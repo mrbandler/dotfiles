@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Create local ~/.ssh directory if it doesn't exist.
+mkdir -p ~/.ssh;
+
+# Copy all required SSH keys into the local ~/.ssh directory.
+cp -f /mnt/w/ssh/config ~/.ssh/config
+cp -f /mnt/w/ssh/git ~/.ssh/git
+cp -f /mnt/w/ssh/minecraft ~/.ssh/minecraft
+cp -f /mnt/v/ssh/mrbandler_key_ffg ~/.ssh/mrbandler
+cp -f /mnt/v/ssh/jarvis_key_ffg ~/.ssh/jarvis
+
+# Change file permissions to adhere to the SSH standard.
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/*
