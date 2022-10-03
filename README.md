@@ -7,8 +7,6 @@
 
 **My personal dotfiles, managed with a bare git repository.**
 
----
-
 ## Dotfiles Installation
 
 > NOTE: For more details please read the excellent article about this method [here](https://www.atlassian.com/git/tutorials/dotfiles).
