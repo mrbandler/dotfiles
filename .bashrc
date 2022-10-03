@@ -119,3 +119,5 @@ fi
 if [[ $(grep microsoft /proc/version) ]]; then
     wsl-startup
 fi
+
+eval "$(starship init bash)"
