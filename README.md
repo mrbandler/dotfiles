@@ -11,9 +11,17 @@
 
 > NOTE: For more details please read the excellent article about this method [here](https://www.atlassian.com/git/tutorials/dotfiles).
 
-To check out the `.dotfiles` use the following commands:
+To check out my `.dotfiles` use the following commands:
+
+**Linux or MacOS based systems:**
 
 ```bash
 git clone --bare https://github.com/mrbandler/dotfiles $HOME/.dotfiles
 git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" checkout
+```
+
+**Windows bases systems:**
+
+```powershell
+git clone https://github.com/mrbandler/dotfiles $HOME\.config
 ```

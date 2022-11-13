@@ -1,0 +1,6 @@
+.emacs.d
+nvim
+scoop
+spotify*
+*/bin/ui
+*/bin/*.exe
