@@ -26,7 +26,16 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 ```powershell
 function config {
-    Start-Process -NoNewWindow -FilePath $(where.exe git) -ArgumentList "--git-dir=$HOME\.dotfiles\ --work-tree=$HOME\ $($args -join " ")" -Wait
+    $params = @("--git-dir=$HOME\.dotfiles", "--work-tree=$HOME")
+    $params += $args
+
+    for ($i = 0; $i -lt $params.count; $i++)
+    {
+        $param = $params[$i]
+        if (($param -replace "[^\s]").length -gt 0) { $params[$i] = "`"$param`"" }
+    }
+
+    Start-Process -NoNewWindow -FilePath $(where.exe git) -ArgumentList $params -Wait
 }
 ```
 
