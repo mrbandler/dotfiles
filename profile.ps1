@@ -1,12 +1,15 @@
 # Variables.
-$env:PATH += ";$env:USERPROFILE\.config\bin"
-
-# This is needed as the whole `dotfiles` repository is used
-# as the `.config` directory on Windows based machines.
-$env:STARSHIP_CONFIG = "$HOME/.config/.config/starship.toml"
+$env:PATH += ";$env:USERPROFILE\.local\bin"
+$env:STARSHIP_CONFIG = "$HOME\.config\starship.toml"
 
 # Aliases.
 Set-Alias ll ls
+Set-Alias find where.exe
+
+# Functions.
+function config {
+    Start-Process -NoNewWindow -FilePath $(find git) -ArgumentList "--git-dir=$HOME\.dotfiles\ --work-tree=$HOME\ $($args -join " ")" -Wait
+}
 
 # Import modules.
 Import-Module PSReadLine
