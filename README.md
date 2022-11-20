@@ -20,9 +20,13 @@ git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" checkout
 
 For convinience please add these aliases to the respective profiles:
 
+**_Bash_**
+
 ```bash
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 ```
+
+**_Powershell_**
 
 ```powershell
 function config {
@@ -39,7 +43,7 @@ function config {
 }
 ```
 
-After that you can use `config` (which expands to `git --git-dir=$HOME/.dotfiles --work-tree=$HOME`):
+After that you can use `config` (which expands to `git --git-dir=$HOME/.dotfiles --work-tree=$HOME`) likes this:
 
 ```console
 config status
