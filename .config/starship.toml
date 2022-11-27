@@ -3,7 +3,7 @@
 
 format = """
 [┌](bold #6272a4)[](fg:#6272a4)\
-$custom\
+(${custom.windows})(${custom.linux})(${custom.macos})\
 ($sudo )\
 [](bg:#44475a fg:#6272a4)\
 $directory\
@@ -69,7 +69,8 @@ show_always = true
 [directory]
 format = "[  $path ]($style)[$read_only]($read_only_style)"
 style = "bold fg:#f8f8f2 bg:#44475a"
-read_only = " "
+read_only_style = "bold fg:#ff5555 bg:#44475a"
+read_only = " "
 use_os_path_sep = false
 
 [git_branch]
@@ -84,6 +85,11 @@ style = "bold fg:#ff5555 bg:#ffb86c"
 [fill]
 symbol = " "
 style = "#44475a"
+
+[custom.license]
+symbol = "𢡄 "
+detect_files = ["LICENSE", "license", "LICENSE.md", "license.md"]
+
 
 [package]
 symbol = " "
