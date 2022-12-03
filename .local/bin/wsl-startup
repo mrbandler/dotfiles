@@ -1,15 +1,47 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Create local ~/.ssh directory if it doesn't exist.
-mkdir -p ~/.ssh;
+# Make sure the mount points for the cryptomator vaults exist.
+mount_points=(
+    "C:/Users/mrbandler/.vaults/personal::/mnt/vaults/personal"
+    "C:/Users/mrbandler/.vaults/ffg/dev::/mnt/vaults/ffg/dev"
+    "C:/Users/mrbandler/.vaults/ffg/exec::/mnt/vaults/ffg/exec"
+)
+
+for point in "${mount_points[@]}"; do
+    host=${point%%::*}
+    guest=${point#*::}
+
+    if [[ ! -d "$guest" ]]; then
+        sudo mkdir -p "$guest"
+    fi
+done
+
+# Mount cryptomator vaults from Windows.
+for point in "${mount_points[@]}"; do
+    host=${point%%::*}
+    guest=${point#*::}
+
+    sudo mount -t drvfs "$host" "$guest" >/dev/null 2>&1
+done
 
 # Copy all required SSH keys into the local ~/.ssh directory.
-cp -f /mnt/w/ssh/config ~/.ssh/config
-cp -f /mnt/w/ssh/git ~/.ssh/git
-cp -f /mnt/w/ssh/minecraft ~/.ssh/minecraft
-cp -f /mnt/v/ssh/mrbandler_key_ffg ~/.ssh/mrbandler
-cp -f /mnt/v/ssh/jarvis_key_ffg ~/.ssh/jarvis
+file_mappings=(
+    "/mnt/vaults/personal/ssh/config::$HOME/.ssh/config"
+    "/mnt/vaults/personal/ssh/git::$HOME/.ssh/git"
+    "/mnt/vaults/personal/ssh/minecraft::$HOME/.ssh/minecraft"
+    "/mnt/vaults/ffg/exec/ssh/mrbandler_key_ffg::$HOME/.ssh/mrbandler"
+    "/mnt/vaults/ffg/exec/ssh/jarvis_key_ffg::$HOME/.ssh/jarvis"
+)
 
-# Change file permissions to adhere to the SSH standard.
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/*
+if [[ ! -d "$HOME/.ssh" ]]; then
+    mkdir -p $HOME/.ssh
+    chmod 700 $HOME/.ssh
+fi
+
+for mapping in "${file_mappings[@]}"; do
+    mounted=${mapping%%::*}
+    local=${mapping#*::}
+
+    cp -f $mounted $local
+    chmod 600 $local
+done
