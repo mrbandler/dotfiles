@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+function join() {
+    local IFS="$1"
+    shift
+    echo "$*"
+}
+
+lang="$1"
+shift
+args=$(join "+" $@)
+
+curl -s cht.sh/$lang/$args | bat
