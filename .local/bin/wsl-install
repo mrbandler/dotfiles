@@ -7,6 +7,7 @@ sudo apt upgrade -y
 # Install needed packages.
 sudo apt install -y \
     build-essential \
+    xsel \
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 cargo install rm-improved --locked
@@ -18,3 +19,6 @@ cargo install procs --locked
 cargo install diskonaut --locked
 cargo install du-dust --locked
 cargo install tokei --locked
+
+curl https://cht.sh/:cht.sh > "$HOME/.local/bin/cht.sh"
+chmod +x "$HOME/.local/bin/cht.sh"

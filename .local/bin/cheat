@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
-function join() {
-    local IFS="$1"
-    shift
-    echo "$*"
-}
+args=("$@")
 
-lang="$1"
-shift
-args=$(join "+" $@)
+if ! command -v "cht.sh" &> /dev/null; then
+    curl -s https://cht.sh/:cht.sh > "$HOME/.local/bin/cht.sh"
+    chmod +x "$HOME/.local/bin/cht.sh"
+fi
 
-curl -s cht.sh/$lang/$args | bat
+if [[ ${#args[@]} -eq 0 ]] ||
+   [[ ${args[*]} =~ "--shell" ]] ||
+   [[ ${args[*]} =~ "--help" ]] ||
+   [[ ${args[*]} =~ "--mode" ]]; then
+    cht.sh $@
+else
+    filename="cht.sh $@"
+    cht.sh $@ | bat --file-name "$filename"
+fi
