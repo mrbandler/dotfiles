@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Make sure the mount points for the cryptomator vaults exist.
+# Make sure the mount points for the vaults from the Windows host exist.
 mount_points=(
     "C:/Users/mrbandler/.vaults/personal::/mnt/vaults/personal"
     "C:/Users/mrbandler/.vaults/ffg/dev::/mnt/vaults/ffg/dev"
@@ -16,7 +16,7 @@ for point in "${mount_points[@]}"; do
     fi
 done
 
-# Mount cryptomator vaults from Windows.
+# Mount vaults from Windows host.
 for point in "${mount_points[@]}"; do
     host=${point%%::*}
     guest=${point#*::}
@@ -24,7 +24,7 @@ for point in "${mount_points[@]}"; do
     sudo mount -t drvfs "$host" "$guest" >/dev/null 2>&1
 done
 
-# Copy all required SSH keys into the local ~/.ssh directory.
+# Copy or symlink all required files from the the mounted vaults from the Windows host.
 file_mappings=(
     "/mnt/vaults/personal/ssh/config::$HOME/.ssh/config"
     "/mnt/vaults/personal/ssh/git::$HOME/.ssh/git"
