@@ -17,38 +17,3 @@ To check out my `.dotfiles` use the following commands:
 git clone --bare https://github.com/mrbandler/dotfiles $HOME/.dotfiles
 git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" checkout
 ```
-
-For convinience please add these aliases to the respective profiles:
-
-**_Bash_**
-
-```bash
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-```
-
-**_Powershell_**
-
-```powershell
-function config {
-    $params = @("--git-dir=$HOME\.dotfiles", "--work-tree=$HOME")
-    $params += $args
-
-    for ($i = 0; $i -lt $params.count; $i++)
-    {
-        $param = $params[$i]
-        if (($param -replace "[^\s]").length -gt 0) { $params[$i] = "`"$param`"" }
-    }
-
-    Start-Process -NoNewWindow -FilePath $(where.exe git) -ArgumentList $params -Wait
-}
-```
-
-After that you can use `config` (which expands to `git --git-dir=$HOME/.dotfiles --work-tree=$HOME`) likes this:
-
-```console
-config status
-config add profile.ps1
-config commit -m "Added new configuration files"
-config pull
-config push
-```
