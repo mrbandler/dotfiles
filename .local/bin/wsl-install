@@ -6,7 +6,15 @@ sudo apt upgrade -y
 
 # Install needed packages.
 sudo apt install -y \
-    build-essential
+    build-essential \
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-cargo install exa
+cargo install rm-improved --locked
+cargo install bottom --locked
+cargo install exa --locked
+cargo install bat --locked
+cargo install zoxide --locked
+cargo install procs --locked
+cargo install diskonaut --locked
+cargo install du-dust --locked
+cargo install tokei --locked

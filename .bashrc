@@ -1,5 +1,7 @@
 # Aliases.
-alias ll='ls -alF'
+alias ls='exa --icons'
+alias ll='exa -l --icons'
+alias cat='bat'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Startup.
@@ -15,6 +17,9 @@ shopt -s histappend
 
 # Terminal.
 shopt -s checkwinsize
+
+# Load dependent files.
+. "$HOME/.cargo/env"
 
 # Prompt.
 eval "$(starship init bash)"
