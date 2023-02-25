@@ -9,6 +9,7 @@ sudo apt install -y \
     build-essential \
     xsel \
 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 curl -sS https://starship.rs/install.sh | sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source "$HOME/.cargo/env"
