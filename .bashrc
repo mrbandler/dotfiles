@@ -1,6 +1,6 @@
 # Aliases.
-alias ls='exa --icons'
-alias ll='exa -l --icons'
+alias ls='exa -l --icons'
+alias ll='exa -la --icons'
 alias cat='bat'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 

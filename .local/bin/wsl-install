@@ -9,7 +9,9 @@ sudo apt install -y \
     build-essential \
     xsel \
 
+curl -sS https://starship.rs/install.sh | sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source "$HOME/.cargo/env"
 cargo install rm-improved --locked
 cargo install bottom --locked
 cargo install exa --locked
