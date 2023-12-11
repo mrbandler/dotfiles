@@ -17,7 +17,7 @@ function config {
         if (($param -replace "[^\s]").length -gt 0) { $params[$i] = "`"$param`"" }
     }
 
-    Start-Process -NoNewWindow -FilePath $(where.exe git) -ArgumentList $params -Wait
+    Start-Process -NoNewWindow -FilePath $(Get-Command git).Source -ArgumentList $params -Wait
 }
 
 function cheat {
@@ -30,6 +30,7 @@ Import-Module posh-git
 Import-Module Terminal-Icons
 
 # Set PSReadLine options.
+Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineOption -PredictionSource History

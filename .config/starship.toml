@@ -240,5 +240,5 @@ format = "[$symbol]($style)"
 style = "bg:#44475a"
 
 [character]
-success_symbol = "[](bold #6272a4)"
-error_symbol = "[](bold #6272a4)"
+success_symbol = "[](#6272a4)"
+error_symbol = "[](#6272a4)"
