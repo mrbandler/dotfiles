@@ -2,7 +2,7 @@
 
 # Make sure the mount points for the vaults from the Windows host exist.
 mount_points=(
-    "C:/Users/mrbandler/.vaults/personal::/mnt/vaults/personal"
+    "C:/Users/mrbandler/.vaults/mrbandler::/mnt/vaults/mrbandler"
     "C:/Users/mrbandler/.vaults/ffg/dev::/mnt/vaults/ffg/dev"
     "C:/Users/mrbandler/.vaults/ffg/exec::/mnt/vaults/ffg/exec"
 )
