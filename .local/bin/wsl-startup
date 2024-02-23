@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+win_username=$(wslpath "$(wslvar USERNAME)")
+
 # Make sure the mount points for the vaults from the Windows host exist.
 mount_points=(
-    "C:/Users/mrbandler/.vaults/mrbandler::/mnt/vaults/mrbandler"
-    "C:/Users/mrbandler/.vaults/ffg/dev::/mnt/vaults/ffg/dev"
-    "C:/Users/mrbandler/.vaults/ffg/exec::/mnt/vaults/ffg/exec"
+    "C:/Users/$win_username/.vaults/mrbandler::/mnt/vaults/mrbandler"
+    "C:/Users/$win_username/.vaults/ffg/dev::/mnt/vaults/ffg/dev"
+    "C:/Users/$win_username/.vaults/ffg/exec::/mnt/vaults/ffg/exec"
 )
 
 for point in "${mount_points[@]}"; do
@@ -26,9 +28,9 @@ done
 
 # Copy or symlink all required files from the the mounted vaults from the Windows host.
 file_mappings=(
-    "/mnt/vaults/personal/ssh/config::$HOME/.ssh/config"
-    "/mnt/vaults/personal/ssh/git::$HOME/.ssh/git"
-    "/mnt/vaults/personal/ssh/minecraft::$HOME/.ssh/minecraft"
+    "/mnt/vaults/mrbandler/ssh/config::$HOME/.ssh/config"
+    "/mnt/vaults/mrbandler/ssh/git::$HOME/.ssh/git"
+    "/mnt/vaults/mrbandler/ssh/minecraft::$HOME/.ssh/minecraft"
     "/mnt/vaults/ffg/exec/ssh/mrbandler_key_ffg::$HOME/.ssh/mrbandler"
     "/mnt/vaults/ffg/exec/ssh/jarvis_key_ffg::$HOME/.ssh/jarvis"
 )
