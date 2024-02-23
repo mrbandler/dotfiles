@@ -2,8 +2,9 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[┌](bold #6272a4)[](fg:#6272a4)\
+[](fg:#6272a4)\
 (${custom.windows})(${custom.linux})(${custom.macos})\
+$username\
 ($sudo )\
 [](bg:#44475a fg:#6272a4)\
 $directory\
@@ -30,10 +31,14 @@ $fill\
 ($nim )\
 ($python )\
 ($purescript )\
-[](fg:#44475a)$time[ | ](fg:#f8f8f2 bg:#44475a)$cmd_duration[ ](bg:#44475a)$status[](fg:#44475a)
-[└](bold #6272a4)$character"""
+[](fg:#44475a)$time[ | ](fg:#f8f8f2 bg:#44475a)$cmd_duration[ ](bg:#44475a)$status[](fg:#44475a)\
+$line_break$character"""
 
 add_newline = true
+
+[os]
+style = "bg:#6272a4 fg:#f8f8f2"
+disabled = false
 
 [custom.windows]
 when = true
@@ -67,11 +72,13 @@ style_user = "bold fg:#f8f8f2 bg:#6272a4"
 show_always = true
 
 [directory]
-format = "[  $path ]($style)[$read_only]($read_only_style)"
+format = "[ $path ]($style)[$read_only]($read_only_style)"
 style = "bold fg:#f8f8f2 bg:#44475a"
 read_only_style = "bold fg:#ff5555 bg:#44475a"
-read_only = " "
+read_only = "󰉐 "
 use_os_path_sep = false
+truncation_length = 3
+truncation_symbol = "…/"
 
 [git_branch]
 format = "[](fg:#ffb86c)[ ](bg:#ffb86c)[$symbol$branch(:$remote_branch) ]($style)"
@@ -87,12 +94,11 @@ symbol = " "
 style = "#44475a"
 
 [custom.license]
-symbol = "𢡄 "
+symbol = "󰿃 "
 detect_files = ["LICENSE", "license", "LICENSE.md", "license.md"]
 
-
 [package]
-symbol = " "
+symbol = "󰏗 "
 version_format = "${raw}"
 format = "[](fg:#ffb86c)[$symbol$version]($style)[](fg:#ffb86c)"
 style = "bold fg:#44475a bg:#ffb86c"
@@ -151,7 +157,7 @@ format = "[](fg:#8be9fd)[$symbol($version(-$name))]($style)[](fg:#8be9fd)"
 style = "bold fg:#44475a bg:#8be9fd"
 
 [cmake]
-symbol = "卑 "
+symbol = " "
 version_format = "${raw}"
 format = "[](fg:#8be9fd)[$symbol($version)]($style)[](fg:#8be9fd)"
 style = "bold fg:#44475a bg:#8be9fd"
@@ -170,7 +176,7 @@ style = "bold fg:#44475a bg:#8be9fd"
 
 [haskell]
 symbol = " "
-format ="[](fg:#bd93f9)[$symbol($version)]($style)[](fg:#bd93f9)"
+format = "[](fg:#bd93f9)[$symbol($version)]($style)[](fg:#bd93f9)"
 style = "bold fg:#44475a bg:#bd93f9"
 
 [java]
@@ -186,7 +192,7 @@ format = "[](fg:#8be9fd)[$symbol($version)]($style)[](fg:#8be9fd)"
 style = "bold fg:#44475a bg:#8be9fd"
 
 [nim]
-symbol = " "
+symbol = " "
 version_format = "${raw}"
 format = "[](fg:#6272a4)[$symbol($version)]($style)[](fg:#6272a4)"
 style = "bold fg:#f8f8f2 bg:#6272a4"
@@ -211,7 +217,7 @@ style = "bold fg:#f8f8f2 bg:#6272a4"
 
 [memory_usage]
 threshold = 0
-symbol = " "
+symbol = "󰍛 "
 format = '[$symbol$ram_pct \(${ram}\)]($style)'
 style = "bold fg:#f8f8f2 bg:#44475a"
 disabled = true
@@ -240,5 +246,10 @@ format = "[$symbol]($style)"
 style = "bg:#44475a"
 
 [character]
-success_symbol = "[](bold #6272a4)"
-error_symbol = "[](bold #6272a4)"
+disabled = false
+success_symbol = '[](bold fg:color_green)'
+error_symbol = '[](bold fg:color_red)'
+vimcmd_symbol = '[](bold fg:color_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol = '[](bold fg:color_purple)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'
