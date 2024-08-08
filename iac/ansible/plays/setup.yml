@@ -1,0 +1,3 @@
+---
+- name: Install requirements
+  import_playbook: ./install-requirements.yml

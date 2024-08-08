@@ -1,0 +1,11 @@
+---
+- name: Installs requirements
+  hosts: localhost
+  tasks:
+    - name: Installing required collections
+      ansible.builtin.command: ansible-galaxy collection install -r requirements.yml -p .ansible/collections
+      changed_when: false
+
+    - name: Installing required roles
+      ansible.builtin.command: ansible-galaxy role install  -r requirements.yml -p .ansible/roles
+      changed_when: false
