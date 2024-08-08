@@ -1,4 +1,4 @@
-# This script is meant to be run every time the Windows environment changes.
+# iac/dsc hash: {{ include "iac/dsc/root.ps1" "iac/dsc/test.txt" | sha256sum }}
 
 echo "Changing Windows configuration..."
 
