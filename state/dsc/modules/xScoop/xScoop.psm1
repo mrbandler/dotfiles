@@ -70,9 +70,11 @@ class Scoop {
                 $installerPath = "$env:TMP/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
                 if ($isAdmin) {
+                    # TODO: Add output redirection for verbose logging.
                     . $installerPath -RunAsAdmin | Out-Null
                 } else {
-                    . $installerPath
+                    # TODO: Add output redirection for verbose logging.
+                    . $installerPath | Out-Null
                 }
 
                 Remove-Item -Path $installerPath -Force
