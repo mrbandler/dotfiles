@@ -70,7 +70,7 @@ class Scoop {
                 $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
                 if ($isAdmin) { $cmd += " -RunAsAdmin" }
 
-                Invoke-Expression $cmd
+                Invoke-Expression $cmd | Out-Null
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
