@@ -67,7 +67,7 @@ properties:
       directives:
         description: Install Scoop
       settings:
-        Ensure: Present
+        Ensure: Absent
 
     #----------------------------------------------------------------------------------------------#
     # Packages.
