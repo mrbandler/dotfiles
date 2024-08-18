@@ -59,13 +59,13 @@ class Scoop {
         $isInstalled = $this.Test()
 
         # If scoop is not installed but the desired state is present, install it.
-        # if ($this.Ensure -eq [Ensure]::Present -and -not $isInstalled) {
+        if ($this.Ensure -eq [Ensure]::Present -and -not $isInstalled) {
             # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-            # $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
-            # $cmd += " -RunAsAdmin"
+            $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
+            $cmd += " -RunAsAdmin"
 
-            # Invoke-Expression $cmd | Out-Null
-        # }
+            Invoke-Expression $cmd | Out-Null
+        }
         # If scoop is installed but the desired state is absent, uninstall it.
         # elseif (this.Ensure -eq [Ensure]::Absent -and $isInstalled) {
             # scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
