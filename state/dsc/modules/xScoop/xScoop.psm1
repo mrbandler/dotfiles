@@ -74,7 +74,7 @@ class Scoop {
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                scoop uninstall scoop -ErrorAction SilentlyContinue
+                scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
             }
