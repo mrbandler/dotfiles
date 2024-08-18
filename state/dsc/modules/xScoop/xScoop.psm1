@@ -27,7 +27,7 @@ class Scoop {
     [Scoop] Get() {
         $resource = [Scoop]::new()
 
-        if ($resource.Test()) {
+        if (Get-Installed()) {
             $resource.Ensure = [Ensure]::Present
         } else {
             $resource.Ensure = [Ensure]::Absent
@@ -38,42 +38,29 @@ class Scoop {
 
     # Tests the current state of the resource.
     [bool] Test() {
-        $path = "$env:USERPROFILE/.config/scoop/config.json"
-        $configExists = Test-Path -Path $path
-        $commandExists = $false
-        if (Get-Command -Name "scoop" -ErrorAction SilentlyContinue) {
-            $commandExists = $true
-        }
-
-        if ($global:PsDscContext.RunAsUser) {
-            Write-Verbose "User: $global:PsDscContext.RunAsUser";
-        }
-
-        Write-Verbose "Config exists: $configExists";
-        Write-Verbose "Command exists: $commandExists";
-
-        return $commandExists -and $configExists
+        return Get-Installed() -and $this.Ensure -eq [Ensure]::Present
     }
 
     # Sets the desired state of the resource.
     [void] Set() {
-        $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-        $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
-        $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
-        $isInstalled = $this.Test()
+        if (-not $this.Test()) {
+            # If scoop is not installed but the desired state is present, install it.
+            if ($this.Ensure -eq [Ensure]::Present) {
+                $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+                $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
+                $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
-        # If scoop is not installed but the desired state is present, install it.
-        if ($this.Ensure -eq [Ensure]::Present -and -not $isInstalled) {
-            $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
-            $cmd += " -RunAsAdmin"
+                $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
+                if ($isAdmin) { $cmd += " -RunAsAdmin" }
 
-            Invoke-Expression $cmd | Out-Null
-        }
-        # If scoop is installed but the desired state is absent, uninstall it.
-        elseif (this.Ensure -eq [Ensure]::Absent -and $isInstalled) {
-            scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
-            Remove-Item -Recursive -Force $env:USERPROFILE/scoop
-            Remove-Item -Recursive -Force $env:USERPROFILE/.config/scoop
+                Invoke-Expression $cmd
+            }
+            # If scoop is installed but the desired state is absent, uninstall it.
+            elseif (this.Ensure -eq [Ensure]::Absent) {
+                scoop uninstall scoop -ErrorAction SilentlyContinue
+                Remove-Item -Recursive -Force $env:USERPROFILE/scoop
+                Remove-Item -Recursive -Force $env:USERPROFILE/.config/scoop
+            }
         }
     }
 }
@@ -103,7 +90,7 @@ class ScoopBucket {
     [ScoopBucket] Get() {
         $resource = [Scoop]::new()
 
-        if ($resource.Test()) {
+        if (Has-Bucket -Name $this.Name) {
             $resource.Ensure = [Ensure]::Present
         } else {
             $resource.Ensure = [Ensure]::Absent
@@ -114,25 +101,24 @@ class ScoopBucket {
 
     # Tests the current state of the resource.
     [bool] Test() {
-        $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
-        return $bucket -ne $null
+        return Has-Bucket -Name $this.Name -and $this.Ensure -eq [Ensure]::Present
     }
 
     # Sets the desired state of the resource.
     [void] Set() {
-        $isInstalled = $this.Test()
-
-        # If the bucket is not installed but the desired state is present, install it.
-        if ($this.Ensure -eq [Ensure]::Present -and -not $isInstalled) {
-            if ($this.Repo -ne $null) {
-                scoop bucket add $this.Name $this.Repo
-            } else {
-                scoop bucket add $this.Name
+        if (-not this.Test()) {
+            # If the bucket is not installed but the desired state is present, install it.
+            if ($this.Ensure -eq [Ensure]::Present) {
+                if ($this.Repo -ne $null) {
+                    scoop bucket add $this.Name $this.Repo
+                } else {
+                    scoop bucket add $this.Name
+                }
             }
-        }
-        # If the bucket is installed but the desired state is absent, uninstall it.
-        elseif ($this.Ensure -eq [Ensure]::Absent -and $isInstalled) {
-            scoop bucket remove $this.Name
+            # If the bucket is installed but the desired state is absent, uninstall it.
+            elseif ($this.Ensure -eq [Ensure]::Absent) {
+                scoop bucket remove $this.Name
+            }
         }
     }
 }
@@ -205,4 +191,27 @@ class ScoopApp {
     [void] Set() {
         # TODO: Implement Set-TargetResource
     }
+}
+
+# Checks if scoop is installed.
+function Is-Installed() {
+    $path = "$env:USERPROFILE/.config/scoop/config.json"
+    $configExists = Test-Path -Path $path
+
+    $commandExists = $false
+    if (Get-Command -Name "scoop" -ErrorAction SilentlyContinue) {
+        $commandExists = $true
+    }
+
+    return $commandExists -and $configExists
+}
+
+# Checks if a bucket is installed.
+function Has-Bucket() {
+    param(
+        [string] $Name
+    )
+
+    $bucket = scoop bucket list | Where-Object { $_.Name -eq $Name }
+    return $bucket -ne $null
 }
