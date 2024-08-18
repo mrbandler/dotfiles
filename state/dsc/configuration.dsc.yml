@@ -56,12 +56,12 @@ properties:
     #   id: installWinGet
     #   directives:
     #     description: Install Windows Package Manager
-    - resource: cChoco/cChocoInstaller
-      id: installChoco
-      directives:
-        description: Install Chocolatey
-      settings:
-        InstallDir: C:/ProgramData/chocolatey
+    # - resource: cChoco/cChocoInstaller
+    #   id: installChoco
+    #   directives:
+    #     description: Install Chocolatey
+    #   settings:
+    #     InstallDir: C:/ProgramData/chocolatey
     - resource: xScoop/Scoop
       id: installScoop
       directives:
