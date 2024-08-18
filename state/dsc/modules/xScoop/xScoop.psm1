@@ -45,10 +45,6 @@ class Scoop {
             $commandExists = $true
         }
 
-        Write-Host "Config exists: $configExists"
-        Write-Host "Command exists: $commandExists"
-
-
         return $commandExists -and $configExists
     }
 
