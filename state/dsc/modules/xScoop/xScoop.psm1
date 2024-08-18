@@ -45,10 +45,8 @@ class Scoop {
             $commandExists = $true
         }
 
-        if (PsDscContext.RunAsUser) {
-            Write-Verbose "Config exists: $configExists";
-            Write-Verbose "Command exists: $commandExists";
-        }
+        Write-Verbose "Config exists: $configExists";
+        Write-Verbose "Command exists: $commandExists";
 
         return $commandExists -and $configExists
     }
