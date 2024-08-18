@@ -65,7 +65,7 @@ class Scoop {
 
             Invoke-Expression $cmd | Out-Null
         }
-        If scoop is installed but the desired state is absent, uninstall it.
+        # If scoop is installed but the desired state is absent, uninstall it.
         elseif (this.Ensure -eq [Ensure]::Absent -and $isInstalled) {
             scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
             Remove-Item -Recursive -Force $env:USERPROFILE/scoop
