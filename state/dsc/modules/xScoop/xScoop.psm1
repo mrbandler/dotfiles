@@ -67,6 +67,14 @@ class Scoop {
                 $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
                 $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
+                # Backup the current color
+                $originalColor = $host.UI.RawUI.ForegroundColor
+
+                # Set a default color if it is null
+                if ($null -eq $originalColor) {
+                    $host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::Gray
+                }
+
                 $installerPath = "$env:TMP/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
                 if ($isAdmin) {
@@ -76,6 +84,9 @@ class Scoop {
                     # TODO: Add output redirection for verbose logging.
                     . $installerPath | Out-Null
                 }
+
+                # Restore the original color
+                $host.UI.RawUI.ForegroundColor = $originalColor
 
                 Remove-Item -Path $installerPath -Force
             }
