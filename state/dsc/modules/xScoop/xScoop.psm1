@@ -76,7 +76,7 @@ class Scoop {
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
                 # TODO: Add output redirection for verbose logging.
-                Invoke-Expression "scoop uninstall scoop" -ErrorAction SilentlyContinue | Out-Null
+                scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
             }
