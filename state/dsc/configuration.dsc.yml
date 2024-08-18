@@ -67,7 +67,7 @@ properties:
       directives:
         description: Install Scoop
       settings:
-        Ensure: Absent
+        Ensure: Present
     - resource: xScoop/ScoopBucket
       id: installScoopExtras
       directives:
@@ -90,12 +90,6 @@ properties:
     #----------------------------------------------------------------------------------------------#
     # Packages.
     #----------------------------------------------------------------------------------------------#
-    - resource: xScoop/Scoop
-      id: installGit
-      directives:
-        description: Install Git
-      settings:
-        Ensure: Present
     # - resource: Microsoft.WinGet.DSC/WinGetPackage
     #   id: installPowerToys
     #   directives:

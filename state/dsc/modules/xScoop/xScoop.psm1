@@ -150,10 +150,10 @@ class ScoopBucket {
         if (!$this.Test()) {
             # If the bucket is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
-                if ($this.Repo -ne $null) {
-                    scoop bucket add $this.Name $this.Repo | Out-Null
-                } else {
+                if (-not $string -or $string -eq "") {
                     scoop bucket add $this.Name | Out-Null
+                } else {
+                    scoop bucket add $this.Name $this.Repo | Out-Null
                 }
             }
             # If the bucket is installed but the desired state is absent, uninstall it.
