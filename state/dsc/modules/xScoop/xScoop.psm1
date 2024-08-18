@@ -67,11 +67,15 @@ class Scoop {
                 $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
                 $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
-                $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
-                if ($isAdmin) { $cmd += " -RunAsAdmin" }
+                $installerPath = "$env:TMP/install-scoop.ps1"
+                Invoke-RestMethod get.scoop.sh -OutFile $installerPath
+                if ($isAdmin) {
+                    . $installerPath -RunAsAdmin | Out-Null
+                } else {
+                    . $installerPath
+                }
 
-                # TODO: Add output redirection for verbose logging.
-                Invoke-Expression $cmd | Out-Null
+                Remove-Item -Path $installerPath -Force
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
