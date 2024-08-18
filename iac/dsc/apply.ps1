@@ -9,4 +9,4 @@ foreach ($module in $modules) {
     }
 }
 
-winget configure test -f $configPath
+winget configure test -f $configPath -verbose --accept-configuration-agreements
