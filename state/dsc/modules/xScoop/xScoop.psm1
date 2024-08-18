@@ -70,17 +70,13 @@ class Scoop {
                 $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
                 if ($isAdmin) { $cmd += " -RunAsAdmin" }
 
-                $env:NO_COLOR = "1"
-                $output = $(Invoke-Expression $cmd)
+                $output = Invoke-Expression $cmd | Out-String
                 Write-Verbose $output
-                $env:NO_COLOR = "0"
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                $env:NO_COLOR = "1"
-                $output = $(scoop uninstall scoop -ErrorAction SilentlyContinue)
+                $output = Invoke-Expression "scoop uninstall scoop" -ErrorAction SilentlyContinue | Out-String
                 Write-Verbose $output
-                $env:NO_COLOR = "0"
 
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
