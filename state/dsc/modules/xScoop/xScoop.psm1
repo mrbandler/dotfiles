@@ -55,24 +55,23 @@ class Scoop {
     [void] Set() {
         $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
         $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
-        $adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
-        $isAdmin = $windowsPrincipal.IsInRole($adminRole)
+        $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
         $isInstalled = $this.Test()
 
         # If scoop is not installed but the desired state is present, install it.
-        if ($this.Ensure -eq [Ensure]::Present -and -not $isInstalled) {
-            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-            $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
-            $cmd += " -RunAsAdmin"
+        # if ($this.Ensure -eq [Ensure]::Present -and -not $isInstalled) {
+            # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+            # $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
+            # $cmd += " -RunAsAdmin"
 
-            Invoke-Expression $cmd | Out-Null
-        }
+            # Invoke-Expression $cmd | Out-Null
+        # }
         # If scoop is installed but the desired state is absent, uninstall it.
-        elseif (this.Ensure -eq [Ensure]::Absent -and $isInstalled) {
-            scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
-            Remove-Item -Recursive -Force $env:USERPROFILE/scoop
-            Remove-Item -Recursive -Force $env:USERPROFILE/.config/scoop
-        }
+        # elseif (this.Ensure -eq [Ensure]::Absent -and $isInstalled) {
+            # scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
+            # Remove-Item -Recursive -Force $env:USERPROFILE/scoop
+            # Remove-Item -Recursive -Force $env:USERPROFILE/.config/scoop
+        # }
     }
 }
 
