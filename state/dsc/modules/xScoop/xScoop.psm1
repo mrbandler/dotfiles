@@ -73,7 +73,7 @@ class Scoop {
                 Invoke-Expression $cmd
             }
             # If scoop is installed but the desired state is absent, uninstall it.
-            elseif (this.Ensure -eq [Ensure]::Absent) {
+            elseif ($this.Ensure -eq [Ensure]::Absent) {
                 scoop uninstall scoop -ErrorAction SilentlyContinue
                 Remove-Item -Recursive -Force $env:USERPROFILE/scoop
                 Remove-Item -Recursive -Force $env:USERPROFILE/.config/scoop
@@ -224,26 +224,4 @@ class ScoopApp {
     [void] Set() {
         # TODO: Implement Set-TargetResource
     }
-}
-
-# Checks if scoop is installed.
-function Get-Installed() {
-    $path = "$env:USERPROFILE/.config/scoop/config.json"
-    $configExists = Test-Path -Path $path
-
-    $commandExists = $false
-    if (Get-Command -Name "scoop" -ErrorAction SilentlyContinue) {
-        $commandExists = $true
-    }
-
-    return $commandExists -and $configExists
-}
-
-# Checks if a bucket is installed.
-function Get-Bucket() {
-    param(
-        [string] $Name
-    )
-
-    return scoop bucket list | Where-Object { $_.Name -eq $Name }
 }
