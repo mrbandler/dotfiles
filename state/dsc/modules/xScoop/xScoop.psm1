@@ -27,7 +27,7 @@ class Scoop {
     [Scoop] Get() {
         $resource = [Scoop]::new()
 
-        if (Get-Installed()) {
+        if (Get-Installed) {
             $resource.Ensure = [Ensure]::Present
         } else {
             $resource.Ensure = [Ensure]::Absent
@@ -38,7 +38,7 @@ class Scoop {
 
     # Tests the current state of the resource.
     [bool] Test() {
-        return Get-Installed() -and $this.Ensure -eq [Ensure]::Present
+        return Get-Installed -and $this.Ensure -eq [Ensure]::Present
     }
 
     # Sets the desired state of the resource.
@@ -101,12 +101,13 @@ class ScoopBucket {
 
     # Tests the current state of the resource.
     [bool] Test() {
-        return Has-Bucket -Name $this.Name -and $this.Ensure -eq [Ensure]::Present
+        $hasBucket = $(Get-Bucket -Name $this.Name) -ne $null
+        return  -and $this.Ensure -eq [Ensure]::Present
     }
 
     # Sets the desired state of the resource.
     [void] Set() {
-        if (-not this.Test()) {
+        if (-not $this.Test()) {
             # If the bucket is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
                 if ($this.Repo -ne $null) {
@@ -194,7 +195,7 @@ class ScoopApp {
 }
 
 # Checks if scoop is installed.
-function Is-Installed() {
+function Get-Installed() {
     $path = "$env:USERPROFILE/.config/scoop/config.json"
     $configExists = Test-Path -Path $path
 
@@ -207,11 +208,10 @@ function Is-Installed() {
 }
 
 # Checks if a bucket is installed.
-function Has-Bucket() {
+function Get-Bucket() {
     param(
         [string] $Name
     )
 
-    $bucket = scoop bucket list | Where-Object { $_.Name -eq $Name }
-    return $bucket -ne $null
+    return scoop bucket list | Where-Object { $_.Name -eq $Name }
 }
