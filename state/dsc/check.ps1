@@ -9,3 +9,9 @@ foreach ($module in $modules) {
         Write-Error "Failed to import module: $($module.FullName). Error: $_"
     }
 }
+
+$configPath = "$PSScriptRoot/configuration.dsc.yml"
+$modulesPath = "$PSScriptRoot/modules"
+$env:PSModulePath = "$env:PSModulePath;$modulesPath"
+
+winget configure test -f $configPath --verbose --disable-interactivity --accept-configuration-agreements

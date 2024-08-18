@@ -23,27 +23,44 @@ class Scoop {
     [DscProperty(Mandatory)]
     [Ensure] $Ensure = [Ensure]::Present
 
+    [DscProperty(NotConfigurable)]
+    [bool] $IsInstalled
+
     # Returns the current state of the resource.
     [Scoop] Get() {
-        $resource = [Scoop]::new()
+        $path = "$env:USERPROFILE/.config/scoop/config.json"
+        $configExists = Test-Path -Path $path
 
-        if (Get-Installed) {
-            $resource.Ensure = [Ensure]::Present
-        } else {
-            $resource.Ensure = [Ensure]::Absent
+        $commandExists = $false
+        if (Get-Command -Name "scoop" -ErrorAction SilentlyContinue) {
+            $commandExists = $true
         }
 
-        return $resource
+        $this.IsInstalled = $commandExists -and $configExists
+
+        return @{
+            Ensure = $this.Ensure
+            IsInstalled = $this.IsInstalled
+        }
     }
 
     # Tests the current state of the resource.
     [bool] Test() {
-        return Get-Installed -and $this.Ensure -eq [Ensure]::Present
+        $state = $this.Get()
+
+        if ($state.Ensure -eq [Ensure]::Present)
+        {
+            return $state.IsInstalled
+        }
+        else
+        {
+            return $state.IsInstalled -eq $false
+        }
     }
 
     # Sets the desired state of the resource.
     [void] Set() {
-        if (-not $this.Test()) {
+        if (!$this.Test()) {
             # If scoop is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
                 $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -86,28 +103,43 @@ class ScoopBucket {
     [DscProperty(Mandatory)]
     [Ensure] $Ensure = [Ensure]::Present
 
+    [DscProperty(NotConfigurable)]
+    [bool] $IsInstalled
+
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
-        $resource = [Scoop]::new()
+        $bucket = scoop bucket list | Where-Object { $_.Name -eq $Name }
 
-        if (Has-Bucket -Name $this.Name) {
-            $resource.Ensure = [Ensure]::Present
+        if ($bucket -ne $null) {
+            $this.IsInstalled = $true
         } else {
-            $resource.Ensure = [Ensure]::Absent
+            $this.IsInstalled = $false
         }
 
-        return $resource
+        return @{
+            Name = $bucket.Name
+            Repo = $bucket.Repo
+            Ensure = $this.Ensure
+        }
     }
 
     # Tests the current state of the resource.
     [bool] Test() {
-        $hasBucket = $(Get-Bucket -Name $this.Name) -ne $null
-        return  -and $this.Ensure -eq [Ensure]::Present
+        $state = $this.Get()
+
+        if ($state.Ensure -eq [Ensure]::Present)
+        {
+            return $state.IsInstalled
+        }
+        else
+        {
+            return $state.IsInstalled -eq $false
+        }
     }
 
     # Sets the desired state of the resource.
     [void] Set() {
-        if (-not $this.Test()) {
+        if (!$this.Test()) {
             # If the bucket is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
                 if ($this.Repo -ne $null) {
