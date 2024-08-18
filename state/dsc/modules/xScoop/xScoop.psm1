@@ -77,7 +77,7 @@ class Scoop {
                     $installerPath
                 )
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
-                & "powershell.exe" @arguments | Out-Null
+                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
                 Remove-Item -Path $installerPath -Force
             }
             # If scoop is installed but the desired state is absent, uninstall it.
