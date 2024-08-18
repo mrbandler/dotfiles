@@ -68,10 +68,34 @@ properties:
         description: Install Scoop
       settings:
         Ensure: Absent
+    - resource: xScoop/ScoopBucket
+      id: installScoopExtras
+      directives:
+        description: Install Scoop extras bucket
+      settings:
+        Name: extras
+        Ensure: Present
+      dependsOn:
+        - installScoop
+    - resource: xScoop/ScoopBucket
+      id: installScoopNerdFonts
+      directives:
+        description: Install Scoop nerd-fonts bucket
+      settings:
+        Name: nerd-fonts
+        Ensure: Present
+      dependsOn:
+        - installScoop
 
     #----------------------------------------------------------------------------------------------#
     # Packages.
     #----------------------------------------------------------------------------------------------#
+    - resource: xScoop/Scoop
+      id: installGit
+      directives:
+        description: Install Git
+      settings:
+        Ensure: Present
     # - resource: Microsoft.WinGet.DSC/WinGetPackage
     #   id: installPowerToys
     #   directives:

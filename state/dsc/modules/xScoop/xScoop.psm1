@@ -151,14 +151,14 @@ class ScoopBucket {
             # If the bucket is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
                 if ($this.Repo -ne $null) {
-                    scoop bucket add $this.Name $this.Repo
+                    scoop bucket add $this.Name $this.Repo | Out-Null
                 } else {
-                    scoop bucket add $this.Name
+                    scoop bucket add $this.Name | Out-Null
                 }
             }
             # If the bucket is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                scoop bucket remove $this.Name
+                scoop bucket remove $this.Name | Out-Null
             }
         }
     }
