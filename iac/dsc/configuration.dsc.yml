@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  assertions:
+    - resource: Microsoft.Windows.Developer/OsVersion
+      directives:
+        description: Verify min OS version requirement
+        allowPrerelease: true
+      settings:
+        MinVersion: "10.0.22000"
+  parameters: []
+  resources:
+    #----------------------------------------------------------------------------------------------#
+    # General settings & configurations.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.Windows.Developer/EnableDarkMode
+      directives:
+        description: Enable Dark Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present
+        RestartExplorer: true
+    - resource: Microsoft.Windows.Developer/Taskbar
+      directives:
+        description: Configure Taskbar
+        allowPrerelease: true
+      settings:
+        Alignment: Middle
+        SearchboxMode: Hide
+        TaskViewButton: Hide
+        RestartExplorer: true
+    - resource: Microsoft.Windows.Developer/WindowsExplorer
+      directives:
+        description: Configure Explorer
+        allowPrerelease: true
+      settings:
+        FileExtensions: Show
+        HiddenFiles: Show
+        ItemCheckBoxes: Hide
+        RestartExplorer: true
+    - resource: Microsoft.Windows.Developer/DeveloperMode
+      directives:
+        description: Enable Developer Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present
+    - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
+      dependsOn:
+        - installPowerToys
+      directives:
+        description: Configure PowerToys
+
+    #----------------------------------------------------------------------------------------------#
+    # Package managers.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackageManager
+      id: installWinGet
+      directives:
+        description: Install Windows Package Manager
+    - resource: cChoco/cChocoInstaller
+      id: installChoco
+      directives:
+        description: Install Chocolatey
+      settings:
+        InstallDir: C:/ProgramData/chocolatey
+    - resource: xScoop/Scoop
+      id: installScoop
+      directives:
+        description: Install Scoop
+      settings:
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Packages.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installPowerToys
+      directives:
+        description: Install PowerToys
+      settings:
+        id: Microsoft.PowerToys
+        source: winget
+  configurationVersion: "0.2.0"
