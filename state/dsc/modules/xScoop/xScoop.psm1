@@ -77,13 +77,15 @@ class Scoop {
                     $installerPath
                 )
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
-                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
+                $output = & "powershell.exe" @arguments
+                Write-Verbose $output
                 Remove-Item -Path $installerPath -Force
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                # TODO: Add output redirection for verbose logging.
-                scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
+                $output = scoop uninstall scoop -ErrorAction SilentlyContinue
+                Write-Verbose $output
+
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
             }
