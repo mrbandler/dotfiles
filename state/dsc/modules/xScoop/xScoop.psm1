@@ -67,27 +67,17 @@ class Scoop {
                 $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
                 $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
-                # Backup the current color
-                $originalColor = $host.UI.RawUI.ForegroundColor
-
-                # Set a default color if it is null
-                if ($null -eq $originalColor) {
-                    $host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::Gray
-                }
-
                 $installerPath = "$env:TMP/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
-                if ($isAdmin) {
-                    # TODO: Add output redirection for verbose logging.
-                    . $installerPath -RunAsAdmin | Out-Null
-                } else {
-                    # TODO: Add output redirection for verbose logging.
-                    . $installerPath | Out-Null
-                }
 
-                # Restore the original color
-                $host.UI.RawUI.ForegroundColor = $originalColor
-
+                $arguments = @(
+                    "-NoProfile"
+                    "-ExecutionPolicy Bypass"
+                    "-File"
+                    $installerPath
+                )
+                if ($isAdmin) { $arguments += "-RunAsAdmin" }
+                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
                 Remove-Item -Path $installerPath -Force
             }
             # If scoop is installed but the desired state is absent, uninstall it.
