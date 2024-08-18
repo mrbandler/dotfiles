@@ -1,12 +1,7 @@
 $configPath = "$PSScriptRoot/configuration.dsc.yml"
-$resourcesPath = "$PSScriptRoot/resources"
-$modules = Get-ChildItem -Path $resourcesPath -Recurse -Include *.psd1
-foreach ($module in $modules) {
-    try {
-        Import-Module -Name $module.FullName -ErrorAction Stop
-    } catch {
-        Write-Error "Failed to import module: $($module.FullName). Error: $_"
-    }
-}
+$modulesPath = "$PSScriptRoot/modules"
+$env:PSModulePath = "$env:PSModulePath;$modulesPath"
 
-winget configure test -f $configPath --verbose --accept-configuration-agreements
+winget configure validate -f $configPath --verbose
+winget configure test -f $configPath --verbose --disable-interactivity --accept-configuration-agreements
+winget configure -f $configPath --verbose --disable-interactivity --accept-configuration-agreements

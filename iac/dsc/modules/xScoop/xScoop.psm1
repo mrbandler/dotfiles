@@ -39,13 +39,17 @@ class Scoop {
     # Tests the current state of the resource.
     [bool] Test() {
         $path = "$env:USERPROFILE/.config/scoop/config.json"
-        $pathExists = Test-Path -Path $path
+        $configExists = Test-Path -Path $path
         $commandExists = $false
         if (Get-Command -Name "scoop" -ErrorAction SilentlyContinue) {
             $commandExists = $true
         }
 
-        return $commandExists -and $pathExists
+        Write-Host "Config exists: $configExists"
+        Write-Host "Command exists: $commandExists"
+
+
+        return $commandExists -and $configExists
     }
 
     # Sets the desired state of the resource.
