@@ -45,6 +45,11 @@ class Scoop {
             $commandExists = $true
         }
 
+        if (PsDscContext.RunAsUser) {
+            Write-Verbose "Config exists: $configExists";
+            Write-Verbose "Command exists: $commandExists";
+        }
+
         return $commandExists -and $configExists
     }
 
@@ -62,11 +67,11 @@ class Scoop {
             $cmd = "& {$(Invoke-RestMethod get.scoop.sh)}"
             $cmd += " -RunAsAdmin"
 
-            Invoke-Expression $cmd
+            Invoke-Expression $cmd | Out-Null
         }
         # If scoop is installed but the desired state is absent, uninstall it.
         elseif (this.Ensure -eq [Ensure]::Absent -and $isInstalled) {
-            scoop uninstall scoop -ErrorAction SilentlyContinue
+            scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
             Remove-Item -Recursive -Force $env:USERPROFILE/scoop
             Remove-Item -Recursive -Force $env:USERPROFILE/.config/scoop
         }
