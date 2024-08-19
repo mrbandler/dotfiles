@@ -23,6 +23,7 @@ class Scoop {
     [DscProperty(Mandatory)]
     [Ensure] $Ensure = [Ensure]::Present
 
+    # Flag, whether scoop is installed or not.
     [DscProperty(NotConfigurable)]
     [bool] $IsInstalled
 
@@ -111,18 +112,14 @@ class ScoopBucket {
     [DscProperty(Mandatory)]
     [Ensure] $Ensure = [Ensure]::Present
 
+    # Flag, whether the bucket is installed or not.
     [DscProperty(NotConfigurable)]
     [bool] $IsInstalled
 
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
-        $bucket = scoop bucket list | Where-Object { $_.Name -eq $Name }
-
-        if ($bucket -ne $null) {
-            $this.IsInstalled = $true
-        } else {
-            $this.IsInstalled = $false
-        }
+        $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
+        $this.IsInstalled = $bucket -ne $null
 
         return @{
             Name = $bucket.Name
