@@ -37,11 +37,9 @@ class Scoop {
             $commandExists = $true
         }
 
-        $this.IsInstalled = $commandExists -and $configExists
-
         return @{
             Ensure = $this.Ensure
-            IsInstalled = $this.IsInstalled
+            IsInstalled = $commandExists -and $configExists
         }
     }
 
@@ -119,12 +117,12 @@ class ScoopBucket {
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
-        $this.IsInstalled = $bucket -ne $null
 
         return @{
             Name = $bucket.Name
             Repo = $bucket.Repo
             Ensure = $this.Ensure
+            IsInstalled = $bucket -ne $null
         }
     }
 
