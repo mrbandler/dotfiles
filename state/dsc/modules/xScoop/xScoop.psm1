@@ -153,7 +153,7 @@ class ScoopBucket {
             }
             # If the bucket is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                scoop bucket remove $this.Name | Out-Null
+                scoop bucket rm $this.Name | Out-Null
             }
         }
     }
