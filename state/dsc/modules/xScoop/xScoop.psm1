@@ -245,11 +245,24 @@ class App {
                     if ($this.Arch -in $validArchValues) { $arguments = "$arguments --arch $this.Arch" }
                 }
 
-                scoop install $arguments | Out-Null
+                $arguments = @(
+                    "scoop"
+                    "install"
+                    $arguments
+                )
+                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
+
+                # scoop install $arguments | Out-Null
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                scoop uninstall "$($this.Name) --purge" | Out-Null
+                $arguments = @(
+                    "scoop"
+                    "uninstall"
+                    "$($this.Name) --purge"
+                )
+                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
+                # scoop uninstall "$($this.Name) --purge" | Out-Null
             }
         }
     }
