@@ -246,11 +246,10 @@ class App {
                 }
 
                 $arguments = @(
+                    "-NoProfile"
                     "-NoExit"
                     "-Command"
-                    "scoop"
-                    "install"
-                    $arguments
+                    "echo $arguments; scoop install $arguments"
                 )
                 Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
 
@@ -259,11 +258,10 @@ class App {
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
                 $arguments = @(
+                    "-NoProfile"
                     "-NoExit"
                     "-Command"
-                    "scoop"
-                    "uninstall"
-                    "$($this.Name) --purge"
+                    "scoop uninstall $($this.Name) --purge"
                 )
                 Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
                 # scoop uninstall "$($this.Name) --purge" | Out-Null
