@@ -136,15 +136,18 @@ class Bucket {
             # If the bucket is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
                 if ([string]::IsNullOrEmpty($this.Repo)) {
-                    scoop bucket add $this.Name | Out-Null
+                    $command = "& scoop bucket add $($this.Name)"
+                    Invoke-Expression $command | Out-Null
                 }
                 else {
-                    scoop bucket add $this.Name $this.Repo | Out-Null
+                    $command = "& scoop bucket add $($this.Name) $($this.Repo)"
+                    Invoke-Expression $command | Out-Null
                 }
             }
             # If the bucket is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                scoop bucket rm $this.Name | Out-Null
+                $command = "& scoop bucket rm $($this.Name)"
+                Invoke-Expression $command | Out-Null
             }
         }
     }
@@ -218,10 +221,6 @@ class App {
         $state = $this.Get()
 
         if ($state.Ensure -eq [Ensure]::Present) {
-            if ($state.IsInstalled) {
-                return ($state.IsInstalledGlobally -eq $this.Global)
-            }
-
             return $state.IsInstalled
         }
         else {
@@ -253,33 +252,13 @@ class App {
                     if ($this.Arch -in $validArchValues) { $arguments += "--arch $this.Arch" }
                 }
 
-                # $scoopArgs = $arguments -join " "
-                # $pwshArgs = @(
-                # "-NoProfile"
-                # "-NoExit"
-                # "-Command"
-                # "echo $scoopArgs; scoop install $scoopArgs"
-                # )
-                # Start-Process -FilePath "scoop" -ArgumentList $pwshArgs -Wait
-
-                $scoopArgs = $arguments -join " "
-                $command = "& scoop install $scoopArgs"
+                $command = "& scoop install $($arguments -join " ")"
                 Invoke-Expression $command | Out-Null
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                # $arguments = @(
-                # "-NoProfile"
-                # "-NoExit"
-                # "-Command"
-                # "scoop uninstall $($this.Name) --purge"
-                # )
-                # Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
-
-                # $scoopArgs = $arguments -join " "
                 $command = "& scoop uninstall $($this.Name) --purge"
                 Invoke-Expression $command | Out-Null
-                # scoop uninstall "$($this.Name) --purge" | Out-Null
             }
         }
     }
