@@ -1,3 +1,27 @@
+# Utilities.
+function Write-Log {
+    param (
+        [string]$Message,
+        [string]$LogFile = "$env:USERPROFILE\DSCResourceLog.txt"
+    )
+
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logEntry = "$timestamp - $Message"
+
+    try {
+        if (-not (Test-Path $LogFile)) {
+            New-Item -Path $LogFile -ItemType File -Force | Out-Null
+            Write-Verbose "Created new log file at $LogFile"
+        }
+
+        Add-Content -Path $LogFile -Value $logEntry
+        Write-Verbose "Log entry added: $logEntry"
+    }
+    catch {
+        Write-Error "Failed to write log entry: $_"
+    }
+}
+
 # Define Enums
 enum Ensure {
     Absent
@@ -293,21 +317,4 @@ class App {
             }
         }
     }
-}
-
-
-function Write-Log {
-    param (
-        [string]$Message,
-        [string]$LogFile = "$env:USERPROFILE\DSCResourceLog.txt"
-    )
-
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $logEntry = "$timestamp - $Message"
-
-    if (-not (Test-Path "$env:USERPROFILE\DSCResourceLog.txt")) {
-        New-Item -Path $LogFile -ItemType File | Out-Null
-    }
-
-    Add-Content -Path $LogFile -Value $logEntry
 }
