@@ -19,6 +19,7 @@ properties:
       settings:
         Ensure: Present
         RestartExplorer: true
+
     - resource: Microsoft.Windows.Developer/Taskbar
       directives:
         description: Configure Taskbar
@@ -28,6 +29,7 @@ properties:
         SearchboxMode: Hide
         TaskViewButton: Hide
         RestartExplorer: true
+
     - resource: Microsoft.Windows.Developer/WindowsExplorer
       directives:
         description: Configure Explorer
@@ -37,6 +39,7 @@ properties:
         HiddenFiles: Show
         ItemCheckBoxes: Hide
         RestartExplorer: true
+
     - resource: Microsoft.Windows.Developer/DeveloperMode
       directives:
         description: Enable Developer Mode
@@ -62,12 +65,14 @@ properties:
     #     description: Install Chocolatey
     #   settings:
     #     InstallDir: C:/ProgramData/chocolatey
+
     - resource: xScoop/Install
       id: installScoop
       directives:
         description: Install Scoop
       settings:
         Ensure: Present
+
     - resource: xScoop/Bucket
       id: installScoopExtras
       directives:
@@ -77,6 +82,7 @@ properties:
         Ensure: Present
       dependsOn:
         - installScoop
+
     - resource: xScoop/Bucket
       id: installScoopNerdFonts
       directives:
@@ -99,6 +105,7 @@ properties:
         Ensure: Present
       dependsOn:
         - installScoop
+
     - resource: xScoop/App
       id: installGit
       directives:
@@ -107,7 +114,8 @@ properties:
         Name: git
         Ensure: Present
       dependsOn:
-        - installGit
+        - installScoop
+
     - resource: xScoop/App
       id: installMake
       directives:
@@ -118,7 +126,8 @@ properties:
         Independent: true
         Ensure: Present
       dependsOn:
-        - installMake
+        - installScoop
+
     # - resource: Microsoft.WinGet.DSC/WinGetPackage
     #   id: installPowerToys
     #   directives:
