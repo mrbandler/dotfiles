@@ -217,8 +217,6 @@ class App {
     [bool] Test() {
         $state = $this.Get()
 
-        Write-Log "app state: $state"
-
         if ($state.Ensure -eq [Ensure]::Present) {
             if ($state.IsInstalled) {
                 return ($state.IsInstalledGlobally -eq $this.Global)
