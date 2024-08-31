@@ -237,11 +237,11 @@ class App {
                 $arguments = @()
 
                 if ([string]::IsNullOrEmpty($this.Manifest)) {
-                    $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Name, $this.Version }
+                    $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Name, $this.Version } else { $this.Name }
                     $arguments += $value
                 }
                 else {
-                    $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Manifest, $this.Version }
+                    $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Manifest, $this.Version } else { $this.Manifest }
                     $arguments += $value
                 }
 
