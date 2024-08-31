@@ -238,19 +238,19 @@ class App {
 
                 if ([string]::IsNullOrEmpty($this.Manifest)) {
                     $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Name, $this.Version }
-                    $args.Add($value)
+                    $arguments += $value
                 }
                 else {
                     $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Manifest, $this.Version }
-                    $args.Add($value)
+                    $arguments += $value
                 }
 
-                if ($this.NoCache) { $args.Add("--no-cache") }
-                if ($this.SkipHashCheck) { $args.Add("--skip-hash-check") }
-                if ($this.NoUpdateScoop) { $args.Add("--no-update-scoop") }
+                if ($this.NoCache) { $arguments += "--no-cache" }
+                if ($this.SkipHashCheck) { $arguments += "--skip-hash-check" }
+                if ($this.NoUpdateScoop) { $arguments += "--no-update-scoop" }
                 if (![string]::IsNullOrEmpty($this.Arch)) {
                     $validArchValues = "32bit", "64bit", "arm64"
-                    if ($this.Arch -in $validArchValues) { $args.Add("--arch $this.Arch") }
+                    if ($this.Arch -in $validArchValues) { $arguments += "--arch $this.Arch" }
                 }
 
                 $scoopArgs = $arguments -join " "
