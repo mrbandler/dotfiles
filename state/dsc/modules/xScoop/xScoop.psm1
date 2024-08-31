@@ -246,7 +246,7 @@ class App {
                 }
 
                 $arguments = @(
-                    "-No-Exit"
+                    "-NoExit"
                     "-Command"
                     "scoop"
                     "install"
@@ -259,7 +259,7 @@ class App {
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
                 $arguments = @(
-                    "-No-Exit"
+                    "-NoExit"
                     "-Command"
                     "scoop"
                     "uninstall"
