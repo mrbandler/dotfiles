@@ -280,7 +280,9 @@ class App {
                     if ($this.Arch -in $validArchValues) { $arguments = "$arguments --arch $this.Arch" }
                 }
 
-                scoop install $arguments | Out-Null
+                Write-Debug-Log "scoop install arguments: $arguments"
+                $output = scoop install $arguments
+                Write-Debug-Log "scoop install output: $output"
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
@@ -291,4 +293,16 @@ class App {
             }
         }
     }
+}
+
+
+function Write-Debug-Log {
+    param (
+        [string]$Message,
+        [string]$LogFile = "$env:USERPROFILE\DSCResourceLog.txt"
+    )
+
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logEntry = "$timestamp - $Message"
+    Add-Content -Path $LogFile -Value $logEntry
 }
