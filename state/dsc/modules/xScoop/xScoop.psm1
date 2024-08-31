@@ -82,6 +82,61 @@ class Install {
 }
 
 #--------------------------------------------------------------------------------------------------#
+# Update Scoop DSC Resource.
+#--------------------------------------------------------------------------------------------------#
+[DSCResource()]
+class Update {
+    # We need a key. Do not set.
+    [DscProperty(Key)]
+    [string]$SID
+
+    # State of the resouce.
+    [DscProperty(Mandatory)]
+    [Ensure] $Ensure = [Ensure]::Present
+
+    # Flag, whether scoop is installed with the latest version or not.
+    [DscProperty(NotConfigurable)]
+    [bool] $IsLatest
+
+    # Returns the current state of the resource.
+    [Update] Get() {
+        $status = scoop status
+        $latest = $status -match "Scoop is up to date"
+
+        return @{
+            Ensure   = $this.Ensure
+            IsLatest = $latest
+        }
+    }
+
+    # Tests the current state of the resource.
+    [bool] Test() {
+        $state = $this.Get()
+
+        if ($state.Ensure -eq [Ensure]::Present) {
+            return $state.IsLatest
+        }
+        else {
+            return $state.IsLatest -eq $false
+        }
+    }
+
+    # Sets the desired state of the resource.
+    [void] Set() {
+        if (!$this.Test()) {
+            # If scoop is not up to date but the desired state is present, update it.
+            if ($this.Ensure -eq [Ensure]::Present) {
+                $command = "& scoop update"
+                Invoke-Expression $command | Out-Null
+            }
+            # If scoop is not up to date but the desired state is absent, do nothing.
+            elseif ($this.Ensure -eq [Ensure]::Absent) {
+            }
+        }
+    }
+}
+
+#--------------------------------------------------------------------------------------------------#
 # Scoop Bucket DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]

@@ -93,6 +93,17 @@ properties:
       dependsOn:
         - installScoop
 
+    - resource: xScoop/Update
+      id: updateScoop
+      directives:
+        description: Install Scoop
+      settings:
+        Ensure: Present
+      dependsOn:
+        - installScoop
+        - installScoopExtras
+        - installScoopNerdFonts
+
     #----------------------------------------------------------------------------------------------#
     # Packages.
     #----------------------------------------------------------------------------------------------#
@@ -105,7 +116,7 @@ properties:
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
-        - installScoop
+        - updateScoop
 
     - resource: xScoop/App
       id: installGit
@@ -116,7 +127,7 @@ properties:
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
-        - installScoop
+        - updateScoop
 
     - resource: xScoop/App
       id: installMake
@@ -127,7 +138,7 @@ properties:
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
-        - installScoop
+        - updateScoop
 
     # - resource: Microsoft.WinGet.DSC/WinGetPackage
     #   id: installPowerToys

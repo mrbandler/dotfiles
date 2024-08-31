@@ -10,6 +10,7 @@
     PowerShellVersion    = '5.1'
     DscResourcesToExport = @(
         'Install',
+        'Update',
         'Bucket',
         'App'
     )
