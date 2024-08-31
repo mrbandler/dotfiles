@@ -201,13 +201,13 @@ class App {
 
     # Flag, whether the app is installed globally or not.
     [DscProperty(NotConfigurable)]
-    [bool] $IsInstalledGlobal
+    [bool] $IsInstalledGlobally
 
     # Returns the current state of the resource.
     [App] Get() {
         $app = scoop list | Where-Object { $_.Name -eq $this.Name }
         $installed = $null -ne $app
-        $globallyInstalled = $false
+        $installedGlobally = $false
 
         if ($installed) {
             $infoOutput = scoop info make -v
@@ -219,22 +219,22 @@ class App {
             }
 
             $info = New-Object PSObject -Property $infoMap
-            $globallyInstalled = $info.Installed -match "C:\\ProgramData\\scoop\\apps\\$($this.Name)"
+            $installedGlobally = $info.Installed -match "C:\\ProgramData\\scoop\\apps\\$($this.Name)"
         }
 
         return @{
-            Name              = $app.Name
-            Version           = $app.Version
-            Manifest          = $this.Manifest
-            Global            = $this.Global
-            Independent       = $this.Independent
-            NoCache           = $this.NoCache
-            SkipHashCheck     = $this.SkipHashCheck
-            NoUpdateScoop     = $this.NoUpdateScoop
-            Arch              = $this.Arch
-            Ensure            = $this.Ensure
-            IsInstalled       = $installed
-            IsInstalledGlobal = $globallyInstalled
+            Name                = $app.Name
+            Version             = $app.Version
+            Manifest            = $this.Manifest
+            Global              = $this.Global
+            Independent         = $this.Independent
+            NoCache             = $this.NoCache
+            SkipHashCheck       = $this.SkipHashCheck
+            NoUpdateScoop       = $this.NoUpdateScoop
+            Arch                = $this.Arch
+            Ensure              = $this.Ensure
+            IsInstalled         = $installed
+            IsInstalledGlobally = $installedGlobally
         }
     }
 
@@ -244,7 +244,7 @@ class App {
 
         if ($state.Ensure -eq [Ensure]::Present) {
             if ($state.IsInstalled) {
-                return ($state.IsInstalledGlobal -eq $this.Global)
+                return ($state.IsInstalledGlobally -eq $this.Global)
             }
 
             return $state.IsInstalled
@@ -260,20 +260,23 @@ class App {
             # If the app is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
                 # Uninstall if it's installed but with the wrong scope
-                if ($this.IsInstalled -and (($this.IsGlobal -ne $this.Global))) {
-                    $arguments = "--purge $($this.Name)"
-                    $arguments = if ($this.IsGlobal) { "--global $arguments" } else { $arguments }
+                $state = $this.Get();
+                if ($state.IsInstalled -and (($state.IsInstalledGlobally -ne $this.Global))) {
+                    $arguments = "$($this.Name) --purge"
+                    if ($this.IsGlobal) { $arguments = "$arguments --global" }
+
                     scoop uninstall $arguments | Out-Null
                 }
 
-                $arguments = if ([string]::IsNullOrEmpty($this.Manifest)) { $this.Name } else { $this.Manifest }
-                $arguments = if ([string]::IsNullOrEmpty($this.Version)) { $arguments } else { "{0}@{1}" -f $arguments, $this.Version }
-                $arguments = if ($this.Global) { "$arguments --global " } else { $arguments }
-                $arguments = if ($this.NoCache) { "$arguments --no-cache " } else { $arguments }
-                $arguments = if ($this.SkipHashCheck) { "$arguments --skip-hash-check" } else { $arguments }
-                $arguments = if ($this.NoUpdateScoop) { "$arguments --no-update-scoop" } else { $arguments }
+                $arguments = ""
+                if ([string]::IsNullOrEmpty($this.Manifest)) { $arguments = $this.Name } else { $arguments = $this.Manifest }
+                if (![string]::IsNullOrEmpty($this.Version)) { $arguments = "{0}@{1}" -f $arguments, $this.Version }
+                if ($this.Global) { $arguments = "$arguments --global" }
+                if ($this.NoCache) { $arguments = "$arguments --no-cache" }
+                if ($this.SkipHashCheck) { $arguments = "$arguments --skip-hash-check" }
+                if ($this.NoUpdateScoop) { $arguments = "$arguments --no-update-scoop" }
                 if (![string]::IsNullOrEmpty($this.Arch)) {
-                    $validArchValues = "bit32", "bit64", "arm64"
+                    $validArchValues = "32bit", "64bit", "arm64"
                     if ($this.Arch -in $validArchValues) { $arguments = "$arguments --arch $this.Arch" }
                 }
 
@@ -281,8 +284,8 @@ class App {
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                $arguments = "--purge $($this.Name)"
-                $arguments = if ($this.IsGlobal) { "--global $arguments" } else { $arguments }
+                $arguments = "$($this.Name) --purge"
+                if ($this.IsGlobal) { $arguments = "$arguments --global" }
 
                 scoop uninstall $arguments | Out-Null
             }
