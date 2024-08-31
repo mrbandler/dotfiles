@@ -253,16 +253,18 @@ class App {
                     if ($this.Arch -in $validArchValues) { $arguments += "--arch $this.Arch" }
                 }
 
-                $scoopArgs = $arguments -join " "
+                # $scoopArgs = $arguments -join " "
                 # $pwshArgs = @(
                 # "-NoProfile"
                 # "-NoExit"
                 # "-Command"
                 # "echo $scoopArgs; scoop install $scoopArgs"
                 # )
-                # Start-Process -FilePath "powershell.exe" -ArgumentList $pwshArgs -Wait
+                # Start-Process -FilePath "scoop" -ArgumentList $pwshArgs -Wait
 
-                scoop install $scoopArgs | Out-Null
+                $scoopArgs = $arguments -join " "
+                $command = "& scoop install $scoopArgs"
+                Invoke-Expression $command | Out-Null
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
@@ -273,7 +275,11 @@ class App {
                 # "scoop uninstall $($this.Name) --purge"
                 # )
                 # Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
-                scoop uninstall "$($this.Name) --purge" | Out-Null
+
+                # $scoopArgs = $arguments -join " "
+                $command = "& scoop uninstall $($this.Name) --purge"
+                Invoke-Expression $command | Out-Null
+                # scoop uninstall "$($this.Name) --purge" | Out-Null
             }
         }
     }
