@@ -96,11 +96,29 @@ properties:
         description: Install 7-Zip
       settings:
         Name: 7zip
+        Ensure: Present
+      dependsOn:
+        - installScoop
+    - resource: xScoop/App
+      id: installGit
+      directives:
+        description: Install Git
+      settings:
+        Name: git
+        Ensure: Present
+      dependsOn:
+        - installGit
+    - resource: xScoop/App
+      id: installMake
+      directives:
+        description: Install make
+      settings:
+        Name: make
         Global: true
         Independent: true
         Ensure: Present
       dependsOn:
-        - installScoop
+        - installMake
     # - resource: Microsoft.WinGet.DSC/WinGetPackage
     #   id: installPowerToys
     #   directives:
