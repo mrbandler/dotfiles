@@ -254,26 +254,26 @@ class App {
                 }
 
                 $scoopArgs = $arguments -join " "
-                $pwshArgs = @(
-                    "-NoProfile"
-                    "-NoExit"
-                    "-Command"
-                    "echo $scoopArgs; scoop install $scoopArgs"
-                )
-                Start-Process -FilePath "powershell.exe" -ArgumentList $pwshArgs -Wait
+                # $pwshArgs = @(
+                # "-NoProfile"
+                # "-NoExit"
+                # "-Command"
+                # "echo $scoopArgs; scoop install $scoopArgs"
+                # )
+                # Start-Process -FilePath "powershell.exe" -ArgumentList $pwshArgs -Wait
 
-                # scoop install $arguments | Out-Null
+                scoop install $scoopArgs | Out-Null
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                $arguments = @(
-                    "-NoProfile"
-                    "-NoExit"
-                    "-Command"
-                    "scoop uninstall $($this.Name) --purge"
-                )
-                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
-                # scoop uninstall "$($this.Name) --purge" | Out-Null
+                # $arguments = @(
+                # "-NoProfile"
+                # "-NoExit"
+                # "-Command"
+                # "scoop uninstall $($this.Name) --purge"
+                # )
+                # Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
+                scoop uninstall "$($this.Name) --purge" | Out-Null
             }
         }
     }
