@@ -204,7 +204,6 @@ class App {
             Name          = $app.Name
             Version       = $app.Version
             Manifest      = $this.Manifest
-            Independent   = $this.Independent
             NoCache       = $this.NoCache
             SkipHashCheck = $this.SkipHashCheck
             NoUpdateScoop = $this.NoUpdateScoop
