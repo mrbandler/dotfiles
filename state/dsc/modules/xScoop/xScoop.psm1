@@ -227,9 +227,10 @@ class App {
                 if ($key -and $value) { $infoMap[$key.Trim()] = $value.Trim() }
             }
 
+            $prefix = scoop prefix $this.Name
             $info = New-Object PSObject -Property $infoMap
-            $globallyInstalled = $info.Binaries -match "C:\\ProgramData\\scoop\\apps\\$($this.Name)"
-            $independentlyInstalled = -not (Test-Path (Join-Path "C:\Users\$env:USERNAME\scoop\apps\$($this.Name)\current"))
+            $globallyInstalled = $info.Installed -match "C:\\ProgramData\\scoop\\apps\\$($this.Name)"
+            $independentlyInstalled = -not ($prefix -match 'current$')
         }
 
         return @{
