@@ -4,17 +4,11 @@ enum Ensure {
     Present
 }
 
-enum Arch {
-    bit32
-    bit64
-    arm64
-}
-
 #--------------------------------------------------------------------------------------------------#
-# Scoop DSC Resource.
+# Install Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]
-class Scoop {
+class Install {
     # We need a key. Do not set.
     [DscProperty(Key)]
     [string]$SID
@@ -28,7 +22,7 @@ class Scoop {
     [bool] $IsInstalled
 
     # Returns the current state of the resource.
-    [Scoop] Get() {
+    [Install] Get() {
         $path = "$env:USERPROFILE/.config/scoop/config.json"
         $configExists = Test-Path -Path $path
 
@@ -38,7 +32,7 @@ class Scoop {
         }
 
         return @{
-            Ensure = $this.Ensure
+            Ensure      = $this.Ensure
             IsInstalled = $commandExists -and $configExists
         }
     }
@@ -47,12 +41,10 @@ class Scoop {
     [bool] Test() {
         $state = $this.Get()
 
-        if ($state.Ensure -eq [Ensure]::Present)
-        {
+        if ($state.Ensure -eq [Ensure]::Present) {
             return $state.IsInstalled
         }
-        else
-        {
+        else {
             return $state.IsInstalled -eq $false
         }
     }
@@ -93,7 +85,7 @@ class Scoop {
 # Scoop Bucket DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]
-class ScoopBucket {
+class Bucket {
     # We need a key. Do not set.
     [DscProperty(Key)]
     [string]$SID
@@ -115,14 +107,14 @@ class ScoopBucket {
     [bool] $IsInstalled
 
     # Returns the current state of the resource.
-    [ScoopBucket] Get() {
+    [Bucket] Get() {
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
 
         return @{
-            Name = $bucket.Name
-            Repo = $bucket.Repo
-            Ensure = $this.Ensure
-            IsInstalled = $bucket -ne $null
+            Name        = $bucket.Name
+            Repo        = $bucket.Repo
+            Ensure      = $this.Ensure
+            IsInstalled = $null -ne $bucket
         }
     }
 
@@ -130,12 +122,10 @@ class ScoopBucket {
     [bool] Test() {
         $state = $this.Get()
 
-        if ($state.Ensure -eq [Ensure]::Present)
-        {
+        if ($state.Ensure -eq [Ensure]::Present) {
             return $state.IsInstalled
         }
-        else
-        {
+        else {
             return $state.IsInstalled -eq $false
         }
     }
@@ -147,7 +137,8 @@ class ScoopBucket {
             if ($this.Ensure -eq [Ensure]::Present) {
                 if ([string]::IsNullOrEmpty($this.Repo)) {
                     scoop bucket add $this.Name | Out-Null
-                } else {
+                }
+                else {
                     scoop bucket add $this.Name $this.Repo | Out-Null
                 }
             }
@@ -163,7 +154,7 @@ class ScoopBucket {
 # Scoop App DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]
-class ScoopApp {
+class App {
     # We need a key. Do not set.
     [DscProperty(Key)]
     [string]$SID
@@ -171,6 +162,10 @@ class ScoopApp {
     # Name of the app.
     [DscProperty()]
     [string] $Name
+
+    # Name of the app.
+    [DscProperty()]
+    [string] $Version
 
     # Manifest of the app.
     [DscProperty()]
@@ -198,33 +193,111 @@ class ScoopApp {
 
     # Architecture of the app.
     [DscProperty()]
-    [Arch] $Arch
+    [string] $Arch
 
     # State of the resouce.
     [DscProperty(Mandatory)]
     [Ensure] $Ensure = [Ensure]::Present
 
-    # Returns the current state of the resource.
-    [ScoopApp] Get() {
-        $resource = [Scoop]::new()
+    # Flag, whether the app is installed or not.
+    [DscProperty(NotConfigurable)]
+    [bool] $IsInstalled
 
-        if ($resource.Test()) {
-            $resource.Ensure = [Ensure]::Present
-        } else {
-            $resource.Ensure = [Ensure]::Absent
+    # Flag, whether the app is installed globally or not.
+    [DscProperty(NotConfigurable)]
+    [bool] $IsGlobal
+
+    # Flag, whether the app is installed independent or not.
+    [DscProperty(NotConfigurable)]
+    [bool] $IsIndependent
+
+    # Returns the current state of the resource.
+    [App] Get() {
+        $app = scoop list | Where-Object { $_.Name -eq $this.Name }
+        $installed = $null -ne $app
+        $globallyInstalled = $false
+        $independentlyInstalled = $false
+
+        if ($installed) {
+            $infoOutput = scoop info make -v
+            $infoMap = @{}
+
+            foreach ($line in $infoOutput) {
+                $key, $value = $line -split ':\s+', 2
+                if ($key -and $value) { $infoMap[$key.Trim()] = $value.Trim() }
+            }
+
+            $info = New-Object PSObject -Property $infoMap
+            $globallyInstalled = $info.Binaries -match "C:\\ProgramData\\scoop\\apps\\$($this.Name)"
+            $independentlyInstalled = -not (Test-Path (Join-Path "C:\Users\$env:USERNAME\scoop\apps\$($this.Name)\current"))
         }
 
-        return $resource
+        return @{
+            Name          = $app.Name
+            Version       = $app.Version
+            Manifest      = $this.Manifest
+            Global        = $this.Global
+            Independent   = $this.Independent
+            NoCache       = $this.NoCache
+            SkipHashCheck = $this.SkipHashCheck
+            NoUpdateScoop = $this.NoUpdateScoop
+            Arch          = $this.Arch
+            Ensure        = $this.Ensure
+            IsInstalled   = $installed
+            IsGlobal      = $globallyInstalled
+            IsIndependent = $independentlyInstalled
+        }
     }
 
     # Tests the current state of the resource.
     [bool] Test() {
-        # TODO: Implement Test-TargetResource
-        return $false;
+        $state = $this.Get()
+
+        if ($state.Ensure -eq [Ensure]::Present) {
+            if ($state.IsInstalled) {
+                return ($state.IsGlobal -eq $this.Global) -and ($state.IsIndependent -eq $this.Independent)
+            }
+
+            return $state.IsInstalled
+        }
+        else {
+            return $state.IsInstalled -eq $false
+        }
     }
 
     # Sets the desired state of the resource.
     [void] Set() {
-        # TODO: Implement Set-TargetResource
+        if (!$this.Test()) {
+            # If the app is not installed but the desired state is present, install it.
+            if ($this.Ensure -eq [Ensure]::Present) {
+                # Uninstall if it's installed but with the wrong scope or independence
+                if ($this.IsInstalled -and (($this.IsGlobal -ne $this.Global) -or ($this.IsIndependent -ne $this.Independent))) {
+                    $arguments = "--purge $($this.Name)"
+                    $arguments = if ($this.IsGlobal) { "--global $arguments" } else { $arguments }
+                    scoop uninstall $arguments | Out-Null
+                }
+
+                $arguments = if ([string]::IsNullOrEmpty($this.Manifest)) { $this.Name } else { $this.Manifest }
+                $arguments = if ([string]::IsNullOrEmpty($this.Version)) { $arguments } else { "{0}@{1}" -f $arguments, $this.Version }
+                $arguments = if ($this.Global) { "--global $arguments" } else { $arguments }
+                $arguments = if ($this.Independent) { "--independent $arguments" } else { $arguments }
+                $arguments = if ($this.NoCache) { "--no-cache $arguments" } else { $arguments }
+                $arguments = if ($this.SkipHashCheck) { "--skip-hash-check $arguments" } else { $arguments }
+                $arguments = if ($this.NoUpdateScoop) { "--no-update-scoop $arguments" } else { $arguments }
+                if (![string]::IsNullOrEmpty($this.Arch)) {
+                    $validArchValues = "bit32", "bit64", "arm64"
+                    if ($this.Arch -in $validArchValues) { $arguments = "--arch $this.Arch $arguments" }
+                }
+
+                scoop install $arguments | Out-Null
+            }
+            # If the app is installed but the desired state is absent, uninstall it.
+            elseif ($this.Ensure -eq [Ensure]::Absent) {
+                $arguments = "--purge $($this.Name)"
+                $arguments = if ($this.IsGlobal) { "--global $arguments" } else { $arguments }
+
+                scoop uninstall $arguments | Out-Null
+            }
+        }
     }
 }

@@ -62,13 +62,13 @@ properties:
     #     description: Install Chocolatey
     #   settings:
     #     InstallDir: C:/ProgramData/chocolatey
-    - resource: xScoop/Scoop
+    - resource: xScoop/Install
       id: installScoop
       directives:
         description: Install Scoop
       settings:
         Ensure: Present
-    - resource: xScoop/ScoopBucket
+    - resource: xScoop/Bucket
       id: installScoopExtras
       directives:
         description: Install Scoop extras bucket
@@ -77,7 +77,7 @@ properties:
         Ensure: Present
       dependsOn:
         - installScoop
-    - resource: xScoop/ScoopBucket
+    - resource: xScoop/Bucket
       id: installScoopNerdFonts
       directives:
         description: Install Scoop nerd-fonts bucket
@@ -90,6 +90,17 @@ properties:
     #----------------------------------------------------------------------------------------------#
     # Packages.
     #----------------------------------------------------------------------------------------------#
+    - resource: xScoop/App
+      id: install7zip
+      directives:
+        description: Install 7-Zip
+      settings:
+        Name: 7zip
+        Global: true
+        Independent: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
     # - resource: Microsoft.WinGet.DSC/WinGetPackage
     #   id: installPowerToys
     #   directives:
