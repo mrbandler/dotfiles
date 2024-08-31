@@ -234,24 +234,33 @@ class App {
         if (!$this.Test()) {
             # If the app is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
-                $arguments = ""
-                if ([string]::IsNullOrEmpty($this.Manifest)) { $arguments = $this.Name } else { $arguments = $this.Manifest }
-                if (![string]::IsNullOrEmpty($this.Version)) { $arguments = "{0}@{1}" -f $arguments, $this.Version }
-                if ($this.NoCache) { $arguments = "$arguments --no-cache" }
-                if ($this.SkipHashCheck) { $arguments = "$arguments --skip-hash-check" }
-                if ($this.NoUpdateScoop) { $arguments = "$arguments --no-update-scoop" }
-                if (![string]::IsNullOrEmpty($this.Arch)) {
-                    $validArchValues = "32bit", "64bit", "arm64"
-                    if ($this.Arch -in $validArchValues) { $arguments = "$arguments --arch $this.Arch" }
+                $arguments = @()
+
+                if ([string]::IsNullOrEmpty($this.Manifest)) {
+                    $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Name, $this.Version }
+                    $args.Add($value)
+                }
+                else {
+                    $value = if (![string]::IsNullOrEmpty($this.Version)) { "{0}@{1}" -f $this.Manifest, $this.Version }
+                    $args.Add($value)
                 }
 
-                $arguments = @(
+                if ($this.NoCache) { $args.Add("--no-cache") }
+                if ($this.SkipHashCheck) { $args.Add("--skip-hash-check") }
+                if ($this.NoUpdateScoop) { $args.Add("--no-update-scoop") }
+                if (![string]::IsNullOrEmpty($this.Arch)) {
+                    $validArchValues = "32bit", "64bit", "arm64"
+                    if ($this.Arch -in $validArchValues) { $args.Add("--arch $this.Arch") }
+                }
+
+                $scoopArgs = $arguments -join " "
+                $pwshArgs = @(
                     "-NoProfile"
                     "-NoExit"
                     "-Command"
-                    "echo $arguments; scoop install $arguments"
+                    "echo $scoopArgs; scoop install $scoopArgs"
                 )
-                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
+                Start-Process -FilePath "powershell.exe" -ArgumentList $pwshArgs -Wait
 
                 # scoop install $arguments | Out-Null
             }
