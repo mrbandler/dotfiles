@@ -23,6 +23,7 @@ class ScoopInstall {
 
     # Returns the current state of the resource.
     [ScoopInstall] Get() {
+        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
         $path = "$env:USERPROFILE/.config/scoop/config.json"
         $configExists = Test-Path -Path $path
 
@@ -100,6 +101,7 @@ class ScoopUpdate {
 
     # Returns the current state of the resource.
     [ScoopUpdate] Get() {
+        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
         $status = scoop status
         $latest = $status -match "Scoop is up to date"
 
@@ -163,6 +165,7 @@ class ScoopBucket {
 
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
+        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
 
         return @{
@@ -255,6 +258,7 @@ class ScoopApp {
 
     # Returns the current state of the resource.
     [ScoopApp] Get() {
+        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
         $app = scoop list | Where-Object { $_.Name -eq $this.Name }
         $installed = $null -ne $app
 
