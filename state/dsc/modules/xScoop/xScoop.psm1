@@ -8,7 +8,7 @@ enum Ensure {
 # Install Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]
-class Install {
+class ScoopInstall {
     # We need a key. Do not set.
     [DscProperty(Key)]
     [string]$SID
@@ -22,7 +22,7 @@ class Install {
     [bool] $IsInstalled
 
     # Returns the current state of the resource.
-    [Install] Get() {
+    [ScoopInstall] Get() {
         $path = "$env:USERPROFILE/.config/scoop/config.json"
         $configExists = Test-Path -Path $path
 
@@ -85,7 +85,7 @@ class Install {
 # Update Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]
-class Update {
+class ScoopUpdate {
     # We need a key. Do not set.
     [DscProperty(Key)]
     [string]$SID
@@ -99,7 +99,7 @@ class Update {
     [bool] $IsLatest
 
     # Returns the current state of the resource.
-    [Update] Get() {
+    [ScoopUpdate] Get() {
         $status = scoop status
         $latest = $status -match "Scoop is up to date"
 
@@ -140,7 +140,7 @@ class Update {
 # Scoop Bucket DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]
-class Bucket {
+class ScoopBucket {
     # We need a key. Do not set.
     [DscProperty(Key)]
     [string]$SID
@@ -162,7 +162,7 @@ class Bucket {
     [bool] $IsInstalled
 
     # Returns the current state of the resource.
-    [Bucket] Get() {
+    [ScoopBucket] Get() {
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
 
         return @{
@@ -212,7 +212,7 @@ class Bucket {
 # Scoop App DSC Resource.
 #--------------------------------------------------------------------------------------------------#
 [DSCResource()]
-class App {
+class ScoopApp {
     # We need a key. Do not set.
     [DscProperty(Key)]
     [string]$SID
@@ -254,7 +254,7 @@ class App {
     [bool] $IsInstalled
 
     # Returns the current state of the resource.
-    [App] Get() {
+    [ScoopApp] Get() {
         $app = scoop list | Where-Object { $_.Name -eq $this.Name }
         $installed = $null -ne $app
 
