@@ -60,7 +60,7 @@ properties:
     #   directives:
     #     description: Install Windows Package Manager
 
-    - resource: xChoco/cChocoInstaller
+    - resource: cChoco/cChocoInstaller
       id: installChoco
       directives:
         description: Install Chocolatey
