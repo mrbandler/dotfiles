@@ -1,3 +1,9 @@
+# Constants
+$SCOOP_DIR = $env:SCOOP, "$env:USERPROFILE\scoop" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_GLOBAL_DIR = $env:SCOOP_GLOBAL, "$env:ProgramData\scoop" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_SHIMS_DIR = "$SCOOP_DIR\shims"
+$SCOOP_APP_DIR = "$SCOOP_DIR\apps\scoop\current"
+
 # Define Enums
 enum Ensure {
     Absent
@@ -23,7 +29,7 @@ class ScoopInstall {
 
     # Returns the current state of the resource.
     [ScoopInstall] Get() {
-        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
+        $env:PATH += $SCOOP_SHIMS_DIR;
         $path = "$env:USERPROFILE/.config/scoop/config.json"
         $configExists = Test-Path -Path $path
 
@@ -101,7 +107,7 @@ class ScoopUpdate {
 
     # Returns the current state of the resource.
     [ScoopUpdate] Get() {
-        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
+        $env:PATH += $SCOOP_SHIMS_DIR;
         $status = scoop status
         $latest = $status -match "Scoop is up to date"
 
@@ -165,7 +171,7 @@ class ScoopBucket {
 
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
-        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
+        $env:PATH += $SCOOP_SHIMS_DIR;
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
 
         return @{
@@ -258,7 +264,7 @@ class ScoopApp {
 
     # Returns the current state of the resource.
     [ScoopApp] Get() {
-        $env:PATH += "$env:USERPROFILE/scoop/apps/scoop/current/bin"
+        $env:PATH += $SCOOP_SHIMS_DIR;
         $app = scoop list | Where-Object { $_.Name -eq $this.Name }
         $installed = $null -ne $app
 
