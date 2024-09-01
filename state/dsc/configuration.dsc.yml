@@ -60,21 +60,21 @@ properties:
     #   directives:
     #     description: Install Windows Package Manager
 
-    - resource: cChoco/cChocoInstaller
-      id: installChoco
-      directives:
-        description: Install Chocolatey
-      settings:
-        InstallDir: C:\ProgramData\chocolatey
+    # - resource: cChoco/cChocoInstaller
+    #   id: installChoco
+    #   directives:
+    #     description: Install Chocolatey
+    #   settings:
+    #     InstallDir: C:\ProgramData\chocolatey
 
-    - resource: xScoop/Install
+    - resource: xScoop/ScoopInstall
       id: installScoop
       directives:
         description: Install Scoop
       settings:
         Ensure: Present
 
-    - resource: xScoop/Bucket
+    - resource: xScoop/ScoopBucket
       id: installScoopExtras
       directives:
         description: Install Scoop extras bucket
@@ -84,7 +84,7 @@ properties:
       dependsOn:
         - installScoop
 
-    - resource: xScoop/Bucket
+    - resource: xScoop/ScoopBucket
       id: installScoopNerdFonts
       directives:
         description: Install Scoop nerd-fonts bucket
@@ -94,7 +94,7 @@ properties:
       dependsOn:
         - installScoop
 
-    - resource: xScoop/Update
+    - resource: xScoop/ScoopUpdate
       id: updateScoop
       directives:
         description: Install Scoop
@@ -108,7 +108,7 @@ properties:
     #----------------------------------------------------------------------------------------------#
     # Packages.
     #----------------------------------------------------------------------------------------------#
-    - resource: xScoop/App
+    - resource: xScoop/ScoopApp
       id: install7zip
       directives:
         description: Install 7-Zip
@@ -119,7 +119,7 @@ properties:
       dependsOn:
         - updateScoop
 
-    - resource: xScoop/App
+    - resource: xScoop/ScoopApp
       id: installGit
       directives:
         description: Install Git
@@ -130,7 +130,7 @@ properties:
       dependsOn:
         - updateScoop
 
-    - resource: xScoop/App
+    - resource: xScoop/ScoopApp
       id: installMake
       directives:
         description: Install make
