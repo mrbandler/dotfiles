@@ -84,14 +84,6 @@ properties:
         - installGit
         - install7zip
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackageManager
-      id: installWinGet
-      directives:
-        description: Install Windows Package Manager
-        allowPrerelease: true
-      settings:
-        UseLatest: true
-
     # - resource: cChoco/cChocoInstaller
     #   id: installChoco
     #   directives:
