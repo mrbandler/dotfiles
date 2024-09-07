@@ -141,7 +141,8 @@ properties:
         description: Install PowerToys
         allowPrerelease: false
       settings:
-        id: Microsoft.PowerToys
-        source: winget
+        Id: Microsoft.PowerToys
+        Source: winget
+        Ensure: Present
 
   configurationVersion: "0.2.0"
