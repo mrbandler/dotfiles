@@ -91,14 +91,17 @@ class ScoopInstall {
                 $installerPath = "$env:TMP/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
 
-                # $arguments = @(
-                # "-NoProfile"
-                # "-ExecutionPolicy Bypass"
-                # "-File"
-                # $installerPath
-                # )
+                $arguments = @(
+                    # "-NoProfile"
+                    # "-ExecutionPolicy Bypass"
+                    # "-File"
+                    # $installerPath
+                )
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
-                . $installerPath $arguments
+                # . $installerPath $arguments
+
+                $command = "& $installerPath $arguments"
+                Invoke-Expression $command | Out-Null
                 # Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
                 Remove-Item -Path $installerPath -Force
 
