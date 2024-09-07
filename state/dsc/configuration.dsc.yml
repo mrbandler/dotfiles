@@ -55,18 +55,6 @@ properties:
     #----------------------------------------------------------------------------------------------#
     # Package managers.
     #----------------------------------------------------------------------------------------------#
-    # - resource: Microsoft.WinGet.DSC/WinGetPackageManager
-    #   id: installWinGet
-    #   directives:
-    #     description: Install Windows Package Manager
-
-    # - resource: cChoco/cChocoInstaller
-    #   id: installChoco
-    #   directives:
-    #     description: Install Chocolatey
-    #   settings:
-    #     InstallDir: C:\ProgramData\chocolatey
-
     - resource: xScoop/ScoopInstall
       id: installScoop
       directives:
@@ -95,6 +83,21 @@ properties:
       dependsOn:
         - installGit
         - install7zip
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackageManager
+      id: installWinGet
+      directives:
+        description: Install Windows Package Manager
+      settings:
+        UseLatest: true
+        Ensure: Present
+
+    # - resource: cChoco/cChocoInstaller
+    #   id: installChoco
+    #   directives:
+    #     description: Install Chocolatey
+    #   settings:
+    #     InstallDir: C:\ProgramData\chocolatey
 
     #----------------------------------------------------------------------------------------------#
     # Packages.
@@ -132,11 +135,13 @@ properties:
       dependsOn:
         - installScoop
 
-    # - resource: Microsoft.WinGet.DSC/WinGetPackage
-    #   id: installPowerToys
-    #   directives:
-    #     description: Install PowerToys
-    #   settings:
-    #     id: Microsoft.PowerToys
-    #     source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installPowerToys
+      directives:
+        description: Install PowerToys
+        allowPrerelease: false
+      settings:
+        id: Microsoft.PowerToys
+        source: winget
+
   configurationVersion: "0.2.0"
