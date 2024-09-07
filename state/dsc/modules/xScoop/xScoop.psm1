@@ -1,16 +1,7 @@
-# Constants.
-$SCOOP_DIR = $env:SCOOP, "$env:USERPROFILE\scoop" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
-$SCOOP_SHIMS_DIR = "$SCOOP_DIR\shims"
-
 # Enums.
 enum Ensure {
     Absent
     Present
-}
-
-# Helper functions.
-function Add-ScoopToPath {
-    $env:PATH += $SCOOP_SHIMS_DIR
 }
 
 #--------------------------------------------------------------------------------------------------#
@@ -83,9 +74,7 @@ class ScoopInstall {
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
                 $cmd = "& $installerPath $arguments"
                 Invoke-Expression $cmd | Out-Null
-
                 Remove-Item -Path $installerPath -Force
-                # Add-ScoopToPath
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
@@ -117,9 +106,10 @@ class ScoopUpdate {
 
     # Returns the current state of the resource.
     [ScoopUpdate] Get() {
-        # Add-ScoopToPath
-        $status = scoop status
-        $latest = $status -match "Scoop is up to date"
+        $coloredOutput = scoop status | Out-String
+        $ansiEscapePattern = "`e\[[\d;]*[a-zA-Z]"
+        $normalizedOutput = $coloredOutput -replace $ansiEscapePattern, ''
+        $latest = $normalizedOutput -match "Scoop is up to date"
 
         return @{
             Ensure   = $this.Ensure
@@ -149,6 +139,7 @@ class ScoopUpdate {
             }
             # If scoop is not up to date but the desired state is absent, do nothing.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
+                # Do nothing.
             }
         }
     }
@@ -181,7 +172,6 @@ class ScoopBucket {
 
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
-        # Add-ScoopToPath
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
 
         return @{
@@ -274,7 +264,6 @@ class ScoopApp {
 
     # Returns the current state of the resource.
     [ScoopApp] Get() {
-        # Add-ScoopToPath
         $app = scoop list | Where-Object { $_.Name -eq $this.Name }
         $installed = $null -ne $app
 
