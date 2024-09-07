@@ -13,6 +13,45 @@ function Add-ScoopToPath {
     $env:PATH += $SCOOP_SHIMS_DIR
 }
 
+function Remove-Function {
+    param (
+        [string]$content,
+        [string]$functionName
+    )
+
+    # Find the start of the function
+    $start = $content.IndexOf("function $functionName")
+    if ($start -eq -1) {
+        return $content  # Function not found
+    }
+
+    # Now, find the corresponding closing brace by counting braces
+    $openBraces = 0
+    $index = $start
+
+    while ($index -lt $content.Length) {
+        $char = $content[$index]
+
+        if ($char -eq '{') {
+            $openBraces++
+        }
+        elseif ($char -eq '}') {
+            $openBraces--
+            if ($openBraces -eq 0) {
+                # We found the closing brace of the function
+                $end = $index
+                break
+            }
+        }
+
+        $index++
+    }
+
+    # Remove the function content from the script
+    $newContent = $content.Remove($start, $end - $start + 1)
+    return $newContent
+}
+
 #--------------------------------------------------------------------------------------------------#
 # Install Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
@@ -68,12 +107,16 @@ class ScoopInstall {
                 $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
                 $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
-                $installerPath = "$env:TMP/install-scoop.ps1"
+                New-Item -Path "$env:TMP/scoop" -ItemType Directory -Force | Out-Null
+                $installerPath = "$env:TMP/scoop/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
 
-                $scriptContent = Get-Content -Path $installerPath
-                $scriptContent = $scriptContent -replace '\$host.UI.RawUI.ForegroundColor', '[System.ConsoleColor]::Gray'
-                Set-Content -Path $installerPath -Value $scriptContent
+                # Replace `Write-InstallInfo` function since it access $host which is not available in DSC.
+                $scriptContent = Get-Content -Path $installerPath -Raw
+                $ast = [System.Management.Automation.Language.Parser]::ParseFile($installerPath, [ref]$null, [ref]$null)
+                $writeInstallInfoFunc = $ast.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $args[0].Name -eq "Write-InstallInfo" }, $true)
+                $replacementFunction = 'function Write-InstallInfo { param([String] $String, [System.ConsoleColor] $ForegroundColor = [System.ConsoleColor]::Gray) Write-Verbose "$String" }'
+                Set-Content -Path $installerPath -Value $($scriptContent -replace [regex]::Escape($writeInstallInfoFunc.Extent.Text), $replacementFunction)
 
                 $arguments = "";
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
