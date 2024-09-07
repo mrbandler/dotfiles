@@ -13,6 +13,26 @@ function Add-ScoopToPath {
     $env:PATH += $SCOOP_SHIMS_DIR
 }
 
+# Global Write-Host function overload.
+function global:Write-Host {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidGlobalFunctions", "")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "NoNewLine")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "ForegroundColor")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "BackgroundColor")]
+    Param(
+        [Parameter(Mandatory, Position = 0)]
+        $Object,
+        [Switch]
+        $NoNewLine,
+        [ConsoleColor]
+        $ForegroundColor,
+        [ConsoleColor]
+        $BackgroundColor
+    )
+
+    Write-Verbose $Object
+}
+
 #--------------------------------------------------------------------------------------------------#
 # Install Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
@@ -71,15 +91,18 @@ class ScoopInstall {
                 $installerPath = "$env:TMP/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
 
-                $arguments = @(
-                    "-NoProfile"
-                    "-ExecutionPolicy Bypass"
-                    "-File"
-                    $installerPath
-                )
+                # $arguments = @(
+                # "-NoProfile"
+                # "-ExecutionPolicy Bypass"
+                # "-File"
+                # $installerPath
+                # )
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
-                Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
+                . $installerPath $arguments
+                # Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
                 Remove-Item -Path $installerPath -Force
+
+                Add-ScoopToPath
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
@@ -110,7 +133,7 @@ class ScoopUpdate {
 
     # Returns the current state of the resource.
     [ScoopUpdate] Get() {
-        Add-ScoopToPath
+        # Add-ScoopToPath
         $status = scoop status
         $latest = $status -match "Scoop is up to date"
 
@@ -174,7 +197,7 @@ class ScoopBucket {
 
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
-        Add-ScoopToPath
+        # Add-ScoopToPath
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
 
         return @{
@@ -267,7 +290,7 @@ class ScoopApp {
 
     # Returns the current state of the resource.
     [ScoopApp] Get() {
-        Add-ScoopToPath
+        # Add-ScoopToPath
         $app = scoop list | Where-Object { $_.Name -eq $this.Name }
         $installed = $null -ne $app
 

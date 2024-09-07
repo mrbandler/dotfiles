@@ -97,7 +97,7 @@ properties:
     - resource: xScoop/ScoopUpdate
       id: updateScoop
       directives:
-        description: Install Scoop
+        description: Update Scoop
       settings:
         Ensure: Present
       dependsOn:
