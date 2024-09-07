@@ -106,7 +106,7 @@ properties:
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
-        - updateScoop
+        - installScoop
 
     - resource: xScoop/ScoopApp
       id: installGit
@@ -117,7 +117,7 @@ properties:
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
-        - updateScoop
+        - installScoop
 
     - resource: xScoop/ScoopApp
       id: installMake
@@ -128,7 +128,7 @@ properties:
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
-        - updateScoop
+        - installScoop
 
     # - resource: Microsoft.WinGet.DSC/WinGetPackage
     #   id: installPowerToys
