@@ -82,7 +82,8 @@ properties:
         Name: extras
         Ensure: Present
       dependsOn:
-        - installScoop
+        - installGit
+        - install7zip
 
     - resource: xScoop/ScoopBucket
       id: installScoopNerdFonts
@@ -92,7 +93,8 @@ properties:
         Name: nerd-fonts
         Ensure: Present
       dependsOn:
-        - installScoop
+        - installGit
+        - install7zip
 
     #----------------------------------------------------------------------------------------------#
     # Packages.

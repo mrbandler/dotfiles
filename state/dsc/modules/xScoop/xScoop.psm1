@@ -79,6 +79,7 @@ class ScoopInstall {
             elseif ($this.Ensure -eq [Ensure]::Absent) {
                 $cmd = "& scoop uninstall scoop -ErrorAction SilentlyContinue"
                 Invoke-Expression $cmd | Out-Null
+                Start-Sleep -Seconds 1 # Make sure the uninstall is finished.
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
             }
