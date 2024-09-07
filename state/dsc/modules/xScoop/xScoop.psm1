@@ -64,24 +64,16 @@ class ScoopInstall {
         if (!$this.Test()) {
             # If scoop is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
-                # Local function to override the scoop install script `Write-InstallInfo` function.
-                function Write-InstallInfo {
-                    param(
-                        [Parameter(Mandatory = $True, Position = 0)]
-                        [String] $String,
-                        [Parameter(Mandatory = $False, Position = 1)]
-                        [System.ConsoleColor] $ForegroundColor = [System.ConsoleColor]::Gray  # Set a default color
-                    )
-
-                    Write-Verbose "$String"
-                }
-
                 $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
                 $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
                 $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
                 $installerPath = "$env:TMP/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
+
+                $scriptContent = Get-Content -Path $installerPath
+                $scriptContent = $scriptContent -replace '\$host.UI.RawUI.ForegroundColor', '[System.ConsoleColor]::Gray'
+                Set-Content -Path $installerPath -Value $scriptContent
 
                 $arguments = "";
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
