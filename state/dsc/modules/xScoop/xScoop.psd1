@@ -10,7 +10,6 @@
     PowerShellVersion    = '5.1'
     DscResourcesToExport = @(
         'ScoopInstall',
-        'ScoopUpdate',
         'ScoopBucket',
         'ScoopApp'
     )

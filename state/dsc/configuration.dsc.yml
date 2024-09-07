@@ -94,17 +94,6 @@ properties:
       dependsOn:
         - installScoop
 
-    - resource: xScoop/ScoopUpdate
-      id: updateScoop
-      directives:
-        description: Update Scoop
-      settings:
-        Ensure: Present
-      dependsOn:
-        - installScoop
-        - installScoopExtras
-        - installScoopNerdFonts
-
     #----------------------------------------------------------------------------------------------#
     # Packages.
     #----------------------------------------------------------------------------------------------#

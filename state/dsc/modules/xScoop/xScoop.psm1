@@ -23,7 +23,6 @@ class ScoopInstall {
 
     # Returns the current state of the resource.
     [ScoopInstall] Get() {
-        Add-ScoopToPath
         $path = "$env:USERPROFILE/.config/scoop/config.json"
         $configExists = Test-Path -Path $path
 
@@ -82,64 +81,6 @@ class ScoopInstall {
                 Invoke-Expression $cmd | Out-Null
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
-            }
-        }
-    }
-}
-
-#--------------------------------------------------------------------------------------------------#
-# Update Scoop DSC Resource.
-#--------------------------------------------------------------------------------------------------#
-[DSCResource()]
-class ScoopUpdate {
-    # We need a key. Do not set.
-    [DscProperty(Key)]
-    [string]$SID
-
-    # State of the resouce.
-    [DscProperty(Mandatory)]
-    [Ensure] $Ensure = [Ensure]::Present
-
-    # Flag, whether scoop is installed with the latest version or not.
-    [DscProperty(NotConfigurable)]
-    [bool] $IsLatest
-
-    # Returns the current state of the resource.
-    [ScoopUpdate] Get() {
-        $coloredOutput = scoop status | Out-String
-        $ansiEscapePattern = "`e\[[\d;]*[a-zA-Z]"
-        $normalizedOutput = $coloredOutput -replace $ansiEscapePattern, ''
-        $latest = $normalizedOutput -match "Scoop is up to date"
-
-        return @{
-            Ensure   = $this.Ensure
-            IsLatest = $latest
-        }
-    }
-
-    # Tests the current state of the resource.
-    [bool] Test() {
-        $state = $this.Get()
-
-        if ($state.Ensure -eq [Ensure]::Present) {
-            return $state.IsLatest
-        }
-        else {
-            return $state.IsLatest -eq $false
-        }
-    }
-
-    # Sets the desired state of the resource.
-    [void] Set() {
-        if (!$this.Test()) {
-            # If scoop is not up to date but the desired state is present, update it.
-            if ($this.Ensure -eq [Ensure]::Present) {
-                $cmd = "& scoop update"
-                Invoke-Expression $cmd | Out-Null
-            }
-            # If scoop is not up to date but the desired state is absent, do nothing.
-            elseif ($this.Ensure -eq [Ensure]::Absent) {
-                # Do nothing.
             }
         }
     }
