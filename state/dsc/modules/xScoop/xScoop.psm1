@@ -36,14 +36,14 @@ class ScoopInstall {
         $path = "$env:USERPROFILE/.config/scoop/config.json"
         $configExists = Test-Path -Path $path
 
-        $commandExists = $false
+        $cmdExists = $false
         if (Get-Command -Name "scoop" -ErrorAction SilentlyContinue) {
-            $commandExists = $true
+            $cmdExists = $true
         }
 
         return @{
             Ensure      = $this.Ensure
-            IsInstalled = $commandExists -and $configExists
+            IsInstalled = $cmdExists -and $configExists
         }
     }
 
@@ -81,16 +81,16 @@ class ScoopInstall {
 
                 $arguments = "";
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
-                $command = "& $installerPath $arguments"
-                Invoke-Expression $command | Out-Null
+                $cmd = "& $installerPath $arguments"
+                Invoke-Expression $cmd | Out-Null
 
                 Remove-Item -Path $installerPath -Force
                 # Add-ScoopToPath
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                $command = "& scoop uninstall scoop -ErrorAction SilentlyContinue"
-                Invoke-Expression $command | Out-Null
+                $cmd = "& scoop uninstall scoop -ErrorAction SilentlyContinue"
+                Invoke-Expression $cmd | Out-Null
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
             }
@@ -144,8 +144,8 @@ class ScoopUpdate {
         if (!$this.Test()) {
             # If scoop is not up to date but the desired state is present, update it.
             if ($this.Ensure -eq [Ensure]::Present) {
-                $command = "& scoop update"
-                Invoke-Expression $command | Out-Null
+                $cmd = "& scoop update"
+                Invoke-Expression $cmd | Out-Null
             }
             # If scoop is not up to date but the desired state is absent, do nothing.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
@@ -210,18 +210,18 @@ class ScoopBucket {
             # If the bucket is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
                 if ([string]::IsNullOrEmpty($this.Repo)) {
-                    $command = "& scoop bucket add $($this.Name)"
-                    Invoke-Expression $command | Out-Null
+                    $cmd = "& scoop bucket add $($this.Name)"
+                    Invoke-Expression $cmd | Out-Null
                 }
                 else {
-                    $command = "& scoop bucket add $($this.Name) $($this.Repo)"
-                    Invoke-Expression $command | Out-Null
+                    $cmd = "& scoop bucket add $($this.Name) $($this.Repo)"
+                    Invoke-Expression $cmd | Out-Null
                 }
             }
             # If the bucket is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                $command = "& scoop bucket rm $($this.Name)"
-                Invoke-Expression $command | Out-Null
+                $cmd = "& scoop bucket rm $($this.Name)"
+                Invoke-Expression $cmd | Out-Null
             }
         }
     }
@@ -327,13 +327,13 @@ class ScoopApp {
                     if ($this.Arch -in $validArchValues) { $arguments += "--arch $this.Arch" }
                 }
 
-                $command = "& scoop install $($arguments -join " ")"
-                Invoke-Expression $command | Out-Null
+                $cmd = "& scoop install $($arguments -join " ")"
+                Invoke-Expression $cmd | Out-Null
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                $command = "& scoop uninstall $($this.Name) --purge"
-                Invoke-Expression $command | Out-Null
+                $cmd = "& scoop uninstall $($this.Name) --purge"
+                Invoke-Expression $cmd | Out-Null
             }
         }
     }
