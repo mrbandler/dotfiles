@@ -13,45 +13,6 @@ function Add-ScoopToPath {
     $env:PATH += $SCOOP_SHIMS_DIR
 }
 
-function Remove-Function {
-    param (
-        [string]$content,
-        [string]$functionName
-    )
-
-    # Find the start of the function
-    $start = $content.IndexOf("function $functionName")
-    if ($start -eq -1) {
-        return $content  # Function not found
-    }
-
-    # Now, find the corresponding closing brace by counting braces
-    $openBraces = 0
-    $index = $start
-
-    while ($index -lt $content.Length) {
-        $char = $content[$index]
-
-        if ($char -eq '{') {
-            $openBraces++
-        }
-        elseif ($char -eq '}') {
-            $openBraces--
-            if ($openBraces -eq 0) {
-                # We found the closing brace of the function
-                $end = $index
-                break
-            }
-        }
-
-        $index++
-    }
-
-    # Remove the function content from the script
-    $newContent = $content.Remove($start, $end - $start + 1)
-    return $newContent
-}
-
 #--------------------------------------------------------------------------------------------------#
 # Install Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
