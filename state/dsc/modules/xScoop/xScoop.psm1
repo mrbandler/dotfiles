@@ -13,26 +13,6 @@ function Add-ScoopToPath {
     $env:PATH += $SCOOP_SHIMS_DIR
 }
 
-# Global Write-Host function overload.
-function global:Write-Host {
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidGlobalFunctions", "")]
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "NoNewLine")]
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "ForegroundColor")]
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSReviewUnusedParameter", "BackgroundColor")]
-    Param(
-        [Parameter(Mandatory, Position = 0)]
-        $Object,
-        [Switch]
-        $NoNewLine,
-        [ConsoleColor]
-        $ForegroundColor,
-        [ConsoleColor]
-        $BackgroundColor
-    )
-
-    Write-Verbose $Object
-}
-
 #--------------------------------------------------------------------------------------------------#
 # Install Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
@@ -91,21 +71,13 @@ class ScoopInstall {
                 $installerPath = "$env:TMP/install-scoop.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
 
-                $arguments = @(
-                    # "-NoProfile"
-                    # "-ExecutionPolicy Bypass"
-                    # "-File"
-                    # $installerPath
-                )
+                $arguments = "";
                 if ($isAdmin) { $arguments += "-RunAsAdmin" }
-                # . $installerPath $arguments
-
                 $command = "& $installerPath $arguments"
                 Invoke-Expression $command | Out-Null
-                # Start-Process -FilePath "powershell.exe" -ArgumentList $arguments -Wait
-                Remove-Item -Path $installerPath -Force
 
-                Add-ScoopToPath
+                Remove-Item -Path $installerPath -Force
+                # Add-ScoopToPath
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
