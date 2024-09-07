@@ -91,7 +91,6 @@ properties:
         allowPrerelease: true
       settings:
         UseLatest: true
-        Ensure: Present
 
     # - resource: cChoco/cChocoInstaller
     #   id: installChoco
