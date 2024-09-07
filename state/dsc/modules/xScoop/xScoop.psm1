@@ -64,6 +64,18 @@ class ScoopInstall {
         if (!$this.Test()) {
             # If scoop is not installed but the desired state is present, install it.
             if ($this.Ensure -eq [Ensure]::Present) {
+                # Local function to override the scoop install script `Write-InstallInfo` function.
+                function Write-InstallInfo {
+                    param(
+                        [Parameter(Mandatory = $True, Position = 0)]
+                        [String] $String,
+                        [Parameter(Mandatory = $False, Position = 1)]
+                        [System.ConsoleColor] $ForegroundColor = [System.ConsoleColor]::Gray  # Set a default color
+                    )
+
+                    Write-Verbose "$String"
+                }
+
                 $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
                 $windowsPrincipal = New-Object -TypeName 'System.Security.Principal.WindowsPrincipal' -ArgumentList @( $windowsIdentity )
                 $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
@@ -81,7 +93,8 @@ class ScoopInstall {
             }
             # If scoop is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
-                scoop uninstall scoop -ErrorAction SilentlyContinue | Out-Null
+                $command = "& scoop uninstall scoop -ErrorAction SilentlyContinue"
+                Invoke-Expression $command | Out-Null
                 Remove-Item -Recurse -Force $env:USERPROFILE/scoop
                 Remove-Item -Recurse -Force $env:USERPROFILE/.config/scoop
             }
