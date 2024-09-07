@@ -88,6 +88,7 @@ properties:
       id: installWinGet
       directives:
         description: Install Windows Package Manager
+        allowPrerelease: true
       settings:
         UseLatest: true
         Ensure: Present
@@ -139,7 +140,7 @@ properties:
       id: installPowerToys
       directives:
         description: Install PowerToys
-        allowPrerelease: false
+        allowPrerelease: true
       settings:
         Id: Microsoft.PowerToys
         Source: winget
