@@ -9,7 +9,6 @@
     CompatiblePSEditions = 'Core'
     PowerShellVersion    = '5.1'
     DscResourcesToExport = @(
-        'ChocoInstall',
-        'ChocoPackage'
+        'ChocoInstall'
     )
 }
