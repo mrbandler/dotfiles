@@ -122,7 +122,7 @@ properties:
       directives:
         description: Install NVIDIA Graphics Driver
       settings:
-        If: $(Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*NVIDIA*'})
+        If: $(Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*NVIDIA*'}) -ne $null
         Name: NVIDIA GeForce Experience
         Type: EXE
         Arguments: /S
