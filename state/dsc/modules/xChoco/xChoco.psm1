@@ -26,9 +26,8 @@ function global:Write-Host {
 
 function Add-ChocoToPath {
     $InstallDir = "C:\ProgramData\chocolatey";
-    $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine')
-    if ($env:path -notlike "*$InstallDir*") {
-        $env:Path += ";$InstallDir"
+    if ($env:PATH -notlike "*$InstallDir*") {
+        $env:PATH += ";$InstallDir"
     }
 }
 
@@ -96,7 +95,14 @@ class ChocoInstall {
                 Invoke-Expression $cmd
                 Remove-Item -Path $installerPath -Force
 
-                Add-ChocoToPath
+                $InstallDir = "C:\ProgramData\chocolatey";
+                $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine')
+                if ($env:Path -notlike "*$InstallDir*") {
+                    $env:Path += ";$InstallDir"
+                }
+
+                Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+                refreshenv
             }
             # If choco is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
