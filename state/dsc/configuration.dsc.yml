@@ -47,11 +47,14 @@ properties:
       settings:
         Ensure: Present
 
-    # - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
-    #   dependsOn:
-    #     - installPowerToys
-    #   directives:
-    #     description: Configure PowerToys
+    - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
+      directives:
+        description: Configure PowerToys
+      settings:
+        FancyZones:
+          Enabled: true
+      dependsOn:
+        - installPowerToys
 
     #----------------------------------------------------------------------------------------------#
     # Package managers.
