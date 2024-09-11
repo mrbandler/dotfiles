@@ -10,7 +10,7 @@ properties:
   parameters: []
   resources:
     #----------------------------------------------------------------------------------------------#
-    # General settings & configurations.
+    # Settings & configurations.
     #----------------------------------------------------------------------------------------------#
     - resource: Microsoft.Windows.Developer/EnableDarkMode
       directives:
@@ -46,6 +46,7 @@ properties:
         allowPrerelease: true
       settings:
         Ensure: Present
+
     # - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
     #   dependsOn:
     #     - installPowerToys
@@ -128,12 +129,32 @@ properties:
         - installScoop
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWindowsTerminal
+      directives:
+        description: Install Windows Terminal
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.WindowsTerminal
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installPowerToys
       directives:
         description: Install PowerToys
         allowPrerelease: true
       settings:
         Id: Microsoft.PowerToys
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVisualStudioCode
+      directives:
+        description: Install Visual Studio Code
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.VisualStudioCode
         Source: winget
         Ensure: Present
 
