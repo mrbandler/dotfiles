@@ -130,10 +130,17 @@ class PkgDownloadAndInstall {
                 }
 
                 foreach ($uninstaller in $foundUninstallers) {
-                    if ($uninstaller.UninstallString -match '^(?:"([^"]+)"|([^\s]+))\s*(.*)$') {
+                    $uninstallString = if (![string]::IsNullOrEmpty($uninstaller.QuietUninstallString)) {
+                        $uninstaller.QuietUninstallString
+                    }
+                    else {
+                        $uninstaller.UninstallString
+                    }
+
+                    if ($uninstallString -match '^(?:"([^"]+)"|([^\s]+))\s*(.*)$') {
                         $exePath = $matches[1]
                         if (-not $exePath) { $exePath = $matches[2] }
-                        $uninstallArgs = $matches[3] + " /S"
+                        $uninstallArgs = $matches[3]
 
                         if ($exePath -notlike '"*"') { $exePath = '"' + $exePath + '"' }
                         if ($uninstallArgs) {
@@ -144,7 +151,7 @@ class PkgDownloadAndInstall {
                         }
                     }
                     else {
-                        throw "Failed to parse UninstallString: $($uninstaller.UninstallString)"
+                        throw "Failed to parse UninstallString: $uninstallString"
                     }
                 }
             }
