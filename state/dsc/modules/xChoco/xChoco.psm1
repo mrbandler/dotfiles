@@ -29,6 +29,7 @@ function Add-ChocoToPath {
     if ($env:PATH -notlike "*$InstallDir*") {
         $env:PATH += ";$InstallDir"
     }
+    $env:ChocolateyInstall = $InstallDir
 }
 
 #--------------------------------------------------------------------------------------------------#
@@ -101,6 +102,7 @@ class ChocoInstall {
                     $env:Path += ";$InstallDir"
                 }
 
+                $env:ChocolateyInstall = $InstallDir
                 Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
                 refreshenv
             }
