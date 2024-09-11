@@ -82,7 +82,7 @@ class ChocoInstall {
             if ($this.Ensure -eq [Ensure]::Present) {
                 New-Item -Path "$env:TMP/choco" -ItemType Directory -Force | Out-Null
                 $installerPath = "$env:TMP/choco/install.ps1"
-                Invoke-RestMethod "https://chocolatey.org/install.ps1" -OutFile $installerPath
+                Invoke-RestMethod chocolatey.org/install.ps1 -OutFile $installerPath
 
                 # # Replace `Write-InstallInfo` function since it access $host which is not available in DSC.
                 # $scriptContent = Get-Content -Path $installerPath -Raw
