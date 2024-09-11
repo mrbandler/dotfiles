@@ -77,8 +77,10 @@ class PkgDownloadAndInstall {
 
     # Tests the current state of the resource.
     [bool] Test() {
-        $shouldRun = Invoke-Expression $this.If
-        if (!$shouldRun) { return $true }
+        if (![string]::IsNullOrEmpty($this.If)) {
+            $shouldRun = Invoke-Expression $this.If
+            if (!$shouldRun) { return $true }
+        }
 
         $state = $this.Get()
 
