@@ -11,6 +11,7 @@ enum InstallerType {
     MSIX
 }
 
+
 #--------------------------------------------------------------------------------------------------#
 # Install Scoop DSC Resource.
 #--------------------------------------------------------------------------------------------------#
@@ -20,21 +21,27 @@ class PkgDownloadAndInstall {
     [DscProperty(Key)]
     [string]$SID
 
+    # Condition to run the resource.
     [DscProperty()]
     [string] $If
 
+    # Name of the package.
     [DscProperty(Mandatory)]
     [string] $Name
 
+    # Type of the installer.
     [DscProperty(Mandatory)]
-    [InstallerType] $InstallerType
+    [InstallerType] $Type
 
+    # URL to download the package from.
     [DscProperty(Mandatory)]
     [string] $Url
 
+    # Headers for the download request.
     [DscProperty()]
-    [System.Collections.Generic.Dictionary[String, String]] $Headers
+    [hashtable] $Headers = @{}
 
+    # Arguments to pass to the installer.
     [DscProperty()]
     [string] $Arguments
 
@@ -89,7 +96,7 @@ class PkgDownloadAndInstall {
             if ($this.Ensure -eq [Ensure]::Present) {
                 $installerPath = [System.IO.Path]::GetTempFileName();
 
-                switch ($this.InstallerType) {
+                switch ($this.Type) {
                     [InstallerType]::MSI {
                         $installerPath += ".msi";
                     }
