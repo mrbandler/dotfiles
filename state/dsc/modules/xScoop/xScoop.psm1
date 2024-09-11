@@ -1,7 +1,24 @@
+# Constants.
+$SCOOP_DIR = $env:SCOOP, "$env:USERPROFILE\scoop" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_GLOBAL_DIR = $env:SCOOP_GLOBAL, "$env:ProgramData\scoop" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_CACHE_DIR = $env:SCOOP_CACHE, "$SCOOP_DIR\cache" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_SHIMS_DIR = "$SCOOP_DIR\shims"
+$SCOOP_APP_DIR = "$SCOOP_DIR\apps\scoop\current"
+$SCOOP_MAIN_BUCKET_DIR = "$SCOOP_DIR\buckets\main"
+$SCOOP_CONFIG_HOME = $env:XDG_CONFIG_HOME, "$env:USERPROFILE\.config" | Select-Object -First 1
+$SCOOP_CONFIG_FILE = "$SCOOP_CONFIG_HOME\scoop\config.json"
+
 # Enums.
 enum Ensure {
     Absent
     Present
+}
+
+# Utils.
+function Add-ScoopToPath {
+    if ($env:PATH -notlike "*$SCOOP_SHIMS_DIR*") {
+        $env:PATH += ";$SCOOP_SHIMS_DIR"
+    }
 }
 
 #--------------------------------------------------------------------------------------------------#
@@ -23,6 +40,8 @@ class ScoopInstall {
 
     # Returns the current state of the resource.
     [ScoopInstall] Get() {
+        Add-ScoopToPath
+
         $path = "$env:USERPROFILE/.config/scoop/config.json"
         $configExists = Test-Path -Path $path
 
@@ -114,6 +133,8 @@ class ScoopBucket {
 
     # Returns the current state of the resource.
     [ScoopBucket] Get() {
+        Add-ScoopToPath
+
         $bucket = scoop bucket list | Where-Object { $_.Name -eq $this.Name }
 
         return @{
@@ -206,6 +227,8 @@ class ScoopApp {
 
     # Returns the current state of the resource.
     [ScoopApp] Get() {
+        Add-ScoopToPath
+
         $app = scoop list | Where-Object { $_.Name -eq $this.Name }
         $installed = $null -ne $app
 
