@@ -151,7 +151,7 @@ class ChocoInstall {
                     $agentService.Stop()
                 }
 
-                Remove-Item -Path $env:ChocolateyInstall -Recurse -Force -WhatIf
+                Remove-Item -Path $env:ChocolateyInstall -Recurse -Force
 
                 'ChocolateyInstall', 'ChocolateyLastPathUpdate' | ForEach-Object {
                     foreach ($scope in 'User', 'Machine') {
