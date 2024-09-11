@@ -96,6 +96,51 @@ properties:
         Ensure: Present
 
     #----------------------------------------------------------------------------------------------#
+    # Drivers.
+    #----------------------------------------------------------------------------------------------#
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installAmdGraphicsDriver
+      directives:
+        description: Install AMD Graphics Driver
+      settings:
+        If: Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*AMD*'}
+        Name: AMD Software
+        InstallerType: EXE
+        Arguments: /S
+        Url: https://drivers.amd.com/drivers/installer/24.10/whql/amd-software-adrenalin-edition-24.7.1-minimalsetup-240730_web.exe
+        Headers:
+          Sec-Fetch-Site: same-site
+          Pragma: no-cache
+          Sec-Fetch-Mode: navigate
+          Sec-Fetch-User: "?1"
+          Upgrade-Insecure-Requests: "1"
+          Referer: https://www.amd.com/
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installNvidiaGraphicsDriver
+      directives:
+        description: Install NVIDIA Graphics Driver
+      settings:
+        If: Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*NVIDIA*'}
+        Name: NVIDIA GeForce Experience
+        InstallerType: EXE
+        Arguments: /S
+        Url: https://de.download.nvidia.com/GFE/GFEClient/3.27.0.120/GeForce_Experience_v3.27.0.120.exe
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installFocusriteScarlett2i2Driver
+      directives:
+        description: Install Focusrite Scarlett 2i2 USB Audio Interface Driver
+      settings:
+        Name: Focusrite Control 2
+        InstallerType: EXE
+        Arguments: /silent /NORESTART
+        Url: https://releases.focusrite.com/com.focusrite.focusrite-control/latest/Focusrite-Control-2.exe
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
     # Packages.
     #----------------------------------------------------------------------------------------------#
     - resource: xScoop/ScoopApp
