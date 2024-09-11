@@ -78,7 +78,7 @@ class ScoopInstall {
                 $isAdmin = $windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
 
                 New-Item -Path "$env:TMP/scoop" -ItemType Directory -Force | Out-Null
-                $installerPath = "$env:TMP/scoop/install-scoop.ps1"
+                $installerPath = "$env:TMP/scoop/install.ps1"
                 Invoke-RestMethod get.scoop.sh -OutFile $installerPath
 
                 # Replace `Write-InstallInfo` function since it access $host which is not available in DSC.

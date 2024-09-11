@@ -85,12 +85,12 @@ properties:
         - installGit
         - install7zip
 
-    - resource: cChoco/cChocoInstaller
+    - resource: xChoco/ChocoInstall
       id: installChoco
       directives:
         description: Install Chocolatey
       settings:
-        InstallDir: C:\ProgramData\chocolatey
+        Ensure: Present
 
     #----------------------------------------------------------------------------------------------#
     # Packages.
