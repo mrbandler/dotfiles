@@ -25,9 +25,10 @@ function global:Write-Host {
 }
 
 function Add-ChocoToPath {
-    $path = "C:\ProgramData\chocolatey\bin"
-    if ($env:PATH -notlike "*$path*") {
-        $env:PATH += ";$path"
+    $InstallDir = "C:\ProgramData\chocolatey";
+    $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine')
+    if ($env:path -notlike "*$InstallDir*") {
+        $env:Path += ";$InstallDir"
     }
 }
 
