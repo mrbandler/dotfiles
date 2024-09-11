@@ -132,17 +132,10 @@ class PkgDownloadAndInstall {
                 foreach ($uninstaller in $foundUninstallers) {
                     if ($uninstaller.UninstallString -match '^(?:"([^"]+)"|([^\s]+))\s*(.*)$') {
                         $exePath = $matches[1]
-                        if (-not $exePath) {
-                            $exePath = $matches[2]
-                        }
-                        $uninstallArgs = $matches[3]
+                        if (-not $exePath) { $exePath = $matches[2] }
+                        $uninstallArgs = $matches[3] + " /S"
 
-                        # Ensure the executable path is properly quoted if not already
-                        if ($exePath -notlike '"*"') {
-                            $exePath = '"' + $exePath + '"'
-                        }
-
-                        # Start the uninstallation process using Start-Process
+                        if ($exePath -notlike '"*"') { $exePath = '"' + $exePath + '"' }
                         if ($uninstallArgs) {
                             Start-Process -FilePath $exePath -ArgumentList $uninstallArgs -Wait
                         }
