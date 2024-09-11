@@ -79,8 +79,15 @@ class PkgDownloadAndInstall {
     [bool] Test() {
         if (![string]::IsNullOrEmpty($this.If)) {
             $shouldRun = Invoke-Expression $this.If
-            if (!$shouldRun) { return $true }
         }
+        else {
+            $shouldRun = $true
+        }
+
+        if (!$shouldRun) {
+            return $true
+        }
+
 
         $state = $this.Get()
 
