@@ -51,6 +51,12 @@ properties:
       directives:
         description: Configure PowerToys
       settings:
+        GeneralSettings:
+          Startup: true
+          Theme: system
+          ShowNewUpdatesToastNotification: false
+          AutoDownloadUpdates: true
+          ShowWhatsNewAfterUpdates: false
         FancyZones:
           Enabled: true
       dependsOn:
