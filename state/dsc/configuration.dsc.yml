@@ -103,7 +103,7 @@ properties:
       directives:
         description: Install AMD Graphics Driver
       settings:
-        If: Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*AMD*'}
+        If: $(Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*AMD*'}) -ne $null
         Name: AMD Software
         Type: EXE
         Arguments: /S
@@ -122,7 +122,7 @@ properties:
       directives:
         description: Install NVIDIA Graphics Driver
       settings:
-        If: Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*NVIDIA*'}
+        If: $(Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*NVIDIA*'})
         Name: NVIDIA GeForce Experience
         Type: EXE
         Arguments: /S
