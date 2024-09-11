@@ -1,7 +1,7 @@
 @{
     RootModule           = 'xChoco.psm1'
     ModuleVersion        = '0.1.0'
-    GUID                 = '0ac21b52-3429-4ace-8095-8ad8c49e47a0'
+    GUID                 = '49e9bd99-3497-4b16-97ea-dd6727d3e16c'
     Author               = 'mrbandler <me@mrbandler.dev>'
     CompanyName          = 'N/A'
     Copyright            = '(c) mrbandler. All rights reserved.'
