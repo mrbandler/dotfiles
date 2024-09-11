@@ -98,29 +98,11 @@ class PkgDownloadAndInstall {
             if ($this.Ensure -eq [Ensure]::Present) {
                 $installerPath = [System.IO.Path]::GetTempFileName();
 
-                switch ($this.Type) {
-                    [InstallerType]::MSI {
-                        $installerPath += ".msi";
-                    }
-                    [InstallerType]::EXE {
-                        $installerPath += ".exe";
-                    }
-                    [InstallerType]::ZIP {
-                        Write-Error "ZIP installer type is not supported yet."
-
-                        return
-                    }
-                    [InstallerType]::MSIX {
-                        Write-Error "ZIP installer type is not supported yet."
-
-                        return
-                    }
-                    default {
-                        Write-Error "Unknown installer type."
-
-                        return
-                    }
-                }
+                if ($this.Type -eq [InstallerType]::MSI) { $installerPath += ".msi" }
+                elseif ($this.Type -eq [InstallerType]::EXE) { $installerPath += ".exe" }
+                elseif ($this.Type -eq [InstallerType]::ZIP) { throw "ZIP installer type is not supported yet." }
+                elseif ($this.Type -eq [InstallerType]::MSIX) { throw "MSIX installer type is not supported yet." }
+                else { throw "Unknown installer type." }
 
                 Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
                 $process = Start-Process -FilePath $installerPath -ArgumentList $this.Arguments -PassThru
