@@ -130,7 +130,29 @@ class PkgDownloadAndInstall {
                 }
 
                 foreach ($uninstaller in $foundUninstallers) {
-                    Invoke-Expression "& '$($uninstaller.UninstallString)'"
+                    if ($uninstaller.UninstallString -match '^(?:"([^"]+)"|([^\s]+))\s*(.*)$') {
+                        $exePath = $matches[1]
+                        if (-not $exePath) {
+                            $exePath = $matches[2]
+                        }
+                        $uninstallArgs = $matches[3]
+
+                        # Ensure the executable path is properly quoted if not already
+                        if ($exePath -notlike '"*"') {
+                            $exePath = '"' + $exePath + '"'
+                        }
+
+                        # Start the uninstallation process using Start-Process
+                        if ($uninstallArgs) {
+                            Start-Process -FilePath $exePath -ArgumentList $uninstallArgs -Wait
+                        }
+                        else {
+                            Start-Process -FilePath $exePath -Wait
+                        }
+                    }
+                    else {
+                        throw "Failed to parse UninstallString: $($uninstaller.UninstallString)"
+                    }
                 }
             }
         }
