@@ -92,7 +92,7 @@ class ChocoInstall {
                 # Set-Content -Path $installerPath -Value $($scriptContent -replace [regex]::Escape($writeInstallInfoFunc.Extent.Text), $replacementFunction)
 
                 $cmd = "& $installerPath"
-                Invoke-Expression $cmd | Out-Null
+                Invoke-Expression $cmd
                 Remove-Item -Path $installerPath -Force
             }
             # If choco is installed but the desired state is absent, uninstall it.
