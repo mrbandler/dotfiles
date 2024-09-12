@@ -68,6 +68,10 @@ function Compare-Config {
         [Config]$Right
     )
 
+    if ($null -eq $Left -or $null -eq $Right) {
+        return $false
+    }
+
     $leftJson = $Left | ConvertTo-Json
     $rightJson = $Right | ConvertTo-Json
 
@@ -124,7 +128,7 @@ function Get-Config {
     param ()
 
     if (-not $(Test-Path $CONFIG_FILE)) {
-        return @();
+        return $null;
     }
 
     $loaded = Get-Content $CONFIG_FILE | ConvertFrom-Json
