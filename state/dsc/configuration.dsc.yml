@@ -12,6 +12,53 @@ properties:
     #----------------------------------------------------------------------------------------------#
     # Settings & configurations.
     #----------------------------------------------------------------------------------------------#
+    - resource: xDebloat/Debloat
+      directives:
+        description: Debloat Windows
+      settings:
+        Config:
+          RunDefaults: false
+          RemoveApps: true
+          RemoveAppsCustom: true
+          RemoveAppsCustomList:
+            - Microsoft.OneDrive
+          RemoveCommApps: true
+          RemoveOutlook: true
+          RemoveDevApps: false
+          RemoveGamingApps: true
+          ForceRemoveEdge: false
+          DisableDVR: false
+          DisableTelemetry: true
+          DisableBing: true
+          DisableSuggestions: true
+          DisableLockscreenTips: true
+          ShowHiddenFolders: true
+          ShowKnownFileExt: true
+          HideDupliDrive: true
+          HideChat: true
+          DisableWidgets: true
+          Win11:
+            ClearStart: true
+            ClearStartAllUsers: true
+            RevertContextMenu: true
+            TaskbarAlignLeft: false
+            HideSearchTb: true
+            ShowSearchIconTb: false
+            ShowSearchLabelTb: false
+            ShowSearchBoxTb: false
+            HideTaskview: true
+            DisableCopilot: true
+            DisableRecall: true
+            HideHome: true
+            HideGallery: true
+          Win10:
+            HideOnedrive: true
+            Hide3dObjects: true
+            HideMusic: true
+            HideIncludeInLibrary: true
+            HideGiveAccessTo: true
+            HideShare: true
+
     - resource: Microsoft.Windows.Developer/EnableDarkMode
       directives:
         description: Enable Dark Mode
