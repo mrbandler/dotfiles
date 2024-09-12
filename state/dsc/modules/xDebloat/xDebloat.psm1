@@ -232,7 +232,7 @@ class Debloat {
                 }
             }
 
-            $flags = Get-Flags -Config $state.Config
+            $flags = $(Get-Flags -Config $state.Config) + " -Silent"
             $cmd = "& $script $flags"
 
             throw "About to run $cmd in $debloatPath"
