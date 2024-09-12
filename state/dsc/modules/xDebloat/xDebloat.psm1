@@ -124,7 +124,7 @@ function Get-Config {
     param ()
 
     if (-not $(Test-Path $CONFIG_FILE)) {
-        return $null;
+        return @();
     }
 
     $loaded = Get-Content $CONFIG_FILE | ConvertFrom-Json
