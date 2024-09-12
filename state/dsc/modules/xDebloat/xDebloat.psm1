@@ -1,5 +1,5 @@
 # Constants.
-$CONFIG_FILE = "$env:USERPROFILE\config\debloat.json"
+$CONFIG_FILE = "$env:USERPROFILE\.config\debloat.json"
 
 # Enums.
 enum Ensure {
@@ -40,7 +40,7 @@ class Config {
     [Nullable[bool]]$RunDefaults
     [Nullable[bool]]$RemoveApps
     [Nullable[bool]]$RemoveAppsCustom
-    [string[]]$RemoveAppsCustomList = @()
+    [string[]]$RemoveAppsCustomList
     [Nullable[bool]]$RemoveCommApps
     [Nullable[bool]]$RemoveW11Outlook
     [Nullable[bool]]$RemoveDevApps
@@ -109,29 +109,6 @@ function Get-Flags {
     return $flags -join " "
 }
 
-# Converts a object to a specific class.
-function ConvertTo-Class {
-    param (
-        [Parameter(Mandatory = $true)]
-        [Type] $Type,
-        [Parameter(Mandatory = $true)]
-        [PSCustomObject] $Obj
-    )
-
-    $instance = [Activator]::CreateInstance($Type)
-
-    $properties = $Type | Get-Member -MemberType Properties
-    foreach ($property in $properties) {
-        $propName = $property.Name
-
-        if ($null -ne $Obj.PSObject.Properties[$propName]) {
-            $instance."$propName" = $Obj."$propName"
-        }
-    }
-
-    return $instance
-}
-
 # Saves the configuration to the system.
 function Set-Config {
     param(
@@ -153,12 +130,7 @@ function Get-Config {
     }
 
     $loaded = Get-Content $CONFIG_FILE | ConvertFrom-Json
-    $instance = ConvertTo-Class -Type ([Config]) -Obj $loaded
-
-    if ($null -ne $loaded.Win11) { $instance.Win11 = ConvertTo-Class -Type ([Win11Config]) -Obj $loaded.Win11 }
-    if ($null -ne $loaded.Win10) { $instance.Win10 = ConvertTo-Class -Type ([Win10Config]) -Obj $loaded.Win10 }
-
-    return $instance
+    return [Config]$loaded
 }
 
 #--------------------------------------------------------------------------------------------------#
@@ -223,8 +195,6 @@ class Debloat {
 
                 $flags = $(Get-Flags -Config $state.Config) + " -Silent"
                 $arguments = "-NoProfile -ExecutionPolicy Bypass -File $script $flags"
-
-                throw $arguments
 
                 Start-Process powershell.exe -ArgumentList $arguments -Wait
                 Set-Config -Config $state.Config
