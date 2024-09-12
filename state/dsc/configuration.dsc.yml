@@ -23,9 +23,9 @@ properties:
           RemoveAppsCustomList:
             - Microsoft.OneDrive
           RemoveCommApps: true
-          RemoveOutlook: true
+          RemoveW11Outlook: true
           RemoveDevApps: false
-          RemoveGamingApps: true
+          RemoveGamingApps: false
           ForceRemoveEdge: false
           DisableDVR: false
           DisableTelemetry: true

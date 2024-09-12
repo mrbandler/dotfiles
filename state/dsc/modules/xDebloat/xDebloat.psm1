@@ -10,56 +10,57 @@ enum Ensure {
 # Utilities.
 # Windows 11 specific debloat configuration.
 class Win11Config {
-    [bool]$ClearStart
-    [bool]$ClearStartAllUsers
-    [bool]$RevertContextMenu
-    [bool]$TaskbarAlignLeft
-    [bool]$HideSearchTb
-    [bool]$ShowSearchIconTb
-    [bool]$ShowSearchLabelTb
-    [bool]$ShowSearchBoxTb
-    [bool]$HideTaskview
-    [bool]$DisableCopilot
-    [bool]$DisableRecall
-    [bool]$HideHome
-    [bool]$HideGallery
+    [Nullable[bool]]$ClearStart
+    [Nullable[bool]]$ClearStartAllUsers
+    [Nullable[bool]]$RevertContextMenu
+    [Nullable[bool]]$TaskbarAlignLeft
+    [Nullable[bool]]$HideSearchTb
+    [Nullable[bool]]$ShowSearchIconTb
+    [Nullable[bool]]$ShowSearchLabelTb
+    [Nullable[bool]]$ShowSearchBoxTb
+    [Nullable[bool]]$HideTaskview
+    [Nullable[bool]]$DisableCopilot
+    [Nullable[bool]]$DisableRecall
+    [Nullable[bool]]$HideHome
+    [Nullable[bool]]$HideGallery
 }
 
 # Windows 10 specific debloat configuration.
 class Win10Config {
-    [bool]$HideOnedrive
-    [bool]$Hide3dObjects
-    [bool]$HideMusic
-    [bool]$HideIncludeInLibrary
-    [bool]$HideGiveAccessTo
-    [bool]$HideShare
+    [Nullable[bool]]$HideOnedrive
+    [Nullable[bool]]$Hide3dObjects
+    [Nullable[bool]]$HideMusic
+    [Nullable[bool]]$HideIncludeInLibrary
+    [Nullable[bool]]$HideGiveAccessTo
+    [Nullable[bool]]$HideShare
 }
 
 # Overall debloat configuration.
 class Config {
-    [bool]$RunDefaults
-    [bool]$RemoveApps
-    [bool]$RemoveAppsCustom
-    [string[]]$RemoveAppsCustomList
-    [bool]$RemoveCommApps
-    [bool]$RemoveOutlook
-    [bool]$RemoveDevApps
-    [bool]$RemoveGamingApps
-    [bool]$ForceRemoveEdge
-    [bool]$DisableDVR
-    [bool]$DisableTelemetry
-    [bool]$DisableBing
-    [bool]$DisableSuggestions
-    [bool]$DisableLockscreenTips
-    [bool]$ShowHiddenFolders
-    [bool]$ShowKnownFileExt
-    [bool]$HideDupliDrive
-    [bool]$HideChat
-    [bool]$DisableWidgets
+    [Nullable[bool]]$RunDefaults
+    [Nullable[bool]]$RemoveApps
+    [Nullable[bool]]$RemoveAppsCustom
+    [string[]]$RemoveAppsCustomList = @()
+    [Nullable[bool]]$RemoveCommApps
+    [Nullable[bool]]$RemoveW11Outlook
+    [Nullable[bool]]$RemoveDevApps
+    [Nullable[bool]]$RemoveGamingApps
+    [Nullable[bool]]$ForceRemoveEdge
+    [Nullable[bool]]$DisableDVR
+    [Nullable[bool]]$DisableTelemetry
+    [Nullable[bool]]$DisableBing
+    [Nullable[bool]]$DisableSuggestions
+    [Nullable[bool]]$DisableLockscreenTips
+    [Nullable[bool]]$ShowHiddenFolders
+    [Nullable[bool]]$ShowKnownFileExt
+    [Nullable[bool]]$HideDupliDrive
+    [Nullable[bool]]$HideChat
+    [Nullable[bool]]$DisableWidgets
     [Win11Config]$Win11
     [Win10Config]$Win10
 }
 
+# Compares two given configurations.
 function Compare-Config {
     param (
         [Config]$Left,
@@ -76,39 +77,62 @@ function Compare-Config {
     return $($leftJson -eq $rightJson)
 }
 
+# Returns the flags given a configuration.
 function Get-Flags {
     param(
         [Parameter(Mandatory = $true)]
         [Config] $Config
     )
 
-    $flags = @()
-
     function ConvertTo-Flags {
         param (
-            [Parameter(Mandatory)]
-            [Object]$obj
+            [Parameter(Mandatory = $true)]
+            [Object] $Obj,
+            [ref] $Flags
         )
 
-        $properties = $obj | Get-Member -MemberType Properties
+        $properties = $Obj | Get-Member -MemberType Properties
         foreach ($property in $properties) {
             $propName = $property.Name
-            $value = $obj."$propName"
+            $value = $Obj."$propName"
 
-            if ($value -is [System.Boolean] -and $value -eq $true) {
-                $flag = "-$propName"
-                $flags += $flag
-            }
+            if ($null -ne $value -and $value -is [bool] -and $value -eq $true) { $Flags.Value += "-$propName" }
         }
     }
 
-    ConvertTo-Flags -obj $config
-    if ($config.Win11) { ConvertTo-Flags -obj $config.Win11 }
-    if ($config.Win10) { ConvertTo-Flags -obj $config.Win10 }
+    $flags = @()
+
+    ConvertTo-Flags -Obj $Config -Flags ([ref] $flags)
+    if ($null -ne $Config.Win11) { ConvertTo-Flags -Obj $Config.Win11 -Flags ([ref] $flags) }
+    if ($null -ne $Config.Win10) { ConvertTo-Flags -Obj $Config.Win10 -Flags ([ref] $flags) }
 
     return $flags -join " "
 }
 
+# Converts a object to a specific class.
+function ConvertTo-Class {
+    param (
+        [Parameter(Mandatory = $true)]
+        [Type] $Type,
+        [Parameter(Mandatory = $true)]
+        [PSCustomObject] $Obj
+    )
+
+    $instance = [Activator]::CreateInstance($Type)
+
+    $properties = $Type | Get-Member -MemberType Properties
+    foreach ($property in $properties) {
+        $propName = $property.Name
+
+        if ($null -ne $Obj.PSObject.Properties[$propName]) {
+            $instance."$propName" = $Obj."$propName"
+        }
+    }
+
+    return $instance
+}
+
+# Saves the configuration to the system.
 function Set-Config {
     param(
         [Parameter(Mandatory = $true)]
@@ -122,58 +146,19 @@ function Set-Config {
     $Config | ConvertTo-Json | Set-Content $CONFIG_FILE
 }
 
+# Loads the configuration from the system.
 function Get-Config {
-    param ()
-
-    if (-not $(Test-Path $CONFIG_FILE)) {
+    if (-not (Test-Path $CONFIG_FILE)) {
         return $null;
     }
 
     $loaded = Get-Content $CONFIG_FILE | ConvertFrom-Json
-    return [Config]::new(
-        $loaded.RunDefaults,
-        $loaded.RemoveApps,
-        $loaded.RemoveAppsCustom,
-        $loaded.RemoveAppsCustomList,
-        $loaded.RemoveCommApps,
-        $loaded.RemoveOutlook,
-        $loaded.RemoveDevApps,
-        $loaded.RemoveGamingApps,
-        $loaded.ForceRemoveEdge,
-        $loaded.DisableDVR,
-        $loaded.DisableTelemetry,
-        $loaded.DisableBing,
-        $loaded.DisableSuggestions,
-        $loaded.DisableLockscreenTips,
-        $loaded.ShowHiddenFolders,
-        $loaded.ShowKnownFileExt,
-        $loaded.HideDupliDrive,
-        $loaded.HideChat,
-        $loaded.DisableWidgets,
-        [Win11Config]::new(
-            $loaded.Win11.ClearStart,
-            $loaded.Win11.ClearStartAllUsers,
-            $loaded.Win11.RevertContextMenu,
-            $loaded.Win11.TaskbarAlignLeft,
-            $loaded.Win11.HideSearchTb,
-            $loaded.Win11.ShowSearchIconTb,
-            $loaded.Win11.ShowSearchLabelTb,
-            $loaded.Win11.ShowSearchBoxTb,
-            $loaded.Win11.HideTaskview,
-            $loaded.Win11.DisableCopilot,
-            $loaded.Win11.DisableRecall,
-            $loaded.Win11.HideHome,
-            $loaded.Win11.HideGallery
-        ),
-        [Win10Config]::new(
-            $loaded.Win10.HideOnedrive,
-            $loaded.Win10.Hide3dObjects,
-            $loaded.Win10.HideMusic,
-            $loaded.Win10.HideIncludeInLibrary,
-            $loaded.Win10.HideGiveAccessTo,
-            $loaded.Win10.HideShare
-        )
-    )
+    $instance = ConvertTo-Class -Type ([Config]) -Obj $loaded
+
+    if ($null -ne $loaded.Win11) { $instance.Win11 = ConvertTo-Class -Type ([Win11Config]) -Obj $loaded.Win11 }
+    if ($null -ne $loaded.Win10) { $instance.Win10 = ConvertTo-Class -Type ([Win10Config]) -Obj $loaded.Win10 }
+
+    return $instance
 }
 
 #--------------------------------------------------------------------------------------------------#
@@ -195,9 +180,10 @@ class Debloat {
 
     # Returns the current state of the resource.
     [Debloat] Get() {
+        $c = Get-Config
         return @{
             Config       = $this.Config
-            LoadedConfig = Get-Config
+            LoadedConfig = $c
         }
     }
 
@@ -214,16 +200,19 @@ class Debloat {
         if (!$this.Test()) {
             $state = $this.Get()
 
-            $debloatPath = "$env:TEMP/Win11Debloat/Win11Debloat-master"
-            $path = "$env:TMP/debloat";
-            $script = "$path/run.ps1"
+            $path = "$env:TMP/debloat"
+            $archive = "$path/debloat.zip"
+            $expandedArchivePath = "$path/Win11Debloat-master"
+            $script = "$expandedArchivePath/Win11Debloat.ps1"
 
             try {
                 New-Item -Path $path -ItemType Directory -Force | Out-Null
-                Invoke-RestMethod win11debloat.raphi.re -OutFile $script
+                Invoke-WebRequest http://github.com/raphire/win11debloat/archive/master.zip -OutFile $archive
+                Expand-Archive $archive $path
+                Remove-Item $archive
 
                 if ($null -ne $state.Config.RemoveAppsCustomList -and $state.Config.RemoveAppsCustomList.Count -gt 0) {
-                    $customAppsListFile = "$debloatPath/CustomAppsList"
+                    $customAppsListFile = "$expandedArchivePath/CustomAppsList"
                     if (Test-Path $customAppsListFile) { Remove-Item -Path $customAppsListFile -Force }
                     New-Item -Path $customAppsListFile -ItemType File -Force | Out-Null
 
@@ -233,18 +222,18 @@ class Debloat {
                 }
 
                 $flags = $(Get-Flags -Config $state.Config) + " -Silent"
-                $cmd = "& $script $flags"
+                $arguments = "-NoProfile -ExecutionPolicy Bypass -File $script $flags"
 
-                throw "About to run $cmd in $debloatPath"
+                throw $arguments
 
-                Invoke-Expression $cmd
+                Start-Process powershell.exe -ArgumentList $arguments -Wait
                 Set-Config -Config $state.Config
             }
             catch {
                 throw $_
             }
             finally {
-                Remove-Item -Path $path -Force
+                Remove-Item -Path $path -Recurse -Force
             }
         }
     }
