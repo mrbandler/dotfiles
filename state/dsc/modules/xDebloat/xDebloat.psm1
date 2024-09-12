@@ -216,29 +216,36 @@ class Debloat {
 
             $debloatPath = "$env:TEMP/Win11Debloat/Win11Debloat-master"
             $path = "$env:TMP/debloat";
-            New-Item -Path $path -ItemType Directory -Force | Out-Null
             $script = "$path/run.ps1"
-            Invoke-RestMethod win11debloat.raphi.re -OutFile $script
 
-            if ($null -ne $state.Config.RemoveAppsCustomList -and $state.Config.RemoveAppsCustomList.Count -gt 0) {
-                $customAppsListFile = "$debloatPath/CustomAppsList"
-                if (Test-Path $customAppsListFile) { Remove-Item -Path $customAppsListFile -Force }
-                New-Item -Path $customAppsListFile -ItemType File -Force | Out-Null
+            try {
+                New-Item -Path $path -ItemType Directory -Force | Out-Null
+                Invoke-RestMethod win11debloat.raphi.re -OutFile $script
 
-                $state.Config.RemoveAppsCustomList | ForEach-Object {
-                    Add-Content -Path $customAppsListFile -Value $_
+                if ($null -ne $state.Config.RemoveAppsCustomList -and $state.Config.RemoveAppsCustomList.Count -gt 0) {
+                    $customAppsListFile = "$debloatPath/CustomAppsList"
+                    if (Test-Path $customAppsListFile) { Remove-Item -Path $customAppsListFile -Force }
+                    New-Item -Path $customAppsListFile -ItemType File -Force | Out-Null
+
+                    $state.Config.RemoveAppsCustomList | ForEach-Object {
+                        Add-Content -Path $customAppsListFile -Value $_
+                    }
                 }
+
+                $flags = $(Get-Flags -Config $state.Config) + " -Silent"
+                $cmd = "& $script $flags"
+
+                throw "About to run $cmd in $debloatPath"
+
+                Invoke-Expression $cmd
+                Set-Config -Config $state.Config
             }
-
-            $flags = $(Get-Flags -Config $state.Config) + " -Silent"
-            $cmd = "& $script $flags"
-
-            throw "About to run $cmd in $debloatPath"
-
-            Invoke-Expression $cmd
-
-            Remove-Item -Path $path -Force
-            Set-Config -Config $state.Config
+            catch {
+                throw $_
+            }
+            finally {
+                Remove-Item -Path $path -Force
+            }
         }
     }
 }
