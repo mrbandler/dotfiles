@@ -62,9 +62,7 @@ class Config {
 
 function Compare-Config {
     param (
-        [Parameter(Mandatory = $true)]
         [Config]$Left,
-        [Parameter(Mandatory = $true)]
         [Config]$Right
     )
 
