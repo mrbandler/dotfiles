@@ -45,6 +45,10 @@ class PkgDownloadAndInstall {
     [DscProperty()]
     [string] $Arguments
 
+    # Command to install a zip.
+    [DscProperty()]
+    [string] $ZipInstall
+
     # State of the resouce.
     [DscProperty(Mandatory)]
     [Ensure] $Ensure = [Ensure]::Present
@@ -98,17 +102,37 @@ class PkgDownloadAndInstall {
             if ($this.Ensure -eq [Ensure]::Present) {
                 $installerPath = [System.IO.Path]::GetTempFileName();
 
-                if ($this.Type -eq [InstallerType]::MSI) { $installerPath += ".msi" }
-                elseif ($this.Type -eq [InstallerType]::EXE) { $installerPath += ".exe" }
-                elseif ($this.Type -eq [InstallerType]::ZIP) { throw "ZIP installer type is not supported yet." }
-                elseif ($this.Type -eq [InstallerType]::MSIX) { throw "MSIX installer type is not supported yet." }
-                else { throw "Unknown installer type." }
+                if ($this.Type -eq [InstallerType]::MSI) { 
+                    $installerPath += ".msi"
+                    $arguments = "$installerPath $($this.Arguments)"
 
-                Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
-                $process = Start-Process -FilePath $installerPath -ArgumentList $this.Arguments -PassThru
-                $process.WaitForExit()
+                    Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
+                    Start-Process msiexec -ArgumentList $arguments -Wait
+                } elseif ($this.Type -eq [InstallerType]::EXE) {
+                     $installerPath += ".exe" 
 
-                Remove-Item -Path $installerPath
+                    Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
+                    Start-Process -FilePath $installerPath -ArgumentList $this.Arguments -Wait
+                } elseif ($this.Type -eq [InstallerType]::ZIP) {
+                    if (![string]::IsNullOrEmpty($this.ZipInstall)) throw "Unable to install, ZipInstall was not specified, "
+                    
+                    $installerPath += ".zip"
+                    Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
+                    
+                    $unzippedPath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetRandomFileName())
+                    Expand-Archive -Path $installerPath -DestinationPath $unzippedPath
+
+                    $cmd = $this.ZipInstall
+                    $cmd = $cmd -replace '\$\{zip\}', $installerPath
+                    $cmd = $cmd -replace '\$\{unzipped\}', $unzippedPath
+                    Invoke-Expression $cmd | Out-Null
+
+                    Remove-Item -Path $unzippedPath -Recurse -Force
+                } elseif ($this.Type -eq [InstallerType]::MSIX) {
+                    throw "MSIX installer type is not supported yet." 
+                } else { throw "Unknown installer type." }
+
+                Remove-Item -Path $installerPath -Force
 
                 if ($process.ExitCode -ne 0) {
                     Write-Error "Failed to install package."
