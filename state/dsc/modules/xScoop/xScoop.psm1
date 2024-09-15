@@ -217,6 +217,10 @@ class ScoopApp {
     [DscProperty()]
     [string] $Arch
 
+    # Command to execute after installation.
+    [DscProperty()]
+    [string] $After
+
     # State of the resouce.
     [DscProperty(Mandatory)]
     [Ensure] $Ensure = [Ensure]::Present
@@ -283,6 +287,10 @@ class ScoopApp {
 
                 $cmd = "& scoop install $($arguments -join " ")"
                 Invoke-Expression $cmd | Out-Null
+
+                if (![string]::IsNullOrEmpty($this.After)) {
+                    Invoke-Expression $this.After | Out-Null
+                }
             }
             # If the app is installed but the desired state is absent, uninstall it.
             elseif ($this.Ensure -eq [Ensure]::Absent) {
