@@ -148,6 +148,20 @@ properties:
       settings:
         Ensure: Present
 
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installUniGetUI
+      directives:
+        description: Install UniGetUI
+        allowPrerelease: true
+      settings:
+        Id: SomePythonThings.WingetUIStore
+        Source: winget
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Packages.
+    #----------------------------------------------------------------------------------------------#
+
     #----------------------------------------------------------------------------------------------#
     # Drivers.
     #----------------------------------------------------------------------------------------------#
@@ -160,7 +174,7 @@ properties:
         Name: AMD Software
         Type: EXE
         Arguments: /S
-        Url: https://drivers.amd.com/drivers/installer/24.10/whql/amd-software-adrenalin-edition-24.7.1-minimalsetup-240730_web.exe
+        Url: https://drivers.amd.com/drivers/installer/24.10/whql/amd-software-adrenalin-edition-24.8.1-minimalsetup-240829_web.exe
         Headers:
           Sec-Fetch-Site: same-site
           Pragma: no-cache
@@ -179,7 +193,7 @@ properties:
         Name: NVIDIA GeForce Experience
         Type: EXE
         Arguments: /S
-        Url: https://de.download.nvidia.com/GFE/GFEClient/3.27.0.120/GeForce_Experience_v3.27.0.120.exe
+        Url: https://de.download.nvidia.com/GFE/GFEClient/3.28.0.417/GeForce_Experience_v3.28.0.417.exe
         Ensure: Present
 
     - resource: xPkg/PkgDownloadAndInstall
@@ -194,7 +208,32 @@ properties:
         Ensure: Present
 
     #----------------------------------------------------------------------------------------------#
-    # Packages.
+    # Fonts.
+    #----------------------------------------------------------------------------------------------#
+    - resource: xScoop/ScoopApp
+      id: installJetBrainsMono
+      directives:
+        description: Install JetBrains Mono
+      settings:
+        Name: JetBrains-Mono
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoopNerdFonts
+
+    - resource: xScoop/ScoopApp
+      id: installJetBrainsMonoNF
+      directives:
+        description: Install JetBrains Mono NF
+      settings:
+        Name: JetBrains-Mono-NF-Mono
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoopNerdFonts
+
+    #----------------------------------------------------------------------------------------------#
+    # Essentials.
     #----------------------------------------------------------------------------------------------#
     - resource: xScoop/ScoopApp
       id: install7zip
@@ -219,11 +258,594 @@ properties:
         - installScoop
 
     - resource: xScoop/ScoopApp
+      id: installSudo
+      directives:
+        description: Install sudo
+      settings:
+        Name: sudo
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installGsudo
+      directives:
+        description: Install gsudo
+      settings:
+        Name: gsudo
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installFastfetch
+      directives:
+        description: Install fastfetch
+      settings:
+        Name: fastfetch
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installCryptomator
+      directives:
+        description: Install Cryptmator
+        allowPrerelease: true
+      settings:
+        Id: Cryptomator.Cryptomator
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVeraCrypt
+      directives:
+        description: Install VeraCrypt
+        allowPrerelease: true
+      settings:
+        Id: IDRIX.VeraCrypt
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install1Password
+      directives:
+        description: Install 1Password
+        allowPrerelease: true
+      settings:
+        Id: AgileBits.1Password
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install1PasswordCli
+      directives:
+        description: Install 1Password CLI
+        allowPrerelease: true
+      settings:
+        Id: AgileBits.1Password.CLI
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEarTrumpet
+      directives:
+        description: Install EarTrumpet
+        allowPrerelease: true
+      settings:
+        Id: File-New-Project.EarTrumpet
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVoicemeeter Banana
+      directives:
+        description: Install Voicemeeter Banana
+        allowPrerelease: true
+      settings:
+        Id: VB-Audio.Voicemeeter.Banana
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVLC
+      directives:
+        description: Install VLC
+        allowPrerelease: true
+      settings:
+        Id: VideoLAN.VLC
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFlameshot
+      directives:
+        description: Install Flameshot
+        allowPrerelease: true
+      settings:
+        Id: Flameshot.Flameshot
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEverything
+      directives:
+        description: Install Everything
+        allowPrerelease: true
+      settings:
+        Id: voidtools.Everything
+        Source: winget
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Utilities.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installPowerToys
+      directives:
+        description: Install PowerToys
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.PowerToys
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installZoomIt
+      directives:
+        description: Install ZoomIt
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.Sysinternals.ZoomIt
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVentoy
+      directives:
+        description: Install Ventoy
+        allowPrerelease: true
+      settings:
+        Id: Ventoy.Ventoy
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFileConverter
+      directives:
+        description: Install File Converter
+        allowPrerelease: true
+      settings:
+        Id: AdrienAllard.FileConverter
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installSpaceSniffer
+      directives:
+        description: Install Space Sniffer
+        allowPrerelease: true
+      settings:
+        Id: UderzoSoftware.SpaceSniffer
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGoogleDrive
+      directives:
+        description: Install Google Drive
+        allowPrerelease: true
+      settings:
+        Id: Google.GoogleDrive
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonDrive
+      directives:
+        description: Install Proton Drive
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonDrive
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonMail
+      directives:
+        description: Install Proton Mail
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonMail
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonVPN
+      directives:
+        description: Install Proton VPN
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonVPN
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installNotion
+      directives:
+        description: Install Notion
+        allowPrerelease: true
+      settings:
+        Id: Notion.Notion
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installSpotify
+      directives:
+        description: Install Spotify
+        allowPrerelease: true
+      settings:
+        Id: Spotify.Spotify
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installTeamviewer
+      directives:
+        description: Install TeamViewer
+        allowPrerelease: true
+      settings:
+        Id: TeamViewer.TeamViewer
+        Source: winget
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Desktop.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGlazeWM
+      directives:
+        description: Install GlazeWM
+        allowPrerelease: true
+      settings:
+        Id: glzr-io.glazewm
+        Source: winget
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installZebar
+      directives:
+        description: Install zebar
+      settings:
+        Name: Zebar
+        Type: MSI
+        Arguments: /QN /NORESTART
+        Url: https://github.com/glzr-io/zebar/releases/download/v1.8.1/zebar-v1.8.1-opt1-x64.msi
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Browsers.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installArc
+      directives:
+        description: Install Arc
+        allowPrerelease: true
+      settings:
+        Id: TheBrowserCompany.Arc
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBrave
+      directives:
+        description: Install Brave
+        allowPrerelease: true
+      settings:
+        Id: Brave.Brave
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installZen
+      directives:
+        description: Install Zen
+        allowPrerelease: true
+      settings:
+        Id: Zen-Team.Zen-Browser
+        Source: winget
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Comms.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installDiscord
+      directives:
+        description: Install Discord
+        allowPrerelease: true
+      settings:
+        Id: Discord.Discord
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installTelegram
+      directives:
+        description: Install Telegram
+        allowPrerelease: true
+      settings:
+        Id: Telegram.TelegramDesktop
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWhatsapp
+      directives:
+        description: Install Whatsapp
+        allowPrerelease: true
+      settings:
+        Id: WhatsApp.WhatsApp
+        Source: winget
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Gaming.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installSteam
+      directives:
+        description: Install Steam
+        allowPrerelease: true
+      settings:
+        Id: Valve.Steam
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEpicGames
+      directives:
+        description: Install Epic Games
+        allowPrerelease: true
+      settings:
+        Id: EpicGames.EpicGamesLauncher
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGogGalaxy
+      directives:
+        description: Install GOG Galaxy
+        allowPrerelease: true
+      settings:
+        Id: GOG.Galaxy
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBattleNet
+      directives:
+        description: Install Battle.net
+        allowPrerelease: true
+      settings:
+        Id: Blizzard.BattleNet
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEaApp
+      directives:
+        description: Install EA App
+        allowPrerelease: true
+      settings:
+        Id: ElectronicArts.EADesktop
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installUbisoftConnect
+      directives:
+        description: Install Ubisoft Connect
+        allowPrerelease: true
+      settings:
+        Id: Ubisoft.Connect
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installItch
+      directives:
+        description: Install Itch.io
+        allowPrerelease: true
+      settings:
+        Id: ItchIo.Itch
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installItch
+      directives:
+        description: Install Itch.io
+        allowPrerelease: true
+      settings:
+        Id: ItchIo.Itch
+        Source: winget
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installGameJolt
+      directives:
+        description: Install Game Jolt
+      settings:
+        Name: Game Jolt
+        Type: EXE
+        Arguments: /SILENT
+        Url: https://download.gamejolt.net/data/games/5/162/362412/files/66bc359fe3e14/gamejoltclientsetup.exe
+        Ensure: Present
+
+    # This type of "installer" is currently not supported by the resouce and would need to be implemented.
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installRPCS3
+      directives:
+        description: Install RPCS3
+      settings:
+        Name: RPCS3
+        Type: ZIP
+        Arguments: ""
+        ZipInstall: | 
+          $startMenuDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\RPCS3"
+          $startMenuShortcut = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\RPCS3\RPCS3.lnk"
+          $sourceDir = ${unzipped}
+          $targetDir = "C:\ProgramData\RPCS3"
+          $exePath = "$targetDir\rpcs3.exe"
+
+          if (-not (Test-Path -Path $startMenuDir)) { New-Item -ItemType Directory -Path $startMenuDir | Out-Null }
+          if (-not (Test-Path -Path $targetDir)) { New-Item -ItemType Directory -Path $targetDir | Out-Null }
+
+          Copy-Item -Path "$sourceDir\*" -Destination $targetDir -Recurse -Force
+
+          $wshell = New-Object -ComObject WScript.Shell
+          $shortcut = $wshell.CreateShortcut($startMenuShortcut)
+          $shortcut.TargetPath = $exePath
+          $shortcut.WorkingDirectory = $targetDir
+          $shortcut.IconLocation = "$exePath, 0"
+          $shortcut.Save()
+        Url: https://github.com/RPCS3/rpcs3-binaries-win/releases/download/build-d1648dd707687c336dff1397daf8a657881c230e/rpcs3-v0.0.33-16930-d1648dd7_win64.7z
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Creative.
+    #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installOBS
+      directives:
+        description: Install OBS
+        allowPrerelease: true
+      settings:
+        Id: OBSProject.OBSStudio
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installKrita
+      directives:
+        description: Install Krita
+        allowPrerelease: true
+      settings:
+        Id: KDE.Krita
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installInkscape
+      directives:
+        description: Install Inkscape
+        allowPrerelease: true
+      settings:
+        Id: Inkscape.Inkscape
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBlender
+      directives:
+        description: Install Blender
+        allowPrerelease: true
+      settings:
+        Id: BlenderFoundation.Blender
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBlockbench
+      directives:
+        description: Install Blockbench
+        allowPrerelease: true
+      settings:
+        Id: JannisX11.Blockbench
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installAudacity
+      directives:
+        description: Install Audacity
+        allowPrerelease: true
+      settings:
+        Id: Audacity.Audacity
+        Source: winget
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installMudstack
+      directives:
+        description: Install Mudstack
+      settings:
+        Name: mudstack
+        Type: EXE
+        Arguments: /S
+        Url: ttps://mudstack-desktop.s3.amazonaws.com/mudstack_windows_latest.exe
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installDaVinciResolve
+      directives:
+        description: Install DaVinci Resolve 
+      settings:
+        Name: DaVinci Resolve
+        Type: ZIP
+        ZipInstall: ${unzipped}/DaVinci_Resolve_19.0.1_Windows.exe /i /q /noreboot
+        Url: https://swr.cloud.blackmagicdesign.com/DaVinciResolve/v19.0.1/DaVinci_Resolve_19.0.1_Windows.zip?verify=1726412602-UuOhgq1oz%2BrqPeD4mQTo7G96twL%2FgregMTqTJ7aC0Js%3D
+        Ensure: Present
+
+    #----------------------------------------------------------------------------------------------#
+    # Develop.
+    #----------------------------------------------------------------------------------------------#
+    - resource: xScoop/ScoopApp
       id: installMake
       directives:
         description: Install make
       settings:
         Name: make
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installNvm
+      directives:
+        description: Install nvm
+      settings:
+        Name: nvm
+        NoUpdateScoop: true
+        After: nvm install lts; nvm use lts
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installPyenv
+      directives:
+        description: Install pyenv
+      settings:
+        Name: pyenv
+        NoUpdateScoop: true
+        # After: pyenv install 3.11.0b4; pyenv install 2.7.18
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installRustup
+      directives:
+        description: Install rustup
+      settings:
+        Name: rustup
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
@@ -240,16 +862,6 @@ properties:
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: installPowerToys
-      directives:
-        description: Install PowerToys
-        allowPrerelease: true
-      settings:
-        Id: Microsoft.PowerToys
-        Source: winget
-        Ensure: Present
-
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installVisualStudioCode
       directives:
         description: Install Visual Studio Code
@@ -259,14 +871,21 @@ properties:
         Source: winget
         Ensure: Present
 
-    - resource: cChoco/cChocoPackageInstaller
-      id: installGoogleDrive
-      directives:
-        description: Install Google Drive
-      settings:
-        Name: googledrive
-        Ensure: Present
-      dependsOn:
-        - installChoco
+    #----------------------------------------------------------------------------------------------#
+    # Experimental.
+    #----------------------------------------------------------------------------------------------#
+
+    #----------------------------------------------------------------------------------------------#
+    # Templates.
+    #----------------------------------------------------------------------------------------------#
+    # - resource: cChoco/cChocoPackageInstaller
+    #   id: installGoogleDrive
+    #   directives:
+    #     description: Install Google Drive
+    #   settings:
+    #     Name: googledrive
+    #     Ensure: Present
+    #   dependsOn:
+    #     - installChoco
 
   configurationVersion: "0.2.0"
