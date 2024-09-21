@@ -340,15 +340,15 @@ properties:
         Source: winget
         Ensure: Present
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: installVoicemeeter Banana
+    - resource: cChoco/cChocoPackageInstaller
+      id: installVoicemeeterBanana
       directives:
         description: Install Voicemeeter Banana
-        allowPrerelease: true
       settings:
-        Id: VB-Audio.Voicemeeter.Banana
-        Source: winget
+        Name: voicemeeter-banana.install
         Ensure: Present
+      dependsOn:
+        - installChoco
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installVLC
@@ -483,15 +483,15 @@ properties:
         Source: winget
         Ensure: Present
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
+    - resource: cChoco/cChocoPackageInstaller
       id: installSpotify
       directives:
         description: Install Spotify
-        allowPrerelease: true
       settings:
-        Id: Spotify.Spotify
-        Source: winget
+        Name: spotify
         Ensure: Present
+      dependsOn:
+        - installChoco
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installTeamviewer
@@ -589,8 +589,8 @@ properties:
         description: Install Whatsapp
         allowPrerelease: true
       settings:
-        Id: WhatsApp.WhatsApp
-        Source: winget
+        Id: 9NKSQGP7F2NH
+        Source: msstore
         Ensure: Present
 
     #----------------------------------------------------------------------------------------------#
@@ -626,14 +626,15 @@ properties:
         Source: winget
         Ensure: Present
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
+    - resource: xPkg/PkgDownloadAndInstall
       id: installBattleNet
       directives:
         description: Install Battle.net
-        allowPrerelease: true
       settings:
-        Id: Blizzard.BattleNet
-        Source: winget
+        Name: Battle.net
+        Type: EXE
+        Arguments: --lang=enUS --installpath="C:\Program Files (x86)\Battle.net"
+        Url: https://downloader.battle.net//download/getInstallerForGame?os=win&gameProgram=BATTLENET_APP&version=Live
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -666,16 +667,6 @@ properties:
         Source: winget
         Ensure: Present
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: installItch
-      directives:
-        description: Install Itch.io
-        allowPrerelease: true
-      settings:
-        Id: ItchIo.Itch
-        Source: winget
-        Ensure: Present
-
     - resource: xPkg/PkgDownloadAndInstall
       id: installGameJolt
       directives:
@@ -684,17 +675,16 @@ properties:
         Name: Game Jolt
         Type: EXE
         Arguments: /SILENT
-        Url: https://download.gamejolt.net/data/games/5/162/362412/files/66bc359fe3e14/gamejoltclientsetup.exe
+        Url: https://download.gamejolt.net/e5842ca3a6328bac0c8032dd4e544809cfa7002a532102c5d6d4dd1c1fe3cb78,1727014585,7/data/games/5/162/362412/files/66bc359fe3e14/gamejoltclientsetup.exe
         Ensure: Present
 
-    # This type of "installer" is currently not supported by the resouce and would need to be implemented.
     - resource: xPkg/PkgDownloadAndInstall
       id: installRPCS3
       directives:
         description: Install RPCS3
       settings:
         Name: RPCS3
-        Type: ZIP
+        Type: SEVENZIP
         Arguments: ""
         ZipInstall: | 
           $startMenuDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\RPCS3"
@@ -788,20 +778,9 @@ properties:
         Name: mudstack
         Type: EXE
         Arguments: /S
-        Url: ttps://mudstack-desktop.s3.amazonaws.com/mudstack_windows_latest.exe
+        Url: https://mudstack-desktop.s3.amazonaws.com/mudstack_windows_latest.exe
         Ensure: Present
-
-    - resource: xPkg/PkgDownloadAndInstall
-      id: installDaVinciResolve
-      directives:
-        description: Install DaVinci Resolve 
-      settings:
-        Name: DaVinci Resolve
-        Type: ZIP
-        ZipInstall: ${unzipped}/DaVinci_Resolve_19.0.1_Windows.exe /i /q /noreboot
-        Url: https://swr.cloud.blackmagicdesign.com/DaVinciResolve/v19.0.1/DaVinci_Resolve_19.0.1_Windows.zip?verify=1726412602-UuOhgq1oz%2BrqPeD4mQTo7G96twL%2FgregMTqTJ7aC0Js%3D
-        Ensure: Present
-
+        
     #----------------------------------------------------------------------------------------------#
     # Develop.
     #----------------------------------------------------------------------------------------------#

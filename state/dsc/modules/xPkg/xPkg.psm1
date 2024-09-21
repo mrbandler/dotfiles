@@ -1,3 +1,13 @@
+# Constants.
+$SCOOP_DIR = $env:SCOOP, "$env:USERPROFILE\scoop" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_GLOBAL_DIR = $env:SCOOP_GLOBAL, "$env:ProgramData\scoop" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_CACHE_DIR = $env:SCOOP_CACHE, "$SCOOP_DIR\cache" | Where-Object { -not [String]::IsNullOrEmpty($_) } | Select-Object -First 1
+$SCOOP_SHIMS_DIR = "$SCOOP_DIR\shims"
+$SCOOP_APP_DIR = "$SCOOP_DIR\apps\scoop\current"
+$SCOOP_MAIN_BUCKET_DIR = "$SCOOP_DIR\buckets\main"
+$SCOOP_CONFIG_HOME = $env:XDG_CONFIG_HOME, "$env:USERPROFILE\.config" | Select-Object -First 1
+$SCOOP_CONFIG_FILE = "$SCOOP_CONFIG_HOME\scoop\config.json"
+
 # Enums.
 enum Ensure {
     Absent
@@ -8,7 +18,14 @@ enum InstallerType {
     MSI
     EXE
     ZIP
-    MSIX
+    SEVENZIP
+}
+
+# Utils.
+function Add-ScoopToPath {
+    if ($env:PATH -notlike "*$SCOOP_SHIMS_DIR*") {
+        $env:PATH += ";$SCOOP_SHIMS_DIR"
+    }
 }
 
 
@@ -104,39 +121,55 @@ class PkgDownloadAndInstall {
 
                 if ($this.Type -eq [InstallerType]::MSI) { 
                     $installerPath += ".msi"
-                    $arguments = "$installerPath $($this.Arguments)"
+                    $installerArgs = "$installerPath $($this.Arguments)"
 
                     Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
-                    Start-Process msiexec -ArgumentList $arguments -Wait
+                    Start-Process msiexec -ArgumentList $installerArgs -Wait
                 } elseif ($this.Type -eq [InstallerType]::EXE) {
                      $installerPath += ".exe" 
 
                     Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
                     Start-Process -FilePath $installerPath -ArgumentList $this.Arguments -Wait
                 } elseif ($this.Type -eq [InstallerType]::ZIP) {
-                    if (![string]::IsNullOrEmpty($this.ZipInstall)) throw "Unable to install, ZipInstall was not specified, "
+                    if ([string]::IsNullOrEmpty($this.ZipInstall)) { throw "Unable to install, ZipInstall was not specified" }
                     
                     $installerPath += ".zip"
                     Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
                     
                     $unzippedPath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetRandomFileName())
+                    New-Item -ItemType Directory -Path $unzippedPath -Force | Out-Null
                     Expand-Archive -Path $installerPath -DestinationPath $unzippedPath
 
                     $cmd = $this.ZipInstall
                     $cmd = $cmd -replace '\$\{zip\}', $installerPath
                     $cmd = $cmd -replace '\$\{unzipped\}', $unzippedPath
+
                     Invoke-Expression $cmd | Out-Null
 
                     Remove-Item -Path $unzippedPath -Recurse -Force
-                } elseif ($this.Type -eq [InstallerType]::MSIX) {
-                    throw "MSIX installer type is not supported yet." 
+                } elseif ($this.Type -eq [InstallerType]::SEVENZIP) {
+                    if ([string]::IsNullOrEmpty($this.ZipInstall)) { throw "Unable to install, ZipInstall was not specified" }
+                    
+                    Add-ScoopToPath
+
+                    $installerPath += ".7z"
+                    Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
+                    
+                    $unzippedPath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetRandomFileName())
+                    New-Item -ItemType Directory -Path $unzippedPath -Force | Out-Null
+                    $unzipCmd = "7z x $installerPath -o$unzippedPath -y"
+                    Invoke-Expression $unzipCmd | Out-Null
+
+                    $cmd = $this.ZipInstall
+                    $cmd = $cmd -replace '\$\{zip\}', "`"$installerPath`""
+                    $cmd = $cmd -replace '\$\{unzipped\}', "`"$unzippedPath`""
+
+                    Invoke-Expression $cmd | Out-Null
+
+                    Remove-Item -Path $unzippedPath -Recurse -Force
                 } else { throw "Unknown installer type." }
 
                 Remove-Item -Path $installerPath -Force
-
-                if ($process.ExitCode -ne 0) {
-                    Write-Error "Failed to install package."
-                }
             }
             elseif ($this.Ensure -eq [Ensure]::Absent) {
                 $uninstallKeyPaths = @(
