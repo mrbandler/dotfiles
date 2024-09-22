@@ -530,14 +530,15 @@ properties:
     #----------------------------------------------------------------------------------------------#
     # Browsers.
     #----------------------------------------------------------------------------------------------#
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
+    - resource: xPkg/PkgDownloadAndInstall
       id: installArc
       directives:
         description: Install Arc
-        allowPrerelease: true
       settings:
-        Id: TheBrowserCompany.Arc
-        Source: winget
+        Name: Arc
+        Type: EXE
+        Arguments: ""
+        Url: https://releases.arc.net/windows/ArcInstaller.exe
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
