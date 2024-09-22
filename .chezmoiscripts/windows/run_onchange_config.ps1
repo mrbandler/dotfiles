@@ -15,4 +15,4 @@ if (-not ($isAdmin)) {
 }
 
 # 2. Apply DSC configuration
-. "$PSScriptRoot\..\..\state\dsc\apply.ps1"
+. "..\..\state\dsc\apply.ps1"

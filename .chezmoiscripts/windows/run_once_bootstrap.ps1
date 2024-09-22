@@ -18,4 +18,4 @@ if (-not ($isAdmin)) {
 &([ScriptBlock]::Create((Invoke-RestMethod winget.pro))) -Force
 
 # 3. Apply DSC configuration
-. "$PSScriptRoot\..\..\state\dsc\apply.ps1"
+. "..\..\state\dsc\apply.ps1"
