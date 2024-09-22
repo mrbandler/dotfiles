@@ -154,7 +154,7 @@ properties:
         description: Install UniGetUI
         allowPrerelease: true
       settings:
-        Id: SomePythonThings.WingetUIStore
+        Id: MartiCliment.UniGetUI
         Source: winget
         Ensure: Present
 
@@ -668,17 +668,6 @@ properties:
         Ensure: Present
 
     - resource: xPkg/PkgDownloadAndInstall
-      id: installGameJolt
-      directives:
-        description: Install Game Jolt
-      settings:
-        Name: Game Jolt
-        Type: EXE
-        Arguments: /SILENT
-        Url: https://download.gamejolt.net/e5842ca3a6328bac0c8032dd4e544809cfa7002a532102c5d6d4dd1c1fe3cb78,1727014585,7/data/games/5/162/362412/files/66bc359fe3e14/gamejoltclientsetup.exe
-        Ensure: Present
-
-    - resource: xPkg/PkgDownloadAndInstall
       id: installRPCS3
       directives:
         description: Install RPCS3
@@ -686,7 +675,7 @@ properties:
         Name: RPCS3
         Type: SEVENZIP
         Arguments: ""
-        ZipInstall: | 
+        ZipInstall: |
           $startMenuDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\RPCS3"
           $startMenuShortcut = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\RPCS3\RPCS3.lnk"
           $sourceDir = ${unzipped}
@@ -780,7 +769,7 @@ properties:
         Arguments: /S
         Url: https://mudstack-desktop.s3.amazonaws.com/mudstack_windows_latest.exe
         Ensure: Present
-        
+
     #----------------------------------------------------------------------------------------------#
     # Develop.
     #----------------------------------------------------------------------------------------------#
