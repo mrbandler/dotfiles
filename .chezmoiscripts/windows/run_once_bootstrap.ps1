@@ -14,8 +14,11 @@ if (-not ($isAdmin)) {
     exit
 }
 
-# 2. Make sure winget is up-to-date and installed.
+# 2. Set PowerShell execution policy.
+Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+# 3. Make sure winget is up-to-date and installed.
 &([ScriptBlock]::Create((Invoke-RestMethod winget.pro))) -Force
 
-# 3. Apply DSC configuration
+# 4. Apply DSC configuration
 & "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
