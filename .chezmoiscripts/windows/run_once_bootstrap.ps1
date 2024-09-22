@@ -15,7 +15,7 @@ if (-not ($isAdmin)) {
 }
 
 # 2. Set PowerShell execution policy.
-Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 
 # 3. Make sure winget is up-to-date and installed.
 &([ScriptBlock]::Create((Invoke-RestMethod winget.pro))) -Force
