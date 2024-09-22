@@ -15,4 +15,5 @@ if (-not ($isAdmin)) {
 }
 
 # 2. Apply DSC configuration
-. "..\..\state\dsc\apply.ps1"
+Get-Location
+# . "..\..\state\dsc\apply.ps1"
