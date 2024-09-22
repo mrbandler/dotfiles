@@ -15,5 +15,8 @@ if (-not ($isAdmin)) {
     exit
 }
 
-# 2. Apply DSC configuration
+# 2. Make sure winget is up-to-date and installed.
+&([ScriptBlock]::Create((Invoke-RestMethod winget.pro))) -Force
+
+# 3. Apply DSC configuration
 . "$PSScriptRoot\..\..\state\dsc\apply.ps1"
