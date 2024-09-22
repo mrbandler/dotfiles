@@ -1,6 +1,5 @@
 # This script is meant to be run once to bootstrap the Windows environment.
-
-echo "Bootstrapping Windows environment..."
+Write-Output "Bootstrapping Windows environment..."
 
 # 1. Check for admin rights, if not elevate
 $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()

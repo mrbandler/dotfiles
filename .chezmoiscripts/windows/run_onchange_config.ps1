@@ -1,4 +1,5 @@
-echo "Applying Windows configuration..."
+# dconf.ini hash: {{ include "state/dsc/configuration.dsc.yml" | sha256sum }}
+Write-Output "Applying Windows configuration..."
 
 # 1. Check for admin rights, if not elevate
 $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
