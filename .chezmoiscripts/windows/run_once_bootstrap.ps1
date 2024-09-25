@@ -22,3 +22,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 
 # 4. Apply DSC configuration
 & "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+
+# 5. Restart
+Write-Output "Windows environment bootstrapped. Restarting..."
+Restart-Computer

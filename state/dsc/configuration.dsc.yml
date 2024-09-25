@@ -94,6 +94,13 @@ properties:
       settings:
         Ensure: Present
 
+    - resource: WindowsFeature
+      directives:
+        description: Install Windows Subsystem for Linux
+      settings:
+        Name: Microsoft-Windows-Subsystem-Linux
+        Ensure: Present
+
     - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
       directives:
         description: Configure PowerToys
