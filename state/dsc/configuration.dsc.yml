@@ -94,13 +94,6 @@ properties:
       settings:
         Ensure: Present
 
-    - resource: WindowsFeature
-      directives:
-        description: Install Windows Subsystem for Linux
-      settings:
-        Name: Microsoft-Windows-Subsystem-Linux
-        Ensure: Present
-
     - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
       directives:
         description: Configure PowerToys
@@ -846,6 +839,28 @@ properties:
         Id: Microsoft.VisualStudioCode
         Source: winget
         Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWSL
+      directives:
+        description: Install WSL
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.WSL
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installUbuntu
+      directives:
+        description: Install Ubuntu
+        allowPrerelease: true
+      settings:
+        Id: Canonical.Ubuntu.2204
+        Source: winget
+        Ensure: Present
+      dependsOn:
+        - installWSL
 
     #----------------------------------------------------------------------------------------------#
     # Experimental.
