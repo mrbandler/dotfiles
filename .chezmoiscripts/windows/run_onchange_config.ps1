@@ -15,4 +15,4 @@ if (-not ($isAdmin)) {
 }
 
 # 2. Apply DSC configuration
-& "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"

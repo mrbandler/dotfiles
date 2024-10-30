@@ -19,10 +19,13 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 
 # 3. Make sure winget is up-to-date, installed and configure is enabled.
 &([ScriptBlock]::Create((Invoke-RestMethod winget.pro))) -Force
+
+# 4. Install enable winget configure and install the latest PowerShell
 winget configure --enable
+winget install --id Microsoft.PowerShell --silent
 
 # 4. Apply DSC configuration
-& "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
 
 # 5. Restart
 Write-Output "Windows environment bootstrapped. Restarting..."
