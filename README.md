@@ -11,7 +11,7 @@ The following one-liners will download and install [`chezmoi`](https://chezmoi.i
 ### 🪟 Windows
 
 ```powershell
-iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply mrbandler"
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply mrbandler"
 ```
 
 ### 🐧 Linux
