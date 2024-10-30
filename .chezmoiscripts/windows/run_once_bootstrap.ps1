@@ -24,9 +24,13 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 winget configure --enable
 winget install --id Microsoft.PowerShell --silent
 
-# 4. Apply DSC configuration
+# 5. Setup PowerShell profile stubs.
+Set-Content -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
+Set-Content -Path "C:\Users\$env:USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
+
+# 6. Apply DSC configuration
 pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
 
-# 5. Restart
+# 7. Restart
 Write-Output "Windows environment bootstrapped. Restarting..."
 Restart-Computer
