@@ -15,4 +15,5 @@ if (-not ($isAdmin)) {
 }
 
 # 2. Apply DSC configuration
+$env:PATH += ";C:\Program Files\PowerShell\7"
 pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"

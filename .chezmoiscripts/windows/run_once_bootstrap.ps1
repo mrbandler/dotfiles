@@ -14,27 +14,22 @@ if (-not ($isAdmin)) {
     exit
 }
 
-# 2. Set PowerShell execution policy.
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-
-# 3. Make sure winget is up-to-date, installed and configure is enabled.
-&([ScriptBlock]::Create((Invoke-RestMethod winget.pro))) -Force
-
-# 4. Install enable winget configure and install the latest PowerShell
+# 2. Install enable winget configure and install the latest PowerShell
 winget configure --enable
 winget install --id Microsoft.PowerShell --silent --accept-source-agreements --accept-package-agreements
 
-# 5. Setup PowerShell profile stubs.
+# 3. Setup PowerShell profile stubs.
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\PowerShell" -Force
 
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 
-# 6. Apply DSC configuration
+# 4. Apply DSC configuration
+$env:PATH += ";C:\Program Files\PowerShell\7"
 pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
 
-# 7. Prompt for restart
+# 5. Prompt for restart
 Write-Output "Windows environment bootstrapped."
 
 $restartResponse = Read-Host "Restart required. Do you want to restart the computer now? (Y/N)"
