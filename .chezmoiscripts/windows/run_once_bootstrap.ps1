@@ -25,12 +25,22 @@ winget configure --enable
 winget install --id Microsoft.PowerShell --silent
 
 # 5. Setup PowerShell profile stubs.
+New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force
+New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\PowerShell" -Force
+
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 
 # 6. Apply DSC configuration
 pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
 
-# 7. Restart
-Write-Output "Windows environment bootstrapped. Restarting..."
-Restart-Computer
+# 7. Prompt for restart
+Write-Output "Windows environment bootstrapped."
+
+$restartResponse = Read-Host "Restart required. Do you want to restart the computer now? (Y/N)"
+if ($restartResponse -match '^(y|Y)') {
+    Write-Output "Restarting the computer..."
+    Restart-Computer
+} else {
+    Write-Output "Restart skipped. Please restart the computer manually to complete the setup."
+}
