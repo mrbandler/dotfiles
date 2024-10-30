@@ -22,7 +22,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 
 # 4. Install enable winget configure and install the latest PowerShell
 winget configure --enable
-winget install --id Microsoft.PowerShell --silent
+winget install --id Microsoft.PowerShell --silent --accept-source-agreements --accept-package-agreements
 
 # 5. Setup PowerShell profile stubs.
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force
