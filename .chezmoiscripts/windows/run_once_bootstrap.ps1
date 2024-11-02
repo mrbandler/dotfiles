@@ -23,15 +23,17 @@ winget configure --enable
 # pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
 
 # 4. Setup PowerShell profile stubs.
-New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force
-New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\PowerShell" -Force
+New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force | Out-Null
+New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\PowerShell" -Force | Out-Null
 
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 
 # 5. Delete all shortcuts from the desktop
-$desktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop")
-Get-ChildItem -Path $desktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
+$userDesktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop")
+$publicDesktopPath = "C:\Users\Public\Desktop"
+Get-ChildItem -Path $userDesktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
+Get-ChildItem -Path $publicDesktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
 
 # 6. Remove all pinned items from the taskbar
 $taskbandRegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband"
@@ -47,7 +49,7 @@ Start-Process explorer
 $chezmoiStorePath = "$HOME\.local\share\chezmoi"
 $afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\after_bootstrap.ps1")
 $trigger = New-ScheduledTaskTrigger -AtLogOn
-$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$scriptPath`""
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$afterBootstrapScriptPath`""
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -DeleteExpiredTaskAfter 00:00:10
 Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest
 
