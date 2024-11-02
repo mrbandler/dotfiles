@@ -1,2 +1,3 @@
-Read-Host "Yay, the after bootstrap script just ran. Close? [ENTER]"
+winget install --id Canonical.Ubuntu.2204
+
 Unregister-ScheduledTask -TaskName "AfterBootstrap" -Confirm:$false

@@ -19,8 +19,8 @@ winget install --id Microsoft.PowerShell --silent --accept-source-agreements --a
 winget configure --enable
 
 # 3. Apply DSC configuration
-# $env:PATH += ";C:\Program Files\PowerShell\7"
-# pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+$env:PATH += ";C:\Program Files\PowerShell\7"
+pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
 
 # 4. Setup PowerShell profile stubs.
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force | Out-Null
