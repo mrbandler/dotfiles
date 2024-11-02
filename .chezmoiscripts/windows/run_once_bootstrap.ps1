@@ -19,8 +19,8 @@ winget install --id Microsoft.PowerShell --silent --accept-source-agreements --a
 winget configure --enable
 
 # 3. Apply DSC configuration
-$env:PATH += ";C:\Program Files\PowerShell\7"
-pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+# $env:PATH += ";C:\Program Files\PowerShell\7"
+# pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
 
 # 4. Setup PowerShell profile stubs.
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force
@@ -43,7 +43,10 @@ Remove-Item -Path "$taskbarPinnedItemsPath\*" -Force -Recurse -ErrorAction Silen
 Stop-Process -Name explorer -Force
 Start-Process explorer
 
-# 7. Prompt for restart
+# 7. Schedule at logon after bootstrap script.
+echo $pwd
+
+# 8. Prompt for restart
 Write-Output "Windows environment bootstrapped."
 
 $restartResponse = Read-Host "Restart required. Do you want to restart the computer now? (Y/N)"
