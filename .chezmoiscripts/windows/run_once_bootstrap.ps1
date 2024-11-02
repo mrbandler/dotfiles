@@ -35,7 +35,7 @@ Get-ChildItem -Path $desktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_
 
 # 6. Remove all pinned items from the taskbar
 $taskbandRegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband"
-Remove-Item -Path $taskbandRegistryPath -Force -ErrorAction SilentlyContinue
+Remove-ItemProperty -Path $taskbandRegistryPath -Name "Favorites" -Force -ErrorAction SilentlyContinue
 
 $taskbarPinnedItemsPath = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar")
 Remove-Item -Path "$taskbarPinnedItemsPath\*" -Force -Recurse -ErrorAction SilentlyContinue
@@ -44,7 +44,12 @@ Stop-Process -Name explorer -Force
 Start-Process explorer
 
 # 7. Schedule at logon after bootstrap script.
-echo $pwd
+$chezmoiStorePath = "$HOME\.local\share\chezmoi"
+$afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\after_bootstrap.ps1")
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$scriptPath`""
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -DeleteExpiredTaskAfter 00:00:10
+Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest
 
 # 8. Prompt for restart
 Write-Output "Windows environment bootstrapped."
