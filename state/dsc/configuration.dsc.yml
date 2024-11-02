@@ -196,16 +196,16 @@ properties:
         Url: https://de.download.nvidia.com/GFE/GFEClient/3.28.0.417/GeForce_Experience_v3.28.0.417.exe
         Ensure: Present
 
-    - resource: xPkg/PkgDownloadAndInstall
-      id: installFocusriteDriver
-      directives:
-        description: Install Focusrite Scarlett 2i2 USB Audio Interface Driver
-      settings:
-        Name: Focusrite Control 2
-        Type: EXE
-        Arguments: /silent /NORESTART
-        Url: https://releases.focusrite.com/com.focusrite.focusrite-control/latest/Focusrite-Control-2.exe
-        Ensure: Present
+    # - resource: xPkg/PkgDownloadAndInstall
+    #   id: installFocusriteDriver
+    #   directives:
+    #     description: Install Focusrite Scarlett 2i2 USB Audio Interface Driver
+    #   settings:
+    #     Name: Focusrite Control 2
+    #     Type: EXE
+    #     Arguments: /silent /NORESTART
+    #     Url: https://releases.focusrite.com/com.focusrite.focusrite-control/latest/Focusrite-Control-2.exe
+    #     Ensure: Present
 
     #----------------------------------------------------------------------------------------------#
     # Fonts.
@@ -268,27 +268,16 @@ properties:
       dependsOn:
         - installScoop
 
-    - resource: xScoop/ScoopApp
-      id: installGsudo
-      directives:
-        description: Install gsudo
-      settings:
-        Name: gsudo
-        NoUpdateScoop: true
-        Ensure: Present
-      dependsOn:
-        - installScoop
-
-    - resource: xScoop/ScoopApp
-      id: installFastfetch
-      directives:
-        description: Install fastfetch
-      settings:
-        Name: fastfetch
-        NoUpdateScoop: true
-        Ensure: Present
-      dependsOn:
-        - installScoop
+    # - resource: xScoop/ScoopApp
+    #   id: installGsudo
+    #   directives:
+    #     description: Install gsudo
+    #   settings:
+    #     Name: gsudo
+    #     NoUpdateScoop: true
+    #     Ensure: Present
+    #   dependsOn:
+    #     - installScoop
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installCryptomator
@@ -377,6 +366,16 @@ properties:
         allowPrerelease: true
       settings:
         Id: voidtools.Everything
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFlow
+      directives:
+        description: Install Flow
+        allowPrerelease: true
+      settings:
+        Id: Flow-Launcher.Flow-Launcher
         Source: winget
         Ensure: Present
 
@@ -775,6 +774,17 @@ properties:
     # Develop.
     #----------------------------------------------------------------------------------------------#
     - resource: xScoop/ScoopApp
+      id: installFastfetch
+      directives:
+        description: Install fastfetch
+      settings:
+        Name: fastfetch
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
       id: installMake
       directives:
         description: Install make
@@ -792,7 +802,6 @@ properties:
       settings:
         Name: nvm
         NoUpdateScoop: true
-        After: nvm install lts; nvm use lts
         Ensure: Present
       dependsOn:
         - installScoop
@@ -804,7 +813,6 @@ properties:
       settings:
         Name: pyenv
         NoUpdateScoop: true
-        # After: pyenv install 3.11.0b4; pyenv install 2.7.18
         Ensure: Present
       dependsOn:
         - installScoop
@@ -821,12 +829,42 @@ properties:
         - installScoop
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installStarship
+      directives:
+        description: Install Starship
+        allowPrerelease: true
+      settings:
+        Id: Starship.Starship
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installWindowsTerminal
       directives:
         description: Install Windows Terminal
         allowPrerelease: true
       settings:
         Id: Microsoft.WindowsTerminal
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWezterm
+      directives:
+        description: Install wezterm
+        allowPrerelease: true
+      settings:
+        Id: wez.wezterm
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installRider
+      directives:
+        description: Install Rider
+        allowPrerelease: true
+      settings:
+        Id: JetBrains.Rider
         Source: winget
         Ensure: Present
 
@@ -841,6 +879,26 @@ properties:
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEmacs
+      directives:
+        description: Install Emacs
+        allowPrerelease: true
+      settings:
+        Id: GNU.Emacs
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installNeovim
+      directives:
+        description: Install Neovim
+        allowPrerelease: true
+      settings:
+        Id: Neovim.Neovim
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installWSL
       directives:
         description: Install WSL
@@ -850,33 +908,20 @@ properties:
         Source: winget
         Ensure: Present
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: installUbuntu
-      directives:
-        description: Install Ubuntu
-        allowPrerelease: true
-      settings:
-        Id: Canonical.Ubuntu.2204
-        Source: winget
-        Ensure: Present
-      dependsOn:
-        - installWSL
+    # - resource: Microsoft.WinGet.DSC/WinGetPackage
+    #   id: installUbuntu
+    #   directives:
+    #     description: Install Ubuntu
+    #     allowPrerelease: true
+    #   settings:
+    #     Id: Canonical.Ubuntu.2204
+    #     Source: winget
+    #     Ensure: Present
+    #   dependsOn:
+    #     - installWSL
 
     #----------------------------------------------------------------------------------------------#
     # Experimental.
     #----------------------------------------------------------------------------------------------#
-
-    #----------------------------------------------------------------------------------------------#
-    # Templates.
-    #----------------------------------------------------------------------------------------------#
-    # - resource: cChoco/cChocoPackageInstaller
-    #   id: installGoogleDrive
-    #   directives:
-    #     description: Install Google Drive
-    #   settings:
-    #     Name: googledrive
-    #     Ensure: Present
-    #   dependsOn:
-    #     - installChoco
 
   configurationVersion: "0.2.0"

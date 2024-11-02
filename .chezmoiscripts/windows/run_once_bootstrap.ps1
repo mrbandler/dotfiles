@@ -18,18 +18,32 @@ if (-not ($isAdmin)) {
 winget configure --enable
 winget install --id Microsoft.PowerShell --silent --accept-source-agreements --accept-package-agreements
 
-# 3. Setup PowerShell profile stubs.
+# 3. Apply DSC configuration
+$env:PATH += ";C:\Program Files\PowerShell\7"
+pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+
+# 4. Setup PowerShell profile stubs.
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\PowerShell" -Force
 
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 
-# 4. Apply DSC configuration
-$env:PATH += ";C:\Program Files\PowerShell\7"
-pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+# 5. Delete all shortcuts from the desktop
+$desktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop")
+Get-ChildItem -Path $desktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
 
-# 5. Prompt for restart
+# 6. Remove all pinned items from the taskbar
+$taskbandRegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband"
+Remove-Item -Path $taskbandRegistryPath -Force -ErrorAction SilentlyContinue
+
+$taskbarPinnedItemsPath = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar")
+Remove-Item -Path "$taskbarPinnedItemsPath\*" -Force -Recurse -ErrorAction SilentlyContinue
+
+Stop-Process -Name explorer -Force
+Start-Process explorer
+
+# 7. Prompt for restart
 Write-Output "Windows environment bootstrapped."
 
 $restartResponse = Read-Host "Restart required. Do you want to restart the computer now? (Y/N)"
