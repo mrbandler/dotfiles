@@ -11,7 +11,7 @@
 
 ## 📥 Installation
 
-#### ⚠️ **WARNING: THESE COMMANDS WILL MODIFIY YOUR SYSTEM!**
+### ⚠️ **WARNING: THESE COMMANDS WILL MODIFIY YOUR SYSTEM!**
 
 ---
 
