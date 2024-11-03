@@ -5,7 +5,8 @@ foreach ($module in $modules) {
     try {
         Write-Host "Importing module: $($module.FullName)"
         Import-Module -Name $module.FullName -Verbose -ErrorAction Stop -Force
-    } catch {
+    }
+    catch {
         Write-Error "Failed to import module: $($module.FullName). Error: $_"
     }
 }

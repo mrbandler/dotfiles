@@ -119,23 +119,25 @@ class PkgDownloadAndInstall {
             if ($this.Ensure -eq [Ensure]::Present) {
                 $installerPath = [System.IO.Path]::GetTempFileName();
 
-                if ($this.Type -eq [InstallerType]::MSI) { 
+                if ($this.Type -eq [InstallerType]::MSI) {
                     $installerPath += ".msi"
                     $installerArgs = "$installerPath $($this.Arguments)"
 
                     Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
                     Start-Process msiexec -ArgumentList $installerArgs -Wait
-                } elseif ($this.Type -eq [InstallerType]::EXE) {
-                     $installerPath += ".exe" 
+                }
+                elseif ($this.Type -eq [InstallerType]::EXE) {
+                    $installerPath += ".exe"
 
                     Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
                     Start-Process -FilePath $installerPath -ArgumentList $this.Arguments -Wait
-                } elseif ($this.Type -eq [InstallerType]::ZIP) {
+                }
+                elseif ($this.Type -eq [InstallerType]::ZIP) {
                     if ([string]::IsNullOrEmpty($this.ZipInstall)) { throw "Unable to install, ZipInstall was not specified" }
-                    
+
                     $installerPath += ".zip"
                     Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
-                    
+
                     $unzippedPath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetRandomFileName())
                     New-Item -ItemType Directory -Path $unzippedPath -Force | Out-Null
                     Expand-Archive -Path $installerPath -DestinationPath $unzippedPath
@@ -147,14 +149,15 @@ class PkgDownloadAndInstall {
                     Invoke-Expression $cmd | Out-Null
 
                     Remove-Item -Path $unzippedPath -Recurse -Force
-                } elseif ($this.Type -eq [InstallerType]::SEVENZIP) {
+                }
+                elseif ($this.Type -eq [InstallerType]::SEVENZIP) {
                     if ([string]::IsNullOrEmpty($this.ZipInstall)) { throw "Unable to install, ZipInstall was not specified" }
-                    
+
                     Add-ScoopToPath
 
                     $installerPath += ".7z"
                     Invoke-WebRequest -Uri $this.Url -OutFile $installerPath -Headers $this.Headers
-                    
+
                     $unzippedPath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetRandomFileName())
                     New-Item -ItemType Directory -Path $unzippedPath -Force | Out-Null
                     $unzipCmd = "7z x $installerPath -o$unzippedPath -y"
@@ -167,7 +170,8 @@ class PkgDownloadAndInstall {
                     Invoke-Expression $cmd | Out-Null
 
                     Remove-Item -Path $unzippedPath -Recurse -Force
-                } else { throw "Unknown installer type." }
+                }
+                else { throw "Unknown installer type." }
 
                 Remove-Item -Path $installerPath -Force
             }

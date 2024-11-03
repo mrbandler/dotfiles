@@ -60,6 +60,7 @@ $restartResponse = Read-Host "Restart required. Do you want to restart the compu
 if ($restartResponse -match '^(y|Y)') {
     Write-Output "Restarting the computer..."
     Restart-Computer
-} else {
+}
+else {
     Write-Output "Restart skipped. Please restart the computer manually to complete the setup."
 }
