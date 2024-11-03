@@ -20,7 +20,7 @@ winget configure --enable
 
 # 3. Apply DSC configuration
 $env:PATH += ";C:\Program Files\PowerShell\7"
-pwsh "$HOME\.local\share\chezmoi\state\dsc\apply.ps1"
+pwsh "$HOME\.local\share\chezmoi\chezmoi\state\dsc\apply.ps1"
 
 # 4. Setup PowerShell profile stubs.
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force | Out-Null
@@ -46,7 +46,7 @@ Stop-Process -Name explorer -Force
 Start-Process explorer
 
 # 7. Schedule at logon after bootstrap script.
-$chezmoiStorePath = "$HOME\.local\share\chezmoi"
+$chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
 $afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\after_bootstrap.ps1")
 $trigger = New-ScheduledTaskTrigger -AtLogOn
 $action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$afterBootstrapScriptPath`""
