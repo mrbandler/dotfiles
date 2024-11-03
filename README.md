@@ -11,9 +11,11 @@
 
 ## 📥 Installation
 
-The following one-liners will download and install [`chezmoi`](https://chezmoi.io/), and initialize it with this repository.
-
 > ⚠️ **WARNING: THESE COMMANDS WILL MODIFIY YOUR SYSTEM!**
+
+---
+
+The following one-liners will download and install [`chezmoi`](https://chezmoi.io/), and initialize it with this repository.
 
 ### 🪟 Windows
 
@@ -26,6 +28,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex "&{$(irm 'https://get.chez
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io) -- init --apply mrbandler"
 ```
+
+---
 
 ### ❄️ NixOS
 
