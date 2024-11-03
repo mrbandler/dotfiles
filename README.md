@@ -4,9 +4,9 @@
 
 ## 📥 Installation
 
-The following one-liners will download and install [`chezmoi`](https://chezmoi.io/) and initialize it with this repository.
+The following one-liners will download and install [`chezmoi`](https://chezmoi.io/), and initialize it with this repository.
 
-> ⚠️ This also runs scripts (**USE WITH CAUTION, THIS WILL MODIFIY YOUR SYSTEM!**).
+> ⚠️ **WARNING: WILL MODIFIY YOUR SYSTEM!**
 
 ### 🪟 Windows
 
@@ -19,3 +19,28 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex "&{$(irm 'https://get.chez
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io) -- init --apply mrbandler"
 ```
+
+### ❄️ NixOS
+
+```bash
+Coming soon...
+```
+
+## ✅ To-Do's
+
+### 🪟 Windows
+
+- [x] Boostrapping
+- [ ] DSC-based State Configuration
+  - [x] Debloat
+  - [ ] Settings
+  - [x] Package Management (Download & Install, winget, choco, scoop)
+- [ ] dotfiles
+
+### 🐧 Linux
+
+**_TBD_**
+
+### ❄️ Nix
+
+**_TBD_**
