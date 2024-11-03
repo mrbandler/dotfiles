@@ -13,7 +13,7 @@
 
 The following one-liners will download and install [`chezmoi`](https://chezmoi.io/), and initialize it with this repository.
 
-> ⚠️ **WARNING: THESEWILL MODIFIY YOUR SYSTEM!**
+> ⚠️ **WARNING: THESE COMMANDS WILL MODIFIY YOUR SYSTEM!**
 
 ### 🪟 Windows
 
