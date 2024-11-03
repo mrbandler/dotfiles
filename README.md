@@ -35,7 +35,8 @@ Coming soon...
   - [x] Debloat
   - [ ] Settings
   - [x] Package Management (Download & Install, winget, choco, scoop)
-- [ ] dotfiles
+- [ ] Configuration Files
+- [ ] Secret Management
 
 ### 🐧 Linux
 
