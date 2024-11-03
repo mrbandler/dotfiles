@@ -829,6 +829,68 @@ properties:
         - installScoop
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFork
+      directives:
+        description: Install Fork
+        allowPrerelease: true
+      settings:
+        Id: Fork.Fork
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installDockerCLI
+      directives:
+        description: Install Docker CLI
+        allowPrerelease: true
+      settings:
+        Id: Docker.DockerCLI
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installDockerDesktop
+      directives:
+        description: Install Docker Desktop
+        allowPrerelease: true
+      settings:
+        Id: Docker.DockerDesktop
+        Source: winget
+        Ensure: Present
+      dependsOn:
+        - installDockerCLI
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGodot
+      directives:
+        description: Install Godot
+        allowPrerelease: true
+      settings:
+        Id: GodotEngine.GodotEngine.Mono
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installUnityHub
+      directives:
+        description: Install Unity Hub
+        allowPrerelease: true
+      settings:
+        Id: Unity.UnityHub
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installDevToys
+      directives:
+        description: Install DevToys
+        allowPrerelease: true
+      settings:
+        Id: DevToys-app.DevToys
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installStarship
       directives:
         description: Install Starship
@@ -908,20 +970,27 @@ properties:
         Source: winget
         Ensure: Present
 
-    # - resource: Microsoft.WinGet.DSC/WinGetPackage
-    #   id: installUbuntu
-    #   directives:
-    #     description: Install Ubuntu
-    #     allowPrerelease: true
-    #   settings:
-    #     Id: Canonical.Ubuntu.2204
-    #     Source: winget
-    #     Ensure: Present
-    #   dependsOn:
-    #     - installWSL
-
     #----------------------------------------------------------------------------------------------#
     # Experimental.
     #----------------------------------------------------------------------------------------------#
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installSpacedrive
+      directives:
+        description: Install Spacedrive
+        allowPrerelease: true
+      settings:
+        Id: spacedrive.Spacedrive
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installOpenRGB
+      directives:
+        description: Install OpenRGB
+        allowPrerelease: true
+      settings:
+        Id: CalcProgrammer1.OpenRGB
+        Source: winget
+        Ensure: Present
 
   configurationVersion: "0.2.0"
