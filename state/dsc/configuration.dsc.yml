@@ -881,6 +881,16 @@ properties:
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installNushell
+      directives:
+        description: Install nushell
+        allowPrerelease: true
+      settings:
+        Id: Nushell.Nushell
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installDevToys
       directives:
         description: Install DevToys
