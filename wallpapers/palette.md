@@ -1,4 +1,4 @@
-### 🎨 Colors
+### 🎨 [Colors](https://catppuccin.com/palette)
 
 | Part                       | Name      | Latte   | Frappe  | Macchiato | Mocha   |
 | -------------------------- | --------- | ------- | ------- | --------- | ------- |
