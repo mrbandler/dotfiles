@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  configurationVersion: "0.2.0"
+  resources:
+    - resource: xDebloat/Debloat
+      directives:
+        description: Debloat Windows
+      settings:
+        Config:
+          RunDefaults: false
+          RemoveApps: true
+          RemoveAppsCustom: true
+          RemoveAppsCustomList:
+            - Microsoft.OneDrive
+          RemoveCommApps: true
+          RemoveW11Outlook: true
+          RemoveDevApps: false
+          RemoveGamingApps: false
+          ForceRemoveEdge: false
+          DisableDVR: false
+          DisableTelemetry: true
+          DisableBing: true
+          DisableSuggestions: true
+          DisableLockscreenTips: true
+          ShowHiddenFolders: true
+          ShowKnownFileExt: true
+          HideDupliDrive: true
+          HideChat: true
+          DisableWidgets: true
+          Win11:
+            ClearStart: true
+            ClearStartAllUsers: true
+            RevertContextMenu: true
+            TaskbarAlignLeft: false
+            HideSearchTb: true
+            ShowSearchIconTb: false
+            ShowSearchLabelTb: false
+            ShowSearchBoxTb: false
+            HideTaskview: true
+            DisableCopilot: true
+            DisableRecall: true
+            HideHome: true
+            HideGallery: true
+          Win10:
+            HideOnedrive: true
+            Hide3dObjects: true
+            HideMusic: true
+            HideIncludeInLibrary: true
+            HideGiveAccessTo: true
+            HideShare: true
+
+    - resource: Microsoft.Windows.Developer/EnableDarkMode
+      directives:
+        description: Enable Dark Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present
+        RestartExplorer: true
+
+    - resource: Microsoft.Windows.Developer/Taskbar
+      directives:
+        description: Configure Taskbar
+        allowPrerelease: true
+      settings:
+        Alignment: Middle
+        SearchboxMode: Hide
+        TaskViewButton: Hide
+        RestartExplorer: true
+
+    - resource: Microsoft.Windows.Developer/WindowsExplorer
+      directives:
+        description: Configure Explorer
+        allowPrerelease: true
+      settings:
+        FileExtensions: Show
+        HiddenFiles: Show
+        ItemCheckBoxes: Hide
+        RestartExplorer: true
+
+    - resource: Microsoft.Windows.Developer/DeveloperMode
+      directives:
+        description: Enable Developer Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present
+
+    - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
+      directives:
+        description: Configure PowerToys
+      settings:
+        GeneralSettings:
+          Startup: true
+          Theme: system
+          ShowNewUpdatesToastNotification: false
+          AutoDownloadUpdates: true
+          ShowWhatsNewAfterUpdates: false
+        FancyZones:
+          Enabled: true
+      dependsOn:
+        - installPowerToys

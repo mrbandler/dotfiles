@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  configurationVersion: "0.2.0"
+  resources:
+    - resource: xScoop/ScoopInstall
+      id: installScoop
+      directives:
+        description: Install Scoop
+      settings:
+        Ensure: Present
+
+    - resource: xScoop/ScoopBucket
+      id: installScoopExtras
+      directives:
+        description: Install Scoop extras bucket
+      settings:
+        Name: extras
+        Ensure: Present
+      dependsOn:
+        - installGit
+        - install7zip
+
+    - resource: xScoop/ScoopBucket
+      id: installScoopNerdFonts
+      directives:
+        description: Install Scoop nerd-fonts bucket
+      settings:
+        Name: nerd-fonts
+        Ensure: Present
+      dependsOn:
+        - installGit
+        - install7zip
+
+    - resource: xChoco/ChocoInstall
+      id: installChoco
+      directives:
+        description: Install Chocolatey
+      settings:
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installUniGetUI
+      directives:
+        description: Install UniGetUI
+        allowPrerelease: true
+      settings:
+        Id: MartiCliment.UniGetUI
+        Source: winget
+        Ensure: Present
