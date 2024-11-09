@@ -16,6 +16,6 @@ $modulesPath = "$PSScriptRoot/modules"
 $env:PSModulePath = "$env:PSModulePath;$modulesPath"
 
 $hostName = $env:COMPUTERNAME.ToLower()
-./merge.ps1 -File "$PSScriptRoot/hosts/$hostName.yml" -Output $configPath
+./merge.ps1 -Path "$PSScriptRoot/hosts/$hostName.yml" -Output $configPath
 
 winget configure test -f $configPath --verbose --disable-interactivity --accept-configuration-agreements
