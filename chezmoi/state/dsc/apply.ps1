@@ -11,5 +11,5 @@ if (-not (Test-Path $hostConfigPath)) {
 }
 
 Remove-Item -Path $configPath -Force -ErrorAction SilentlyContinue
-./build.ps1 -Path "$PSScriptRoot/hosts/$hostName.yml" -Output $configPath
+& "$PSScriptRoot/build.ps1" -Path "$PSScriptRoot/hosts/$hostName.yml" -Output $configPath
 winget configure -f $configPath --verbose --disable-interactivity --accept-configuration-agreements
