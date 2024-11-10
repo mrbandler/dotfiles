@@ -45,7 +45,10 @@ Remove-Item -Path "$taskbarPinnedItemsPath\*" -Force -Recurse -ErrorAction Silen
 Stop-Process -Name explorer -Force
 Start-Process explorer
 
-# 7. Schedule at logon after bootstrap script.
+# 7. Sign into 1Password CLI to allow the
+Invoke-Expression $(op signin)
+
+# 8. Schedule at logon after bootstrap script.
 $chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
 $afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\after_bootstrap.ps1")
 $trigger = New-ScheduledTaskTrigger -AtLogOn
@@ -53,8 +56,14 @@ $action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -Executi
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest
 
-# 8. Prompt for restart
-Write-Output "Windows environment bootstrapped."
+# 9. Schedule restart
+$chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
+$restartBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\restart_bootstrap.ps1")
+$startTime = (Get-Date).AddSeconds(30).ToString("HH:mm")
+$trigger = New-ScheduledTaskTrigger -Once -At $startTime
+$action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$afterBootstrapScriptPath`""
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+Register-ScheduledTask -TaskName "RestartBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "Restarts the computer after a specified delay following the main script execution." -User "$env:USERNAME" -RunLevel Highest
 
 $restartResponse = Read-Host "Restart required. Do you want to restart the computer now? (Y/N)"
 if ($restartResponse -match '^(y|Y)') {
@@ -62,5 +71,5 @@ if ($restartResponse -match '^(y|Y)') {
     Restart-Computer
 }
 else {
-    Write-Output "Restart skipped. Please restart the computer manually to complete the setup."
+    Write-Output "Restart skipped. Please restart the computer manually to complete bootstrapping."
 }
