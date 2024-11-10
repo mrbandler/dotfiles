@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installSteam
+      directives:
+        description: Install Steam
+        allowPrerelease: true
+      settings:
+        Id: Valve.Steam
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEpicGames
+      directives:
+        description: Install Epic Games
+        allowPrerelease: true
+      settings:
+        Id: EpicGames.EpicGamesLauncher
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGogGalaxy
+      directives:
+        description: Install GOG Galaxy
+        allowPrerelease: true
+      settings:
+        Id: GOG.Galaxy
+        Source: winget
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installBattleNet
+      directives:
+        description: Install Battle.net
+      settings:
+        Name: Battle.net
+        Type: EXE
+        Arguments: --lang=enUS --installpath="C:\Program Files (x86)\Battle.net"
+        Url: https://downloader.battle.net//download/getInstallerForGame?os=win&gameProgram=BATTLENET_APP&version=Live
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEaApp
+      directives:
+        description: Install EA App
+        allowPrerelease: true
+      settings:
+        Id: ElectronicArts.EADesktop
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installUbisoftConnect
+      directives:
+        description: Install Ubisoft Connect
+        allowPrerelease: true
+      settings:
+        Id: Ubisoft.Connect
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installItch
+      directives:
+        description: Install Itch.io
+        allowPrerelease: true
+      settings:
+        Id: ItchIo.Itch
+        Source: winget
+        Ensure: Present

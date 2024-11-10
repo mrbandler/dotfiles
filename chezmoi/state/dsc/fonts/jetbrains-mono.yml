@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../pm.scoop.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xScoop/ScoopApp
+      id: installJetBrainsMono
+      directives:
+        description: Install JetBrains Mono
+      settings:
+        Name: JetBrains-Mono
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoopNerdFonts
+
+    - resource: xScoop/ScoopApp
+      id: installJetBrainsMonoNF
+      directives:
+        description: Install JetBrains Mono NF
+      settings:
+        Name: JetBrains-Mono-NF-Mono
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoopNerdFonts

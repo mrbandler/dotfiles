@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installSpacedrive
+      directives:
+        description: Install Spacedrive
+        allowPrerelease: true
+      settings:
+        Id: spacedrive.Spacedrive
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installOpenRGB
+      directives:
+        description: Install OpenRGB
+        allowPrerelease: true
+      settings:
+        Id: CalcProgrammer1.OpenRGB
+        Source: winget
+        Ensure: Present

@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installLedgerLive
+      directives:
+        description: Install Ledger Live
+        allowPrerelease: true
+      settings:
+        Id: LedgerHQ.LedgerLive
+        Source: winget
+        Ensure: Present

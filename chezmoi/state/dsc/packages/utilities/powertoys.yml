@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installPowerToys
+      directives:
+        description: Install PowerToys
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.PowerToys
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
+      id: configurePowerToys
+      directives:
+        description: Configure PowerToys
+      settings:
+        GeneralSettings:
+          Startup: true
+          Theme: system
+          ShowNewUpdatesToastNotification: false
+          AutoDownloadUpdates: true
+          ShowWhatsNewAfterUpdates: false
+        FancyZones:
+          Enabled: true
+      dependsOn:
+        - installPowerToys

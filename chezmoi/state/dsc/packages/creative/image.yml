@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installKrita
+      directives:
+        description: Install Krita
+        allowPrerelease: true
+      settings:
+        Id: KDE.Krita
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installInkscape
+      directives:
+        description: Install Inkscape
+        allowPrerelease: true
+      settings:
+        Id: Inkscape.Inkscape
+        Source: winget
+        Ensure: Present

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installWacomDriver
+      directives:
+        description: Install Wacom Driver
+      settings:
+        Name: Wacom Tablet
+        Type: EXE
+        Arguments: /silent /NORESTART
+        Url: https://cdn.wacom.com/u/productsupport/drivers/win/professional/WacomTablet_6.4.7-3.exe
+        Ensure: Present

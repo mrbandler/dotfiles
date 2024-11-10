@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installRider
+      directives:
+        description: Install Rider
+        allowPrerelease: true
+      settings:
+        Id: JetBrains.Rider
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVisualStudioCode
+      directives:
+        description: Install Visual Studio Code
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.VisualStudioCode
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEmacs
+      directives:
+        description: Install Emacs
+        allowPrerelease: true
+      settings:
+        Id: GNU.Emacs
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installNeovim
+      directives:
+        description: Install Neovim
+        allowPrerelease: true
+      settings:
+        Id: Neovim.Neovim
+        Source: winget
+        Ensure: Present

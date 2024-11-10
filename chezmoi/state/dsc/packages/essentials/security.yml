@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installCryptomator
+      directives:
+        description: Install Cryptmator
+        allowPrerelease: true
+      settings:
+        Id: Cryptomator.Cryptomator
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVeraCrypt
+      directives:
+        description: Install VeraCrypt
+        allowPrerelease: true
+      settings:
+        Id: IDRIX.VeraCrypt
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: install1Password
+      directives:
+        description: Install 1Password
+        allowPrerelease: true
+      settings:
+        Id: AgileBits.1Password
+        Source: winget
+        Ensure: Present

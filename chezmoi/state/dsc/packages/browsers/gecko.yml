@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installZen
+      directives:
+        description: Install Zen
+        allowPrerelease: true
+      settings:
+        Id: Zen-Team.Zen-Browser
+        Source: winget
+        Ensure: Present

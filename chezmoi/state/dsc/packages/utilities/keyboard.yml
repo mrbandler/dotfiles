@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installUHKAgent
+      directives:
+        description: Install UHK Agent
+      settings:
+        Name: UHK Agent
+        Type: EXE
+        Arguments: /silent /NORESTART
+        Url: https://github.com/UltimateHackingKeyboard/agent/releases/download/v4.2.1/UHK.Agent-4.2.1-win.exe
+        Ensure: Present

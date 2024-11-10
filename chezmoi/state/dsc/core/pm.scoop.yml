@@ -1,6 +1,8 @@
 # yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
 properties:
   configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
   resources:
     - resource: xScoop/ScoopInstall
       id: installScoop
@@ -31,19 +33,24 @@ properties:
         - installGit
         - install7zip
 
-    - resource: xChoco/ChocoInstall
-      id: installChoco
+    - resource: xScoop/ScoopApp
+      id: install7zip
       directives:
-        description: Install Chocolatey
+        description: Install 7-Zip
       settings:
+        Name: 7zip
+        NoUpdateScoop: true
         Ensure: Present
+      dependsOn:
+        - installScoop
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: installUniGetUI
+    - resource: xScoop/ScoopApp
+      id: installGit
       directives:
-        description: Install UniGetUI
-        allowPrerelease: true
+        description: Install Git
       settings:
-        Id: MartiCliment.UniGetUI
-        Source: winget
+        Name: git
+        NoUpdateScoop: true
         Ensure: Present
+      dependsOn:
+        - installScoop

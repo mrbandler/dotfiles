@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xScoop/ScoopApp
+      id: installNvm
+      directives:
+        description: Install nvm
+      settings:
+        Name: nvm
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installRustup
+      directives:
+        description: Install rustup
+      settings:
+        Name: rustup
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop

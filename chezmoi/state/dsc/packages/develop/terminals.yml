@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWindowsTerminal
+      directives:
+        description: Install Windows Terminal
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.WindowsTerminal
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWezterm
+      directives:
+        description: Install wezterm
+        allowPrerelease: true
+      settings:
+        Id: wez.wezterm
+        Source: winget
+        Ensure: Present

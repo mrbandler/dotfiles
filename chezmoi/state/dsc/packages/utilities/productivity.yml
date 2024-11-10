@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonMail
+      directives:
+        description: Install Proton Mail
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonMail
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonVPN
+      directives:
+        description: Install Proton VPN
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonVPN
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installNotion
+      directives:
+        description: Install Notion
+        allowPrerelease: true
+      settings:
+        Id: Notion.Notion
+        Source: winget
+        Ensure: Present

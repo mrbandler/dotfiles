@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGlazeWM
+      directives:
+        description: Install GlazeWM
+        allowPrerelease: true
+      settings:
+        Id: glzr-io.glazewm
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFlow
+      directives:
+        description: Install Flow
+        allowPrerelease: true
+      settings:
+        Id: Flow-Launcher.Flow-Launcher
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installZoomIt
+      directives:
+        description: Install ZoomIt
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.Sysinternals.ZoomIt
+        Source: winget
+        Ensure: Present

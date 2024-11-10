@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBlender
+      directives:
+        description: Install Blender
+        allowPrerelease: true
+      settings:
+        Id: BlenderFoundation.Blender
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBlockbench
+      directives:
+        description: Install Blockbench
+        allowPrerelease: true
+      settings:
+        Id: JannisX11.Blockbench
+        Source: winget
+        Ensure: Present

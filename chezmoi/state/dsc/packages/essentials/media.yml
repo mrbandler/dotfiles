@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVLC
+      directives:
+        description: Install VLC
+        allowPrerelease: true
+      settings:
+        Id: VideoLAN.VLC
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFlameshot
+      directives:
+        description: Install Flameshot
+        allowPrerelease: true
+      settings:
+        Id: Flameshot.Flameshot
+        Source: winget
+        Ensure: Present

@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ./audio.yml
+  - path: ./image.yml
+  - path: ./storage.yml
+  - path: ./three-d.yml
+  - path: ./video.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources: []

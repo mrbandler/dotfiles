@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ./cli.yml
+  - path: ./desktop.yml
+  - path: ./editors.yml
+  - path: ./engines.yml
+  - path: ./languages.yml
+  - path: ./terminals.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources: []

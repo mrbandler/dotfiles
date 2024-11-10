@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFork
+      directives:
+        description: Install Fork
+        allowPrerelease: true
+      settings:
+        Id: Fork.Fork
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installDockerDesktop
+      directives:
+        description: Install Docker Desktop
+        allowPrerelease: true
+      settings:
+        Id: Docker.DockerDesktop
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installDevToys
+      directives:
+        description: Install DevToys
+        allowPrerelease: true
+      settings:
+        Id: DevToys-app.DevToys
+        Source: winget
+        Ensure: Present

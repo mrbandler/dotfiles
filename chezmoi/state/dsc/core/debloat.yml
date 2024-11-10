@@ -1,8 +1,11 @@
 # yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
 properties:
   configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
   resources:
     - resource: xDebloat/Debloat
+      id: debloat
       directives:
         description: Debloat Windows
       settings:
@@ -48,53 +51,3 @@ properties:
             HideIncludeInLibrary: true
             HideGiveAccessTo: true
             HideShare: true
-
-    - resource: Microsoft.Windows.Developer/EnableDarkMode
-      directives:
-        description: Enable Dark Mode
-        allowPrerelease: true
-      settings:
-        Ensure: Present
-        RestartExplorer: true
-
-    - resource: Microsoft.Windows.Developer/Taskbar
-      directives:
-        description: Configure Taskbar
-        allowPrerelease: true
-      settings:
-        Alignment: Middle
-        SearchboxMode: Hide
-        TaskViewButton: Hide
-        RestartExplorer: true
-
-    - resource: Microsoft.Windows.Developer/WindowsExplorer
-      directives:
-        description: Configure Explorer
-        allowPrerelease: true
-      settings:
-        FileExtensions: Show
-        HiddenFiles: Show
-        ItemCheckBoxes: Hide
-        RestartExplorer: true
-
-    - resource: Microsoft.Windows.Developer/DeveloperMode
-      directives:
-        description: Enable Developer Mode
-        allowPrerelease: true
-      settings:
-        Ensure: Present
-
-    - resource: Microsoft.PowerToys.Configure/PowerToysConfigure
-      directives:
-        description: Configure PowerToys
-      settings:
-        GeneralSettings:
-          Startup: true
-          Theme: system
-          ShowNewUpdatesToastNotification: false
-          AutoDownloadUpdates: true
-          ShowWhatsNewAfterUpdates: false
-        FancyZones:
-          Enabled: true
-      dependsOn:
-        - installPowerToys

@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installDiscord
+      directives:
+        description: Install Discord
+        allowPrerelease: true
+      settings:
+        Id: Discord.Discord
+        Source: winget
+        Ensure: Absent
+
+    - resource: cChoco/cChocoPackageInstaller
+      id: installDiscord
+      directives:
+        description: Install Discord
+      settings:
+        Name: betterdiscord
+        Ensure: Present
+      dependsOn:
+        - installChoco
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installTelegram
+      directives:
+        description: Install Telegram
+        allowPrerelease: true
+      settings:
+        Id: Telegram.TelegramDesktop
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWhatsapp
+      directives:
+        description: Install Whatsapp
+        allowPrerelease: true
+      settings:
+        Id: 9NKSQGP7F2NH
+        Source: msstore
+        Ensure: Present

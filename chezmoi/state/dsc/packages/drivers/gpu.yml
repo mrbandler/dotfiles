@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installAmdGraphicsDriver
+      directives:
+        description: Install AMD Graphics Driver
+      settings:
+        If: $(Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*AMD*'}) -ne $null
+        Name: AMD Software
+        Type: EXE
+        Arguments: /S
+        Url: https://drivers.amd.com/drivers/installer/24.10/whql/amd-software-adrenalin-edition-24.8.1-minimalsetup-240829_web.exe
+        Headers:
+          Sec-Fetch-Site: same-site
+          Pragma: no-cache
+          Sec-Fetch-Mode: navigate
+          Sec-Fetch-User: "?1"
+          Upgrade-Insecure-Requests: "1"
+          Referer: https://www.amd.com/
+        Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installNvidiaGraphicsDriver
+      directives:
+        description: Install NVIDIA Graphics Driver
+      settings:
+        If: $(Get-WmiObject -Query 'SELECT * FROM Win32_VideoController' | Where-Object {$_.Name -like '*NVIDIA*'}) -ne $null
+        Name: NVIDIA GeForce Experience
+        Type: EXE
+        Arguments: /S
+        Url: https://de.download.nvidia.com/GFE/GFEClient/3.28.0.417/GeForce_Experience_v3.28.0.417.exe
+        Ensure: Present

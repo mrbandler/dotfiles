@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installMudstack
+      directives:
+        description: Install Mudstack
+      settings:
+        Name: mudstack
+        Type: EXE
+        Arguments: /S
+        Url: https://mudstack-desktop.s3.amazonaws.com/mudstack_windows_latest.exe
+        Ensure: Present

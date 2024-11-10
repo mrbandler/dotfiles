@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installRPCS3
+      directives:
+        description: Install RPCS3
+      settings:
+        Name: RPCS3
+        Type: SEVENZIP
+        Arguments: ""
+        ZipInstall: |
+          $startMenuDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\RPCS3"
+          $startMenuShortcut = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\RPCS3\RPCS3.lnk"
+          $sourceDir = ${unzipped}
+          $targetDir = "C:\ProgramData\RPCS3"
+          $exePath = "$targetDir\rpcs3.exe"
+
+          if (-not (Test-Path -Path $startMenuDir)) { New-Item -ItemType Directory -Path $startMenuDir | Out-Null }
+          if (-not (Test-Path -Path $targetDir)) { New-Item -ItemType Directory -Path $targetDir | Out-Null }
+
+          Copy-Item -Path "$sourceDir\*" -Destination $targetDir -Recurse -Force
+
+          $wshell = New-Object -ComObject WScript.Shell
+          $shortcut = $wshell.CreateShortcut($startMenuShortcut)
+          $shortcut.TargetPath = $exePath
+          $shortcut.WorkingDirectory = $targetDir
+          $shortcut.IconLocation = "$exePath, 0"
+          $shortcut.Save()
+        Url: https://github.com/RPCS3/rpcs3-binaries-win/releases/download/build-d1648dd707687c336dff1397daf8a657881c230e/rpcs3-v0.0.33-16930-d1648dd7_win64.7z
+        Ensure: Present

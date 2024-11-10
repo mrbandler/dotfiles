@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installArc
+      directives:
+        description: Install Arc
+      settings:
+        Name: Arc
+        Type: EXE
+        Arguments: ""
+        Url: https://releases.arc.net/windows/ArcInstaller.exe
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBrave
+      directives:
+        description: Install Brave
+        allowPrerelease: true
+      settings:
+        Id: Brave.Brave
+        Source: winget
+        Ensure: Present

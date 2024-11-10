@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.Windows.Developer/EnableDarkMode
+      id: enableDarkMode
+      directives:
+        description: Enable Dark Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present
+        RestartExplorer: true
+
+    - resource: Microsoft.Windows.Developer/Taskbar
+      id: configureTaskbar
+      directives:
+        description: Configure Taskbar
+        allowPrerelease: true
+      settings:
+        Alignment: Middle
+        SearchboxMode: Hide
+        TaskViewButton: Hide
+        RestartExplorer: true
+
+    - resource: Microsoft.Windows.Developer/WindowsExplorer
+      id: configureExplorer
+      directives:
+        description: Configure Explorer
+        allowPrerelease: true
+      settings:
+        FileExtensions: Show
+        HiddenFiles: Show
+        ItemCheckBoxes: Hide
+        RestartExplorer: true
+
+    - resource: Microsoft.Windows.Developer/DeveloperMode
+      id: enableDeveloperMode
+      directives:
+        description: Enable Developer Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present

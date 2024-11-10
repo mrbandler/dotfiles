@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installAudacity
+      directives:
+        description: Install Audacity
+        allowPrerelease: true
+      settings:
+        Id: Audacity.Audacity
+        Source: winget
+        Ensure: Present

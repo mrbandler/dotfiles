@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGodot
+      directives:
+        description: Install Godot
+        allowPrerelease: true
+      settings:
+        Id: GodotEngine.GodotEngine.Mono
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installUnityHub
+      directives:
+        description: Install Unity Hub
+        allowPrerelease: true
+      settings:
+        Id: Unity.UnityHub
+        Source: winget
+        Ensure: Present

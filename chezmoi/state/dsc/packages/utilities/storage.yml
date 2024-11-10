@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installSpaceSniffer
+      directives:
+        description: Install Space Sniffer
+        allowPrerelease: true
+      settings:
+        Id: UderzoSoftware.SpaceSniffer
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEverything
+      directives:
+        description: Install Everything
+        allowPrerelease: true
+      settings:
+        Id: voidtools.Everything
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installFileConverter
+      directives:
+        description: Install File Converter
+        allowPrerelease: true
+      settings:
+        Id: AdrienAllard.FileConverter
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installGoogleDrive
+      directives:
+        description: Install Google Drive
+        allowPrerelease: true
+      settings:
+        Id: Google.GoogleDrive
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonDrive
+      directives:
+        description: Install Proton Drive
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonDrive
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installVentoy
+      directives:
+        description: Install Ventoy
+        allowPrerelease: true
+      settings:
+        Id: Ventoy.Ventoy
+        Source: winget
+        Ensure: Present
