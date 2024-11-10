@@ -64,12 +64,3 @@ $trigger = New-ScheduledTaskTrigger -Once -At $startTime
 $action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$afterBootstrapScriptPath`""
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName "RestartBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "Restarts the computer after a specified delay following the main script execution." -User "$env:USERNAME" -RunLevel Highest
-
-$restartResponse = Read-Host "Restart required. Do you want to restart the computer now? (Y/N)"
-if ($restartResponse -match '^(y|Y)') {
-    Write-Output "Restarting the computer..."
-    Restart-Computer
-}
-else {
-    Write-Output "Restart skipped. Please restart the computer manually to complete bootstrapping."
-}
