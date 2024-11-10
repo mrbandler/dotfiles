@@ -6,11 +6,12 @@ properties:
   assertions: []
   parameters: []
   resources:
-    - resource: xPSDesiredStateConfiguration/xEnvironment
-      id: setXDGConfigHomeEnvVar
-      directives:
-        description: Set XDG_CONFIG_HOME Environment Variable
-      settings:
-        Name: XDG_CONFIG_HOME
-        Value: "%USERPROFILE%\\.config"
-        Ensure: Present
+    []
+    # - resource: xPSDesiredStateConfiguration/xEnvironment
+    #   id: setXDGConfigHomeEnvVar
+    #   directives:
+    #     description: Set XDG_CONFIG_HOME Environment Variable
+    #   settings:
+    #     Name: XDG_CONFIG_HOME
+    #     Value: "%USERPROFILE%\\.config"
+    #     Ensure: Present

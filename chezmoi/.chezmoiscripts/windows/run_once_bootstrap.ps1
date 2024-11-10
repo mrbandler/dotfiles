@@ -15,6 +15,7 @@ if (-not ($isAdmin)) {
 }
 
 # 2. Install enable winget configure and install the latest PowerShell
+[System.Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "$env:USERPROFILE\.config", [System.EnvironmentVariableTarget]::User)
 winget install --id Microsoft.PowerShell --silent --accept-source-agreements --accept-package-agreements
 winget configure --enable
 
