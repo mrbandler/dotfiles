@@ -15,17 +15,20 @@ properties:
       settings:
         Id: Discord.Discord
         Source: winget
-        Ensure: Absent
+        Ensure: Present
 
-    - resource: cChoco/cChocoPackageInstaller
+    - resource: xPkg/PkgDownloadAndInstall
       id: installBetterDiscord
       directives:
-        description: Install Discord
+        description: Install Better Discord
       settings:
-        Name: betterdiscord
+        Name: Better Discord
+        Type: EXE
+        Arguments: ""
+        Url: https://github.com/BetterDiscord/Installer/releases/latest/download/BetterDiscord-Windows.exe
         Ensure: Present
       dependsOn:
-        - installChoco
+        - installDiscord
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installTelegram

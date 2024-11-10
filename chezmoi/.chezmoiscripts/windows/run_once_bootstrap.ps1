@@ -47,6 +47,7 @@ Stop-Process -Name explorer -Force
 Start-Process explorer
 
 # 7. Sign into 1Password CLI to allow the
+$env:PATH += ";$env:APPDATA\Local\Microsoft\WinGet\Links"
 Invoke-Expression $(op signin)
 
 # 8. Schedule at logon after bootstrap script.

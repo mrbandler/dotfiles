@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
 imports:
-  - path: ./zeus.yml
+  - path: ../core/assertions.yml
+  - path: ../core/debloat.yml
+  - path: ../core/base.yml
+  - path: ../env/all.yml
+  - path: ../fonts/all.yml
+  - path: ../packages/browsers/all.yml
+  # - path: ../packages/creative/all.yml
+  - path: ../packages/develop/all.yml
+  - path: ../packages/essentials/all.yml
+  # - path: ../packages/gaming/all.yml
+  - path: ../packages/utilities/all.yml
+  - path: ../packages/comms.yml
+  - path: ../packages/experimental.yml
 
 properties:
   configurationVersion: "0.2.0"
