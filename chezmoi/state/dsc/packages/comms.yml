@@ -18,7 +18,7 @@ properties:
         Ensure: Absent
 
     - resource: cChoco/cChocoPackageInstaller
-      id: installDiscord
+      id: installBetterDiscord
       directives:
         description: Install Discord
       settings:
