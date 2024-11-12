@@ -54,28 +54,28 @@ function Resolve-Config {
                 $importedConfig = Resolve-Config -ConfigPath $importPath
                 if ($null -ne $importedConfig) {
                     if ($null -ne $importedConfig.properties.assertions) {
-                        if ($null -ne $import.include) {
-                            $resolved.properties.assertions += $importedConfig.properties.assertions | Where-Object { $_.id -in $import.include }
-                        }
-                        else {
-                            $resolved.properties.assertions += $importedConfig.properties.assertions
-                        }
+                        $filteredAssertions = $importedConfig.properties.assertions
+
+                        if ($null -ne $import.exclude) { $filteredAssertions = $filteredAssertions | Where-Object { $_.id -notin $import.exclude } }
+                        if ($null -ne $import.include) { $filteredAssertions = $filteredAssertions | Where-Object { $_.id -in $import.include } }
+
+                        $resolved.properties.assertions += $filteredAssertions
                     }
                     if ($null -ne $importedConfig.properties.resources) {
-                        if ($null -ne $import.include) {
-                            $resolved.properties.resources += $importedConfig.properties.resources | Where-Object { $_.id -in $import.include }
-                        }
-                        else {
-                            $resolved.properties.resources += $importedConfig.properties.resources
-                        }
+                        $filteredResources = $importedConfig.properties.resources
+
+                        if ($null -ne $import.exclude) { $filteredResources = $filteredResources | Where-Object { $_.id -notin $import.exclude } }
+                        if ($null -ne $import.include) { $filteredResources = $filteredResources | Where-Object { $_.id -in $import.include } }
+
+                        $resolved.properties.resources += $filteredResources
                     }
                     if ($null -ne $importedConfig.properties.parameters) {
-                        if ($null -ne $import.include) {
-                            $resolved.properties.parameters += $importedConfig.properties.parameters | Where-Object { $_.id -in $import.include }
-                        }
-                        else {
-                            $resolved.properties.parameters += $importedConfig.properties.parameters
-                        }
+                        $filteredParameters = $importedConfig.properties.parameters
+
+                        if ($null -ne $import.exclude) { $filteredParameters = $filteredParameters | Where-Object { $_.id -notin $import.exclude } }
+                        if ($null -ne $import.include) { $filteredParameters = $filteredParameters | Where-Object { $_.id -in $import.include } }
+
+                        $resolved.properties.parameters += $filteredParameters
                     }
                 }
             }
