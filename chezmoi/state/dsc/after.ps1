@@ -11,7 +11,7 @@ $autoStart = $content | ConvertFrom-Yaml
 
 function Is-Whitelisted {
     param (
-        [string]$EntryName,
+        [string]$EntryName
     )
 
     foreach ($item in $autoStart.whitelist) {
