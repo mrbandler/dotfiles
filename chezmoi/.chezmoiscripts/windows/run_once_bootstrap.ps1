@@ -30,13 +30,7 @@ New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\PowerShell"
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 
-# 5. Delete all shortcuts from the desktop
-$userDesktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop")
-$publicDesktopPath = "C:\Users\Public\Desktop"
-Get-ChildItem -Path $userDesktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
-Get-ChildItem -Path $publicDesktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
-
-# 6. Remove all pinned items from the taskbar
+# 5. Remove all pinned items from the taskbar
 $taskbandRegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband"
 Remove-ItemProperty -Path $taskbandRegistryPath -Name "Favorites" -Force -ErrorAction SilentlyContinue
 
@@ -46,11 +40,11 @@ Remove-Item -Path "$taskbarPinnedItemsPath\*" -Force -Recurse -ErrorAction Silen
 Stop-Process -Name explorer -Force
 Start-Process explorer
 
-# 7. Sign into 1Password CLI to allow the
+# 6. Sign into 1Password CLI to allow the
 $env:PATH += ";$env:APPDATA\Local\Microsoft\WinGet\Links"
 Invoke-Expression $(op signin)
 
-# 8. Schedule at logon after bootstrap script.
+# 7. Schedule at logon after bootstrap script.
 $chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
 $afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\after_bootstrap.ps1")
 $trigger = New-ScheduledTaskTrigger -AtLogOn
@@ -58,11 +52,6 @@ $action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -Executi
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest
 
-# 9. Schedule restart
-$chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
-$restartBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\restart_bootstrap.ps1")
-$startTime = (Get-Date).AddSeconds(30).ToString("HH:mm")
-$trigger = New-ScheduledTaskTrigger -Once -At $startTime
-$action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$afterBootstrapScriptPath`""
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
-Register-ScheduledTask -TaskName "RestartBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "Restarts the computer after a specified delay following the main script execution." -User "$env:USERNAME" -RunLevel Highest
+# 8. Ask for restart
+Write-Output "Windows environment bootstrapped."
+Write-Output "Restart is required to finalize bootstrapping. Please restart the computer manually to complete it."
