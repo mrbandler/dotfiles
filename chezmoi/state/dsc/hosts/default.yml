@@ -13,6 +13,8 @@ imports:
   - path: ../packages/utilities/all.yml
   - path: ../packages/comms.yml
   - path: ../packages/experimental.yml
+  - path: ../registry/all.yml
+  - path: ../settings/all.yml
 
 properties:
   configurationVersion: "0.2.0"

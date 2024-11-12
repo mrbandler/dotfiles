@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports: []
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      id: enableWSLFeature
+      directives:
+        description: Enables Microsoft Windows Subsystem for Linux feature
+      settings:
+        Name: Microsoft-Windows-Subsystem-Linux
+        Ensure: Present
+
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      id: enableVirtualMachinePlatformFeature
+      directives:
+        description: Enables Virtual Machine Platform feature
+      settings:
+        Name: VirtualMachinePlatform
+        Ensure: Present
+
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      id: enableHyperVFeature
+      directives:
+        description: Enables Hyper-V feature
+      settings:
+        Name: Microsoft-Hyper-V-All
+        Ensure: Present
+
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      id: enableHypervisorPlatformFeature
+      directives:
+        description: Enables Hypervisor Platform feature
+      settings:
+        Name: HypervisorPlatform
+        Ensure: Present
+
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      id: enableContainersFeature
+      directives:
+        description: Enables Containters feature
+      settings:
+        Name: Containers
+        Ensure: Present
