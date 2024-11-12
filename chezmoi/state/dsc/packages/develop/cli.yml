@@ -69,13 +69,3 @@ properties:
         Id: AgileBits.1Password.CLI
         Source: winget
         Ensure: Present
-
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: installWSL
-      directives:
-        description: Install WSL
-        allowPrerelease: true
-      settings:
-        Id: Microsoft.WSL
-        Source: winget
-        Ensure: Present
