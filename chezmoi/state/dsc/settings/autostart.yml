@@ -5,13 +5,19 @@ whitelist:
   - name: 1Password
   - name: Cryptomator
   - name: EarTrumpet
-  - name: Flow.Launcher
+    from: C:\Program Files\WindowsApps
+    type: exe
+  - name: Flow Launcher
+    from: C:\Users\mrbandler\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
+    type: shortcut
   - name: Focusrite Notifier
   - name: GoogleDriveFS
   - name: Phone Link
   - name: ProtonDrive
   - name: SecurityHealth
-  - name: Voicemeeter
+  - name: Voicemeeter Banana
+    from: C:\Users\mrbandler\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
+    type: shortcut
   - name: Xbox
   - name: Everything
   - name: PS

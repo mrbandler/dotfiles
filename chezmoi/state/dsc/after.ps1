@@ -16,8 +16,7 @@ function Test-Whitelisted {
 
     foreach ($item in $autoStart.whitelist) {
         if ($entryName -like "*$($item.name)*") {
-            if ($null -eq $item.hosts) { return $true }
-            else { return $item.hosts -contains $env:COMPUTERNAME.ToLower() }
+            return $true;
         }
     }
 
@@ -69,5 +68,18 @@ foreach ($item in $autoStart.whitelist) {
 
         $destinationPath = Join-Path -Path $userStartupFolderPath -ChildPath $shortcut.Name
         Copy-Item -Path $shortcut.FullName -Destination $destinationPath -Force
+    }
+    elseif ($item.type = "exe") {
+        $executable = Get-ChildItem -Path $item.From -Recurse -Filter '*.exe' |
+        Where-Object { $_.BaseName -like $item.name } |
+        Select-Object -First 1
+
+        if ($null -eq $executable) { continue }
+
+        $destinationPath = Join-Path -Path $userStartupFolderPath -ChildPath "$($executable.BaseName).lnk"
+        $WScriptShell = New-Object -ComObject WScript.Shell
+        $Shortcut = $WScriptShell.CreateShortcut($destinationPath)
+        $Shortcut.TargetPath = $executable.FullName
+        $Shortcut.Save()
     }
 }
