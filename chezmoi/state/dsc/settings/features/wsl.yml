@@ -6,7 +6,7 @@ properties:
   assertions: []
   parameters: []
   resources:
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+    - resource: xSettings/WindowsOptionalFeature
       id: enableWSLFeature
       directives:
         description: Enables Microsoft Windows Subsystem for Linux feature
@@ -14,7 +14,7 @@ properties:
         Name: Microsoft-Windows-Subsystem-Linux
         Ensure: Present
 
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+    - resource: xSettings/WindowsOptionalFeature
       id: enableVirtualMachinePlatformFeature
       directives:
         description: Enables Virtual Machine Platform feature
@@ -22,7 +22,7 @@ properties:
         Name: VirtualMachinePlatform
         Ensure: Present
 
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+    - resource: xSettings/WindowsOptionalFeature
       id: enableHyperVFeature
       directives:
         description: Enables Hyper-V feature
@@ -30,7 +30,7 @@ properties:
         Name: Microsoft-Hyper-V-All
         Ensure: Present
 
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+    - resource: xSettings/WindowsOptionalFeature
       id: enableHypervisorPlatformFeature
       directives:
         description: Enables Hypervisor Platform feature
@@ -38,7 +38,7 @@ properties:
         Name: HypervisorPlatform
         Ensure: Present
 
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+    - resource: xSettings/WindowsOptionalFeature
       id: enableContainersFeature
       directives:
         description: Enables Containters feature

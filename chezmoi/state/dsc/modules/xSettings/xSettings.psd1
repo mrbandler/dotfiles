@@ -8,5 +8,5 @@
     Description          = 'PowerShell Module with DSC resources related to Windows 11 Settings'
     CompatiblePSEditions = 'Core'
     PowerShellVersion    = '5.1'
-    DscResourcesToExport = @()
+    DscResourcesToExport = @('WindowsOptionalFeature')
 }
