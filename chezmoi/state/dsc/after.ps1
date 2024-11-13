@@ -6,7 +6,7 @@ Get-ChildItem -Path $publicDesktopPath -Filter *.lnk | ForEach-Object { Remove-I
 
 # 2. Remove all auto start entries that are not whitelisted
 Import-Module "powershell-yaml"
-$content = Get-Content -Path "$PSScriptRoot/autostart.yml" -Raw
+$content = Get-Content -Path "$PSScriptRoot/settings/autostart.yml" -Raw
 $autoStart = $content | ConvertFrom-Yaml
 
 function Is-Whitelisted {
