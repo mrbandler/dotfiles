@@ -48,7 +48,7 @@ Get-ChildItem -Path $startupFolderPath -Filter '*.lnk' | ForEach-Object {
 
 # 3. Create custom autostart entries
 foreach ($item in $autoStart.custom) {
-    if ($item.type == "shortcut") {
+    if ($item.type = "shortcut") {
         $startMenuPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
         $shortcut = Get-ChildItem -Path $startMenuPath -Recurse -Filter '*.lnk' |
             Where-Object { $_.BaseName -like $item.name } |
