@@ -1,67 +1,26 @@
 # 1. Remove all desktop icons
 $userDesktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop")
 $publicDesktopPath = "C:\Users\Public\Desktop"
-Get-ChildItem -Path $userDesktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
-Get-ChildItem -Path $publicDesktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
+$desktopPaths = @(
+    $userDesktopPath,
+    $publicDesktopPath
+)
+foreach ($desktopPath in $desktopPaths) {
+    Get-ChildItem -Path $desktopPath -Filter *.lnk | ForEach-Object { Remove-Item $_.FullName -Force }
+}
 
 # 2. Remove all auto start entries that are not whitelisted
 Import-Module "powershell-yaml"
-$content = Get-Content -Path "$PSScriptRoot/settings/autostart.yml" -Raw
-$autoStart = $content | ConvertFrom-Yaml
-
-function Test-Whitelisted {
-    param (
-        [string]$EntryName
-    )
-
-    foreach ($item in $autoStart.whitelist) {
-        if ($entryName -like "*$($item.name)*") {
-            return $true;
-        }
-    }
-
-    return $false
-}
-
-$registryPaths = @(
-    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run",
-    "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce",
-    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run",
-    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
-    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce",
-    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run",
-    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run32"
-)
-foreach ($registryPath in $registryPaths) {
-    if (Test-Path -Path $registryPath) {
-        $entries = Get-ItemProperty -Path $registryPath
-        foreach ($entry in $entries.PSObject.Properties) {
-            if (-not (Test-Whitelisted -EntryName $entry.Name)) {
-                Remove-ItemProperty -Path $registryPath -Name $entry.Name -ErrorAction SilentlyContinue
-            }
-        }
-    }
-}
-
-$machineStartupFolderPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup";
-$userStartupFolderPath = [System.Environment]::GetFolderPath('Startup')
-$startupFolderPaths = @(
-    $machineStartupFolderPath,
-    $userStartupFolderPath
-)
-foreach ($startupFolderPath in $startupFolderPaths) {
-    Get-ChildItem -Path $startupFolderPath -Filter '*.lnk' | ForEach-Object {
-        if (-not (Test-Whitelisted -EntryName $_.BaseName)) {
-            Remove-Item -Path $_.FullName -Force -ErrorAction SilentlyContinue
-        }
-    }
-}
+$content = Get-Content -Path "$PSScriptRoot/configuration.dsc.yml" -Raw
+$config = $content | ConvertFrom-Yaml
 
 # 3. Create or enable autostart entries
-foreach ($item in $autoStart.whitelist) {
-    if ($item.type = "shortcut") {
-        $shortcut = Get-ChildItem -Path $item.From -Recurse -Filter '*.lnk' |
-        Where-Object { $_.BaseName -like $item.name } |
+foreach ($item in $config.resouces) {
+    if ($null -eq $item.autostart) { continue }
+
+    if ($item.autostart.type = "shortcut") {
+        $shortcut = Get-ChildItem -Path $item.autostart.from -Recurse -Filter '*.lnk' |
+        Where-Object { $_.BaseName -like $item.autostart.name } |
         Select-Object -First 1
 
         if ($null -eq $shortcut) { continue }
@@ -69,9 +28,9 @@ foreach ($item in $autoStart.whitelist) {
         $destinationPath = Join-Path -Path $userStartupFolderPath -ChildPath $shortcut.Name
         Copy-Item -Path $shortcut.FullName -Destination $destinationPath -Force
     }
-    elseif ($item.type = "exe") {
-        $executable = Get-ChildItem -Path $item.From -Recurse -Filter '*.exe' |
-        Where-Object { $_.BaseName -like $item.name } |
+    elseif ($item.autostart.type = "exe") {
+        $executable = Get-ChildItem -Path $item.autostart.from -Recurse -Filter '*.exe' |
+        Where-Object { $_.BaseName -like $item.autostart.name } |
         Select-Object -First 1
 
         if ($null -eq $executable) { continue }
@@ -82,4 +41,11 @@ foreach ($item in $autoStart.whitelist) {
         $Shortcut.TargetPath = $executable.FullName
         $Shortcut.Save()
     }
+}
+
+# 4. Ask user to open the Task Manager to manage startup entries
+$input = Read-Host "Do you want to open the Task Manager now, to manage Start Up entries? [Y/n]"
+if ($input -match '^(Y|y)$') {
+    Start-Process -FilePath "taskmgr"
+    Write-Output "Opening Task Manager..."
 }

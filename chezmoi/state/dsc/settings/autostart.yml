@@ -1,14 +1,4 @@
-whitelist:
+create:
   - name: GlazeWM
     from: C:\ProgramData\Microsoft\Windows\Start Menu\Programs
     type: shortcut
-  - name: 1Password
-  - name: Cryptomator
-  - name: Focusrite Notifier
-  - name: GoogleDriveFS
-  - name: Phone Link
-  - name: ProtonDrive
-  - name: SecurityHealth
-  - name: Xbox
-  - name: Everything
-  - name: PS

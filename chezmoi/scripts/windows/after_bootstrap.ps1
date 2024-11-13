@@ -1,39 +1,40 @@
-# 1. Install and setup WSL
-wsl --install --no-distribution
-wsl --set-default-version 2
-wsl --install Ubuntu --no-launch
-ubuntu install --root
+# 1. Start apps that need to be configured
+Import-Module "powershell-yaml"
+$content = Get-Content -Path "$PSScriptRoot/../../state/dsc/configuration.dsc.yml" -Raw
+$config = $content | ConvertFrom-Yaml
 
-# 2. Create default user and set it for WSL
-$user = $env:USERNAME.ToLower()
-wsl -d Ubuntu -u root adduser --gecos GECOS --disabled-password $user
-wsl -d Ubuntu -u root usermod -aG sudo $user
-& ubuntu config --default-user $user
-wsl --set-default Ubuntu
-
-# 3. Start apps that need to be configured
 $startMenuPaths = @(
     "C:\ProgramData\Microsoft\Windows\Start Menu\Programs",
     "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
 )
-$apps = @(
-    "Flow Launcher",
-    "Voicemeeter Banana",
-    "EarTrumpet",
-    "1Password",
-    "Proton Drive",
-    "Google Drive"
-)
+foreach ($item in $config.resouces) {
+    if ($null -eq $item.boostrap) { continue }
+    if ($null -eq $item.bootstrap.startAfter -or $item.bootstrap.startAfter -eq $false) { continue }
 
-foreach ($app in $apps) {
+    # TODO: Find a way to get the path to the application via the package manager it was installed with and open it with that method.
+
+    $name = $item.name
     foreach ($startMenuPath in $startMenuPaths) {
-        $appPath = Get-ChildItem -Path $startMenuPath -Recurse -Filter "$app.lnk" -ErrorAction SilentlyContinue
+        $appPath = Get-ChildItem -Path $startMenuPath -Recurse -Filter "$name.lnk" -ErrorAction SilentlyContinue
         if ($appPath) {
             Start-Process -FilePath $appPath.FullName
             break
         }
     }
 }
+
+# 2. Install and setup WSL
+wsl --install --no-distribution
+wsl --set-default-version 2
+wsl --install Ubuntu --no-launch
+ubuntu install --root
+
+# 3. Create default user and set it for WSL
+$user = $env:USERNAME.ToLower()
+wsl -d Ubuntu -u root adduser --gecos GECOS --disabled-password $user
+wsl -d Ubuntu -u root usermod -aG sudo $user
+& ubuntu config --default-user $user
+wsl --set-default Ubuntu
 
 # 4. Unregister this scheduled task
 Unregister-ScheduledTask -TaskName "AfterBootstrap" -Confirm:$false

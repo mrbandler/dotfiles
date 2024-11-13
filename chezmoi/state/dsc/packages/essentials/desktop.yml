@@ -16,6 +16,10 @@ properties:
         Id: glzr-io.glazewm
         Source: winget
         Ensure: Present
+      autostart:
+        name: GlazeWM
+        from: C:\ProgramData\Microsoft\Windows\Start Menu\Programs
+        type: shortcut
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installFlow
@@ -26,6 +30,8 @@ properties:
         Id: Flow-Launcher.Flow-Launcher
         Source: winget
         Ensure: Present
+      bootstrap:
+        startAfter: true
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installZoomIt

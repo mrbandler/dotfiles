@@ -36,3 +36,27 @@ properties:
         Id: AgileBits.1Password
         Source: winget
         Ensure: Present
+      bootstrap:
+        startAfter: true
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonPass
+      directives:
+        description: Install Proton Pass
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonPass
+        Source: winget
+        Ensure: Present
+      bootstrap:
+        startAfter: true
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonVPN
+      directives:
+        description: Install Proton VPN
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonVPN
+        Source: winget
+        Ensure: Present

@@ -4,7 +4,6 @@ imports:
   - path: ./media.yml
   - path: ./keyboard.yml
   - path: ./networking.yml
-  - path: ./powertoys.yml
   - path: ./productivity.yml
   - path: ./storage.yml
 

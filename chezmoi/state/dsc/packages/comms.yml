@@ -49,3 +49,25 @@ properties:
         Id: 9NKSQGP7F2NH
         Source: msstore
         Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installProtonMail
+      directives:
+        description: Install Proton Mail
+        allowPrerelease: true
+      settings:
+        Id: Proton.ProtonMail
+        Ensure: Present
+      bootstrap:
+        startAfter: true
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installThunderbird
+      directives:
+        description: Install Thunderbird
+        allowPrerelease: true
+      settings:
+        Id: Mozilla.Thunderbird
+        Ensure: Present
+      bootstrap:
+        startAfter: true
