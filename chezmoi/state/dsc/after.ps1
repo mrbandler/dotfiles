@@ -27,9 +27,17 @@ function Is-Whitelisted {
 $registryPaths = @(
     "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run",
     "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce",
-    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run",
-    "HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce"
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run",
+    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
+    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce",
+    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run",
+    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run32"
 )
+foreach ($path in $registryPaths) {
+    $entries = Get-ItemProperty -Path $path
+    echo $entries
+}
+
 foreach ($path in $registryPaths) {
     $entries = Get-ItemProperty -Path $path
     foreach ($entry in $entries.PSObject.Properties) {
@@ -39,15 +47,21 @@ foreach ($path in $registryPaths) {
     }
 }
 
-$startupFolderPath = [System.Environment]::GetFolderPath('Startup')
-Get-ChildItem -Path $startupFolderPath -Filter '*.lnk' | ForEach-Object {
-    if (-not (Is-Whitelisted -EntryName $_.BaseName)) {
-        Remove-Item -Path $_.FullName -Force -ErrorAction SilentlyContinue
+$machineStartupFolderPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup";
+$userStartupFolderPath = [System.Environment]::GetFolderPath('Startup')
+$startupFolders = @(
+    $userStartupFolderPath
+)
+foreach ($startupFolder in $startupFolders) {
+    Get-ChildItem -Path $startupFolder -Filter '*.lnk' | ForEach-Object {
+        if (-not (Is-Whitelisted -EntryName $_.BaseName)) {
+            Remove-Item -Path $_.FullName -Force -ErrorAction SilentlyContinue
+        }
     }
 }
 
-# 3. Create custom autostart entries
-foreach ($item in $autoStart.custom) {
+# 3. Create or enable autostart entries
+foreach ($item in $autoStart.whitelist) {
     if ($item.type = "shortcut") {
         $startMenuPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
         $shortcut = Get-ChildItem -Path $startMenuPath -Recurse -Filter '*.lnk' |

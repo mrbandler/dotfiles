@@ -1,61 +1,17 @@
-custom:
+whitelist:
   - name: GlazeWM
     from: C:\ProgramData\Microsoft\Windows\Start Menu\Programs
     type: shortcut
-
-whitelist:
   - name: 1Password
-    hosts:
-      - ade
-      - zeus
-      - artemis
   - name: Cryptomator
-    hosts:
-      - ade
-      - zeus
-      - artemis
   - name: EarTrumpet
-    hosts:
-      - ade
-      - zeus
-      - artemis
   - name: Flow.Launcher
-    hosts:
-      - ade
-      - zeus
-      - artemis
   - name: Focusrite Notifier
-    hosts:
-      - ade
-      - zeus
-      - artemis
-  - name: Google Drive
-    hosts:
-      - ade
-      - zeus
-      - artemis
+  - name: GoogleDriveFS
   - name: Phone Link
-    hosts:
-      - ade
-      - zeus
-      - artemis
   - name: ProtonDrive
-    hosts:
-      - ade
-      - zeus
-      - artemis
-  - name: SecurityHealthSystray
-    hosts:
-      - ade
-      - zeus
-      - artemis
+  - name: SecurityHealth
   - name: Voicemeeter
-    hosts:
-      - ade
-      - zeus
-      - artemis
   - name: Xbox
-    hosts:
-      - ade
-      - zeus
-      - artemis
+  - name: Everything
+  - name: PS
