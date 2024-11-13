@@ -13,3 +13,6 @@ wsl -d ubuntu -u root usermod -aG sudo $user
 
 # 3. Unregister this scheduled task
 Unregister-ScheduledTask -TaskName "AfterBootstrap" -Confirm:$false
+
+# 4. Finalize boostrapping
+Read-Host "Finalized boostrapping. Press Enter to continue."
