@@ -50,7 +50,7 @@ $afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "script
 $trigger = New-ScheduledTaskTrigger -AtLogOn
 $action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$afterBootstrapScriptPath`""
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
-Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest
+Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest | Out-Null
 
 # 8. Ask for restart
 Write-Output "Windows environment bootstrapped."
