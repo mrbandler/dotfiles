@@ -1,4 +1,15 @@
-# 1. Start apps that need to be configured
+# 1. Install and setup WSL
+wsl --install --no-distribution
+wsl --install Ubuntu --no-launch
+ubuntu install --root
+
+$user = $env:USERNAME.ToLower()
+wsl -d Ubuntu -u root adduser --gecos GECOS --disabled-password $user
+wsl -d Ubuntu -u root usermod -aG sudo $user
+& ubuntu config --default-user $user
+wsl --set-default Ubuntu
+
+# 2. Start apps that need to be configured
 Import-Module "powershell-yaml"
 $content = Get-Content -Path "$PSScriptRoot/../../state/dsc/configuration.dsc.yml" -Raw
 $config = $content | ConvertFrom-Yaml
@@ -14,9 +25,6 @@ foreach ($item in $config.properties.resources) {
     if ($null -eq $item.config.bootstrap.startAfter -or $item.bootstrap.startAfter -eq $false) { continue }
 
     $name = $item.config.name
-
-    echo $name
-
     foreach ($startMenuPath in $startMenuPaths) {
         $appPath = Get-ChildItem -Path $startMenuPath -Recurse -Filter "$name.lnk" -ErrorAction SilentlyContinue
         if ($appPath) {
@@ -26,21 +34,8 @@ foreach ($item in $config.properties.resources) {
     }
 }
 
-# 2. Install and setup WSL
-wsl --install --no-distribution
-wsl --set-default-version 2
-wsl --install Ubuntu --no-launch
-ubuntu install --root
-
-# 3. Create default user and set it for WSL
-$user = $env:USERNAME.ToLower()
-wsl -d Ubuntu -u root adduser --gecos GECOS --disabled-password $user
-wsl -d Ubuntu -u root usermod -aG sudo $user
-& ubuntu config --default-user $user
-wsl --set-default Ubuntu
-
-# 4. Unregister this scheduled task
+# 3. Unregister this scheduled task
 Unregister-ScheduledTask -TaskName "AfterBootstrap" -Confirm:$false
 
-# 5. Finalize boostrapping
-Read-Host "Finalized boostrapping. [Enter]"
+# 4. Finalize boostrapping
+Read-Host "Finalized boostrapping [Enter]"
