@@ -7,13 +7,16 @@ $startMenuPaths = @(
     "C:\ProgramData\Microsoft\Windows\Start Menu\Programs",
     "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
 )
-foreach ($item in $config.resouces) {
+foreach ($item in $config.properties.resources) {
     if ($null -eq $item.config) { continue }
     if ($null -eq $item.config.name) { continue }
-    if ($null -eq $item.config.boostrap) { continue }
+    if ($null -eq $item.config.bootstrap) { continue }
     if ($null -eq $item.config.bootstrap.startAfter -or $item.bootstrap.startAfter -eq $false) { continue }
 
     $name = $item.config.name
+
+    echo $name
+
     foreach ($startMenuPath in $startMenuPaths) {
         $appPath = Get-ChildItem -Path $startMenuPath -Recurse -Filter "$name.lnk" -ErrorAction SilentlyContinue
         if ($appPath) {
@@ -40,4 +43,4 @@ wsl --set-default Ubuntu
 Unregister-ScheduledTask -TaskName "AfterBootstrap" -Confirm:$false
 
 # 5. Finalize boostrapping
-Read-Host "Finalized boostrapping. Press Enter to continue."
+Read-Host "Finalized boostrapping. [Enter]"

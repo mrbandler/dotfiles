@@ -11,6 +11,7 @@ imports:
     exclude:
       - installRider
       - installDockerDesktop
+  # - path: ../packacges/drivers.all.yml
   - path: ../packages/essentials/all.yml
   # - path: ../packages/gaming/all.yml
   - path: ../packages/utilities/all.yml

@@ -15,7 +15,7 @@ $content = Get-Content -Path "$PSScriptRoot/configuration.dsc.yml" -Raw
 $config = $content | ConvertFrom-Yaml
 
 # 3. Create or enable autostart entries
-foreach ($item in $config.resouces) {
+foreach ($item in $config.properties.resources) {
     if ($null -eq $item.config) { continue }
     if ($null -eq $item.config.name) { continue }
     if ($null -eq $item.config.autostart) { continue }
