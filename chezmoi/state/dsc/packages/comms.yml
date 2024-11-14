@@ -51,19 +51,6 @@ properties:
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: installProtonMail
-      directives:
-        description: Install Proton Mail
-        allowPrerelease: true
-      settings:
-        Id: Proton.ProtonMail
-        Ensure: Present
-      config:
-        name: Proton Mail
-        bootstrap:
-          startAfter: true
-
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installThunderbird
       directives:
         description: Install Thunderbird
