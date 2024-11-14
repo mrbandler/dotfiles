@@ -46,10 +46,6 @@ properties:
         Id: Google.GoogleDrive
         Source: winget
         Ensure: Present
-      config:
-        name: Google Drive
-        bootstrap:
-          startAfter: true
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installProtonDrive
@@ -60,10 +56,6 @@ properties:
         Id: Proton.ProtonDrive
         Source: winget
         Ensure: Present
-      config:
-        name: Proton Drive
-        bootstrap:
-          startAfter: true
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installVentoy
