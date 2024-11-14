@@ -1,6 +1,9 @@
-# 1. Remove all desktop icons
+# 0. Variables
+$userStartupFolderPath = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Windows\Start Menu\Programs\Startup")
 $userDesktopPath = [System.IO.Path]::Combine($env:USERPROFILE, "Desktop")
 $publicDesktopPath = "C:\Users\Public\Desktop"
+
+# 1. Remove all desktop icons
 $desktopPaths = @(
     $userDesktopPath,
     $publicDesktopPath

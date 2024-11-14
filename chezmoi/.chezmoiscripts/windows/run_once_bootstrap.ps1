@@ -42,7 +42,12 @@ Start-Process explorer
 
 # 6. Sign into 1Password CLI to allow the
 $env:PATH += ";$env:LOCALAPPDATA\Microsoft\WinGet\Links"
-Invoke-Expression $(op signin)
+try {
+    Invoke-Expression $(op signing)
+}
+catch {
+    # Intentionally left empty to suppress error output
+}
 
 # 7. Schedule at logon after bootstrap script.
 $chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
