@@ -24,7 +24,9 @@ properties:
       settings:
         Name: voicemeeter-banana.install
         Ensure: Present
-      bootstrap:
-        startAfter: true
+      config:
+        name: Voicemeeter Banana
+        bootstrap:
+          startAfter: true
       dependsOn:
         - installChoco

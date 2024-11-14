@@ -16,10 +16,11 @@ properties:
         Id: glzr-io.glazewm
         Source: winget
         Ensure: Present
-      autostart:
+      config:
         name: GlazeWM
-        from: C:\ProgramData\Microsoft\Windows\Start Menu\Programs
-        type: shortcut
+        autostart:
+          from: C:\ProgramData\Microsoft\Windows\Start Menu\Programs
+          type: shortcut
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installFlow

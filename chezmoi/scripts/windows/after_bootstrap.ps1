@@ -8,12 +8,12 @@ $startMenuPaths = @(
     "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
 )
 foreach ($item in $config.resouces) {
-    if ($null -eq $item.boostrap) { continue }
-    if ($null -eq $item.bootstrap.startAfter -or $item.bootstrap.startAfter -eq $false) { continue }
+    if ($null -eq $item.config) { continue }
+    if ($null -eq $item.config.name) { continue }
+    if ($null -eq $item.config.boostrap) { continue }
+    if ($null -eq $item.config.bootstrap.startAfter -or $item.bootstrap.startAfter -eq $false) { continue }
 
-    # TODO: Find a way to get the path to the application via the package manager it was installed with and open it with that method.
-
-    $name = $item.name
+    $name = $item.config.name
     foreach ($startMenuPath in $startMenuPaths) {
         $appPath = Get-ChildItem -Path $startMenuPath -Recurse -Filter "$name.lnk" -ErrorAction SilentlyContinue
         if ($appPath) {

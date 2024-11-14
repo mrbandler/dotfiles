@@ -58,8 +58,10 @@ properties:
       settings:
         Id: Proton.ProtonMail
         Ensure: Present
-      bootstrap:
-        startAfter: true
+      config:
+        name: Proton Mail
+        bootstrap:
+          startAfter: true
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installThunderbird
@@ -69,5 +71,7 @@ properties:
       settings:
         Id: Mozilla.Thunderbird
         Ensure: Present
-      bootstrap:
-        startAfter: true
+      config:
+        name: Thunderbird
+        bootstrap:
+          startAfter: true
