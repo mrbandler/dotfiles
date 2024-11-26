@@ -43,7 +43,7 @@ Start-Process explorer
 # 6. Sign into 1Password CLI to allow the
 $env:PATH += ";$env:LOCALAPPDATA\Microsoft\WinGet\Links"
 try {
-    Invoke-Expression $(op signing)
+    Invoke-Expression $(op signin)
 }
 catch {
     # Intentionally left empty to suppress error output
