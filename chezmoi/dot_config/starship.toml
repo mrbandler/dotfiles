@@ -1,0 +1,253 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](fg:#6272a4)\
+(${custom.windows})(${custom.linux})(${custom.macos})\
+$username\
+($sudo )\
+[](bg:#44475a fg:#6272a4)\
+$directory\
+[](fg:#44475a)\
+$git_branch\
+[$git_status](bg:#ffb86c)\
+$fill\
+($package )\
+($docker_context )\
+($helm )\
+($nodejs )\
+($bun )\
+($deno )\
+($dotnet )\
+($c )\
+($cmake )\
+($golang )\
+($rust )\
+($haskell )\
+($dart )\
+($java )\
+($scala )\
+($lua )\
+($nim )\
+($python )\
+($purescript )\
+[](fg:#44475a)$time[ | ](fg:#f8f8f2 bg:#44475a)$cmd_duration[ ](bg:#44475a)$status[](fg:#44475a)\
+$line_break$character"""
+
+[os]
+style = "bg:#6272a4 fg:#f8f8f2"
+disabled = false
+
+[custom.windows]
+when = true
+disabled = false
+os = "windows"
+symbol = " "
+style = "bg:#6272a4 fg:#f8f8f2"
+
+[custom.linux]
+when = true
+disabled = false
+os = "linux"
+symbol = " "
+style = "bg:#6272a4 fg:#f8f8f2"
+
+[custom.macos]
+when = true
+disabled = false
+os = "macos"
+symbol = " "
+style = "bg:#6272a4 fg:#f8f8f2"
+
+[sudo]
+symbol = " "
+format = "[$symbol]($style)"
+style = "bg:#6272a4 fg:#f8f8f2"
+
+[username]
+format = "[ $user ]($style)"
+style_user = "bold fg:#f8f8f2 bg:#6272a4"
+show_always = true
+
+[directory]
+format = "[ $path ]($style)[$read_only]($read_only_style)"
+style = "bold fg:#f8f8f2 bg:#44475a"
+read_only_style = "bold fg:#ff5555 bg:#44475a"
+read_only = "󰉐 "
+use_os_path_sep = false
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+format = "[](fg:#ffb86c)[ ](bg:#ffb86c)[$symbol$branch(:$remote_branch) ]($style)"
+symbol = " "
+style = "bold fg:#44475a bg:#ffb86c"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )[](fg:#ffb86c)'
+style = "bold fg:#ff5555 bg:#ffb86c"
+
+[fill]
+symbol = " "
+style = "#44475a"
+
+[custom.license]
+symbol = "󰿃 "
+detect_files = ["LICENSE", "license", "LICENSE.md", "license.md"]
+
+[package]
+symbol = "󰏗 "
+version_format = "${raw}"
+format = "[](fg:#ffb86c)[$symbol$version]($style)[](fg:#ffb86c)"
+style = "bold fg:#44475a bg:#ffb86c"
+display_private = true
+
+[docker_context]
+symbol = " "
+format = "[](fg:#8be9fd)[$symbol$context]($style)[](fg:#8be9fd)"
+style = "bold fg:#44475a bg:#8be9fd"
+
+[helm]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#8be9fd)[$symbol($version)]($style)[](fg:#8be9fd)"
+style = "bold fg:#44475a bg:#8be9fd"
+
+[kubernetes]
+symbol = "☸ "
+format = '[$symbol$context( \($namespace\))]($style) in'
+disabled = false
+
+[nodejs]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#50fa7b)[$symbol($version)]($style)[](fg:#50fa7b)"
+style = "bold fg:#44475a bg:#50fa7b"
+
+[bun]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#ffb86c)[$symbol($version)]($style)[](fg:#ffb86c)"
+style = "bold fg:#44475a bg:#ffb86c"
+
+[deno]
+symbol = "  "
+version_format = "${raw}"
+format = "[](fg:#44475a)[$symbol($version)]($style)[](fg:#44475a)"
+style = "bold bold fg:#f8f8f2 bg:#44475a"
+
+[dotnet]
+symbol = ".NET "
+version_format = "${raw}"
+format = "[](fg:#bd93f9)[$symbol($version )(什 $tfm)]($style)[](fg:#bd93f9)"
+style = "bold fg:#44475a bg:#bd93f9"
+
+[rust]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#ff5555)[$symbol($version)]($style)[](fg:#ff5555)"
+style = "bold fg:#44475a bg:#ff5555"
+
+[c]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#8be9fd)[$symbol($version(-$name))]($style)[](fg:#8be9fd)"
+style = "bold fg:#44475a bg:#8be9fd"
+
+[cmake]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#8be9fd)[$symbol($version)]($style)[](fg:#8be9fd)"
+style = "bold fg:#44475a bg:#8be9fd"
+
+[golang]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#8be9fd)[$symbol($version)]($style)[](fg:#8be9fd)"
+style = "bold fg:#44475a bg:#8be9fd"
+
+[dart]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#8be9fd)[$symbol($version)]($style)[](fg:#8be9fd)"
+style = "bold fg:#44475a bg:#8be9fd"
+
+[haskell]
+symbol = " "
+format = "[](fg:#bd93f9)[$symbol($version)]($style)[](fg:#bd93f9)"
+style = "bold fg:#44475a bg:#bd93f9"
+
+[java]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#ff5555)[${symbol}(${version})]($style)[](fg:#ff5555)"
+style = "bold fg:#44475a bg:#ff5555"
+
+[lua]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#8be9fd)[$symbol($version)]($style)[](fg:#8be9fd)"
+style = "bold fg:#44475a bg:#8be9fd"
+
+[nim]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#6272a4)[$symbol($version)]($style)[](fg:#6272a4)"
+style = "bold fg:#f8f8f2 bg:#6272a4"
+
+[python]
+symbol = " "
+version_format = "${raw}"
+format = '[](fg:#8be9fd)[${symbol}${pyenv_prefix}(${version})( \($virtualenv\))]($style)[](fg:#8be9fd)'
+style = "bold fg:#44475a bg:#8be9fd"
+
+[scala]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#ff5555)[$symbol($version)]($style)[](fg:#ff5555)"
+style = "bold fg:#44475a bg:#ff5555"
+
+[purescript]
+symbol = " "
+version_format = "${raw}"
+format = "[](fg:#6272a4)[$symbol($version)]($style)[](fg:#6272a4)"
+style = "bold fg:#f8f8f2 bg:#6272a4"
+
+[memory_usage]
+threshold = 0
+symbol = "󰍛 "
+format = '[$symbol$ram_pct \(${ram}\)]($style)'
+style = "bold fg:#f8f8f2 bg:#44475a"
+disabled = true
+
+[time]
+disabled = false
+format = "[ $time]($style)"
+style = "bold fg:#f8f8f2 bg:#44475a"
+time_format = "%R"
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+format = "[$duration]($style)"
+style = "bold fg:#f8f8f2 bg:#44475a"
+
+[status]
+disabled = false
+symbol = "[](fg:#ff5555 bg:#44475a) "
+success_symbol = "[](fg:#50fa7b bg:#44475a) "
+not_executable_symbol = "[](fg:#ff5555 bg:#44475a) "
+not_found_symbol = "[ﯪ](fg:#bd93f9 bg:#44475a) "
+sigint_symbol = "[ﰸ](fg:#ffb86c bg:#44475a) "
+signal_symbol = "[](fg:#f1fa8c bg:#44475a) "
+format = "[$symbol]($style)"
+style = "bg:#44475a"
+
+[character]
+disabled = false
+success_symbol = '[](bold fg:color_green)'
+error_symbol = '[](bold fg:color_red)'
+vimcmd_symbol = '[](bold fg:color_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol = '[](bold fg:color_purple)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'

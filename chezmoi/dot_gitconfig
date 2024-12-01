@@ -1,0 +1,15 @@
+[user]
+	email = me@mrbandler.dev
+	name = mrbandler
+
+[core]
+	autocrlf = true
+
+[includeIf "gitdir:~/Develop/ffg/"]
+  path = .gitconfig-ffg
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
