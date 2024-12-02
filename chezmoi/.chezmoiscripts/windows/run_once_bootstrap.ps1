@@ -51,7 +51,7 @@ catch {
 
 # 7. Transfer ownership of ~/.local/share/chezmoi to the current user
 Takeown /F "$env:USERPROFILE\.local\share\chezmoi" /R /D Y | Out-Null
-icacls "$env:USERPROFILE\.local\share\chezmoi" /grant "%USERNAME%:F" /T
+icacls "$env:USERPROFILE\.local\share\chezmoi" /grant "%USERNAME%:F" /T | Out-Null
 
 # 8. Schedule at logon after bootstrap script.
 $chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
