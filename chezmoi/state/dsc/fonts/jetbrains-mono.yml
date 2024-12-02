@@ -23,6 +23,17 @@ properties:
       directives:
         description: Install JetBrains Mono NF
       settings:
+        Name: JetBrains-Mono-NF
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoopNerdFonts
+
+    - resource: xScoop/ScoopApp
+      id: installJetBrainsMonoNFMono
+      directives:
+        description: Install JetBrains Mono NF
+      settings:
         Name: JetBrains-Mono-NF-Mono
         NoUpdateScoop: true
         Ensure: Present
