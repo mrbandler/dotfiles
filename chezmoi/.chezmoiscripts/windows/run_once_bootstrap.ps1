@@ -49,7 +49,11 @@ catch {
     # Intentionally left empty to suppress error output
 }
 
-# 7. Schedule at logon after bootstrap script.
+# 7. Transfer ownership of ~/.local/share/chezmoi to the current user
+Takeown /F "$env:USERPROFILE\.local\share\chezmoi" /R /D Y | Out-Null
+icacls "$env:USERPROFILE\.local\share\chezmoi" /grant "%USERNAME%:F" /T
+
+# 8. Schedule at logon after bootstrap script.
 $chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
 $afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\after_bootstrap.ps1")
 $trigger = New-ScheduledTaskTrigger -AtLogOn
@@ -57,6 +61,6 @@ $action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -Executi
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest | Out-Null
 
-# 8. Ask for restart
+# 9. Ask for restart
 Write-Output "Windows environment bootstrapped."
 Write-Output "Restart is required to finalize bootstrapping. Please restart the computer manually to complete it."
