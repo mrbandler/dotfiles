@@ -84,7 +84,7 @@ class PkgDownloadAndInstall {
 
         $foundUninstallers = @()
         foreach ($keyPath in $uninstallKeyPaths) {
-            $uninstallers = Get-ItemProperty "$keyPath\*" | Where-Object { $_.DisplayName -like "*$($this.Name)*" }
+            $uninstallers = Get-ItemProperty "$keyPath\*" | Where-Object { $_.DisplayName -like "$($this.Name)*" }
             if ($uninstallers) {
                 $foundUninstallers += $uninstallers
             }
