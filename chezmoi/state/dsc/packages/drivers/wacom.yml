@@ -4,13 +4,12 @@ properties:
   assertions: []
   parameters: []
   resources:
-    - resource: xPkg/PkgDownloadAndInstall
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installWacomDriver
       directives:
         description: Install Wacom Driver
+        allowPrerelease: true
       settings:
-        Name: Wacom Tablet
-        Type: EXE
-        Arguments: /silent /NORESTART
-        Url: https://cdn.wacom.com/u/productsupport/drivers/win/professional/WacomTablet_6.4.7-3.exe
+        Id: Wacom.WacomTabletDriver
+        Source: winget
         Ensure: Present
