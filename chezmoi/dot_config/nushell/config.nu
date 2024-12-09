@@ -896,3 +896,5 @@ $env.config = {
         }
     ]
 }
+
+use ~/.config/nushell/starship.nu
