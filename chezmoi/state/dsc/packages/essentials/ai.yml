@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+imports:
+  - path: ../../core/pm.yml
+
+properties:
+  configurationVersion: "0.2.0"
+  assertions: []
+  parameters: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installChatGPT
+      directives:
+        description: Install ChatGPT
+        allowPrerelease: true
+      settings:
+        Id: 9NT1R1C2HH7J
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installClaude
+      directives:
+        description: Install Claude
+        allowPrerelease: true
+      settings:
+        Id: Anthropic.Claude
+        Source: winget
+        Ensure: Present

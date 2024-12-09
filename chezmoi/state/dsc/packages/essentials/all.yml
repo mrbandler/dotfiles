@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
 imports:
+  - path: ./ai.yml
   - path: ./audio.yml
   - path: ./desktop.yml
   - path: ./media.yml
