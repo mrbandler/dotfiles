@@ -36,3 +36,13 @@ properties:
         Id: Notion.Notion
         Source: winget
         Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installNotionCalendar
+      directives:
+        description: Install Notion Calendar
+        allowPrerelease: true
+      settings:
+        Id: Notion.NotionCalendar
+        Source: winget
+        Ensure: Present
