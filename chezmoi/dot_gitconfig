@@ -3,7 +3,7 @@
 	name = Michael Baudler
 
 [core]
-	autocrlf = true
+	autocrlf = input
 
 [includeIf "gitdir:~/Develop/ffg/"]
   path = .gitconfig-ffg
