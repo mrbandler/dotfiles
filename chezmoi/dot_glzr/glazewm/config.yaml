@@ -78,6 +78,9 @@ workspaces:
   - name: gaming
     display_name: Gaming
     bind_to_monitor: 1
+  - name: scratch
+    display_name: Scratch
+    bind_to_monitor: 1
 
   # Below central widescreen monitor.
   - name: web
@@ -191,18 +194,16 @@ binding_modes:
         bindings: ["k", "down"]
 
       - commands: ["focus --next-workspace"]
-        bindings: ["o"]
+        bindings: ["p"]
       - commands: ["focus --prev-workspace"]
-        bindings: ["i"]
+        bindings: ["u"]
 
       - commands: ["focus --workspace main"]
         bindings: ["1", "a"]
       - commands: ["focus --workspace web"]
         bindings: ["2", "s"]
-      - commands: ["focus --workspace chatgpt"]
+      - commands: ["focus --workspace scratch"]
         bindings: ["3", "d"]
-      - commands: ["focus --workspace git"]
-        bindings: ["4", "f"]
 
       - commands: ["wm-disable-binding-mode --name focus"]
         bindings: ["escape", "ctrl+d"]
@@ -236,10 +237,17 @@ binding_modes:
         bindings: ["1", "a"]
       - commands: ["move --workspace web", "focus --workspace web"]
         bindings: ["2", "s"]
-      - commands: ["move --workspace chatgpt", "focus --workspace chatgpt"]
+      - commands: ["move --workspace scratch", "focus --workspace scratch"]
         bindings: ["3", "d"]
-      - commands: ["move --workspace git", "focus --workspace git"]
-        bindings: ["4", "f"]
+
+      - commands: ["move-workspace --direction left"]
+        bindings: ["ctrl+j"]
+      - commands: ["move-workspace --direction right"]
+        bindings: ["ctrl+l"]
+      - commands: ["move-workspace --direction up"]
+        bindings: ["ctrl+i"]
+      - commands: ["move-workspace --direction down"]
+        bindings: ["ctrl+k"]
 
       - commands: ["wm-disable-binding-mode --name move"]
         bindings: ["escape", "ctrl+shift+d"]
@@ -268,9 +276,9 @@ keybindings:
 
   # Focus the next/previous workspace defined in `workspaces` config.
   - commands: ["focus --next-workspace"]
-    bindings: ["ctrl+o"]
+    bindings: ["ctrl+p"]
   - commands: ["focus --prev-workspace"]
-    bindings: ["ctrl+i"]
+    bindings: ["ctrl+u"]
 
   # Focus the workspace that last had focus.
   - commands: ["focus --recent-workspace"]
@@ -281,10 +289,8 @@ keybindings:
     bindings: ["ctrl+1"]
   - commands: ["focus --workspace web"]
     bindings: ["ctrl+2"]
-  - commands: ["focus --workspace chatgpt"]
+  - commands: ["focus --workspace scatch"]
     bindings: ["ctrl+3"]
-  - commands: ["focus --workspace git"]
-    bindings: ["ctrl+4"]
 
   # Movement (leader = ctrl+shift).
 
@@ -304,24 +310,22 @@ keybindings:
 
   # Move the focused window's parent workspace to a monitor in a given
   # direction.
-  # - commands: ["move-workspace --direction left"]
-  #   bindings: ["ctrl+shift+a"]
-  # - commands: ["move-workspace --direction right"]
-  #   bindings: ["ctrl+shift+f"]
-  # - commands: ["move-workspace --direction up"]
-  #   bindings: ["ctrl+shift+d"]
-  # - commands: ["move-workspace --direction down"]
-  #   bindings: ["ctrl+shift+s"]
+  - commands: ["move-workspace --direction left"]
+    bindings: ["ctrl+shift+alt+j"]
+  - commands: ["move-workspace --direction right"]
+    bindings: ["ctrl+shift+alt+l"]
+  - commands: ["move-workspace --direction up"]
+    bindings: ["ctrl+shift+alt+i"]
+  - commands: ["move-workspace --direction down"]
+    bindings: ["ctrl+shift+alt+k"]
 
   # Move focused window to a workspace defined in `workspaces` config.
   - commands: ["move --workspace main", "focus --workspace main"]
     bindings: ["ctrl+shift+1"]
   - commands: ["move --workspace web", "focus --workspace web"]
     bindings: ["ctrl+shift+2"]
-  - commands: ["move --workspace chatgpt", "focus --workspace chatgpt"]
+  - commands: ["move --workspace scratch", "focus --workspace scratch"]
     bindings: ["ctrl+shift+3"]
-  - commands: ["move --workspace git", "focus --workspace git"]
-    bindings: ["ctrl+shift+4"]
 
   # Minimize focused window.
   - commands: ["toggle-minimized"]
