@@ -4,12 +4,12 @@ general:
     - "shell-exec %ProgramFiles%/Unity Hub/Unity Hub.exe"
     - "shell-exec %LocalAppData%/Fork/Fork.exe"
     - "shell-exec %LocalAppData%/AnthropicClaude/claude.exe"
-    - "shell-exec %ProgramFiles%/WindowsApps/OpenAI.ChatGPT-Desktop_1.2024.337.0_x64__2p2nqsd0c76g0/app/ChatGPT.exe"
+    - "shell-exec %ProgramFiles%/WindowsApps/OpenAI.ChatGPT-Desktop_1.2024.345.0_x64__2p2nqsd0c76g0/app/ChatGPT.exe"
     - "shell-exec %LocalAppData%/Programs/Notion/Notion.exe"
     - "shell-exec %LocalAppData%/Programs/cron-web/Notion Calendar.exe"
     - "shell-exec %LocalAppData%/Discord/Update.exe --processStart Discord.exe"
     - "shell-exec %AppData%/Telegram Desktop/Telegram.exe"
-    - "shell-exec %ProgramFiles%/WindowsApps/5319275A.WhatsAppDesktop_2.2447.5.0_x64__cv1g1gvanyjgm/WhatsApp.exe"
+    - "shell-exec %ProgramFiles%/WindowsApps/5319275A.WhatsAppDesktop_2.2449.2.0_x64__cv1g1gvanyjgm/WhatsApp.exe"
     - "shell-exec %LocalAppData%/proton_mail/Proton Mail.exe"
     - "shell-exec %ProgramFiles%/Mozilla Thunderbird/thunderbird.exe"
     - "shell-exec %AppData%/Spotify/Spotify.exe"
@@ -194,7 +194,7 @@ binding_modes:
         bindings: ["k", "down"]
 
       - commands: ["focus --next-workspace"]
-        bindings: ["p"]
+        bindings: ["o"]
       - commands: ["focus --prev-workspace"]
         bindings: ["u"]
 
@@ -276,7 +276,7 @@ keybindings:
 
   # Focus the next/previous workspace defined in `workspaces` config.
   - commands: ["focus --next-workspace"]
-    bindings: ["ctrl+p"]
+    bindings: ["ctrl+o"]
   - commands: ["focus --prev-workspace"]
     bindings: ["ctrl+u"]
 
@@ -355,7 +355,7 @@ keybindings:
 
   # Resizing (leader = ctrl+alt).
 
-  # Enable resize mode.
+  # Enable resize modek.
   - commands: ["wm-enable-binding-mode --name resize"]
     bindings: ["ctrl+alt+d"]
 
@@ -369,9 +369,8 @@ keybindings:
   - commands: ["resize --height -2%"]
     bindings: ["ctrl+alt+i"]
 
-  # Launching.
-
-  - commands: ["shell-exec %ProgramFiles%/WezTerm/wezterm-gui.exe"]
+  # Launching apps.
+  - commands: ["shell-exec wezterm-gui"]
     bindings: ["ctrl+shift+enter"]
 
   # Misc.

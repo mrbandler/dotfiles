@@ -3,6 +3,7 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 -- Theme & Appearance
+config.term = "wezterm"
 config.font = wezterm.font_with_fallback { 'JetBrainsMono Nerd Font', 'JetBrains Mono' }
 config.font_size = 12.0
 config.line_height = 0.9
