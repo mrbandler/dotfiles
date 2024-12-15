@@ -29,6 +29,11 @@ function Resolve-Config {
         return @{}
     }
 
+    if (-not (Test-Path $ConfigPath)) {
+        Write-Error "The provided configuration path ('$ConfigPath') does not exist."
+        return @{}
+    }
+
     $absolutePath = (Resolve-Path -Path $ConfigPath).Path
     if ($imported.ContainsKey($absolutePath)) {
         Write-Verbose "File $absolutePath already imported, skipping to avoid duplication."
@@ -46,7 +51,7 @@ function Resolve-Config {
     $resolved = $yaml.Clone()
     if ($null -ne $resolved.imports) {
         foreach ($import in $resolved.imports) {
-            $importPath = Join-Path -Path (Split-Path -Path $absolutePath -Parent) -ChildPath $import.Path
+            $importPath = Join-Path -Path (Split-Path -Path $absolutePath -Parent) -ChildPath $import.path
             if (-not (Test-Path $importPath)) {
                 Write-Verbose "Unable to import $importPath for $absolutePath"
             }
