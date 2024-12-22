@@ -41,7 +41,7 @@
   "UseAnimation": true,
   "UseSound": true,
   "SoundVolume": 50,
-  "UseClock": true,
+  "UseClock": false,
   "UseDate": false,
   "TimeFormat": "HH:mm",
   "DateFormat": "dddd dd\u0027, \u0027MMMM",
