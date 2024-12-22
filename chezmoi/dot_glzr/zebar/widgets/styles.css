@@ -1,30 +1,33 @@
-/**
- * Import the Nerdfonts icon font.
- * Ref https://www.nerdfonts.com/cheat-sheet for a cheatsheet of available Nerdfonts icons.
- */
 @import 'https://www.nerdfonts.com/assets/css/webfont.css';
+@import "../themes/macchiato.css";
 
 i {
-  color: rgb(115 130 175 / 95%);
+  color: var(--sapphire);
   margin-right: 7px;
 }
 
 body {
-  color: rgb(255 255 255 / 90%);
+  color: var(--text);
+  background: rgba(1, 0, 0, 0);
   font-family: ui-monospace, monospace;
   font-size: 12px;
   overflow: hidden;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 0px;
 }
 
 html,
-body,
-#root {
+body {
   height: 100%;
 }
 
 #root {
-  border-bottom: 1px solid rgb(255 255 255 / 5%);
-  background: linear-gradient(rgb(0 0 0 / 90%), rgb(5 2 20 / 85%));
+  height: calc(100% - 8px);
+  border-bottom: 1px solid var(--surface0);
+  background: var(--crust);
+  border-radius: 8px;
 }
 
 .app {
@@ -66,28 +69,28 @@ body,
 }
 
 .workspace {
-  background: rgb(255 255 255 / 5%);
+  background: var(--surface0);
   margin-right: 4px;
   padding: 4px 8px;
-  color: rgb(255 255 255 / 90%);
+  color: var(--subtext0);
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
   cursor: pointer;
 
   &.displayed {
-    background: rgb(255 255 255 / 15%);
+    background: var(--surface0);
   }
 
   &.focused,
   &:hover {
-    background: rgb(75 115 255 / 50%);
+    color: var(--base);
+    border-bottom: 1px solid var(--maroon);
+    background: var(--sapphire);
   }
 }
 
 .binding-mode,
 .tiling-direction {
-  background: rgb(255 255 255 / 15%);
-  color: rgb(255 255 255 / 90%);
   border-radius: 2px;
   line-height: 1;
   padding: 4px 8px;
@@ -95,12 +98,22 @@ body,
   cursor: pointer;
 }
 
+.tiling-direction {
+  background: var(--surface1);
+  color: var(--text);
+}
+
+.binding-mode {
+  background: var(--yellow);
+  color: var(--base);
+}
+
 .binding-mode {
   margin-right: 4px;
 }
 
 .cpu .high-usage {
-  color: #900029;
+  color: var(--red);
 }
 
 .battery {

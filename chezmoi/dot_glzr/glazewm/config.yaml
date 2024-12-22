@@ -14,9 +14,15 @@ general:
     - "shell-exec %ProgramFiles%/Mozilla Thunderbird/thunderbird.exe"
     - "shell-exec %AppData%/Spotify/Spotify.exe"
     - "shell-exec arc"
+
   shutdown_commands:
     - "shell-exec taskkill /IM zebar.exe /F"
-  config_reload_commands: []
+
+  config_reload_commands:
+    - "shell-exec taskkill /IM zebar.exe /F"
+    - "shell-exec timeout /t 1 >nul"
+    - "shell-exec zebar"
+
   focus_follows_cursor: false
   toggle_workspace_on_refocus: false
   cursor_jump:
