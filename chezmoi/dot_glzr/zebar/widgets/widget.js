@@ -195,21 +195,21 @@ function Right() {
         </div>
       )}
 
-      {output.memory && (
+      {/* {output.memory && (
         <div className="memory">
           <i className="nf nf-fae-chip"></i>
           {Math.round(output.memory.usage)}%
         </div>
-      )}
+      )} */}
 
-      {output.cpu && (
+      {/* {output.cpu && (
         <div className="cpu">
           <i className="nf nf-oct-cpu"></i>
           <span className={output.cpu.usage > 85 ? "high-usage" : ""}>
             {Math.round(output.cpu.usage)}%
           </span>
         </div>
-      )}
+      )} */}
 
       {output.battery && (
         <div className="battery">
