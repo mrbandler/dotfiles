@@ -4,24 +4,20 @@ general:
     - "shell-exec %ProgramFiles%/Unity Hub/Unity Hub.exe"
     - "shell-exec %LocalAppData%/Fork/Fork.exe"
     - "shell-exec %LocalAppData%/AnthropicClaude/claude.exe"
-    - "shell-exec %ProgramFiles%/WindowsApps/OpenAI.ChatGPT-Desktop_1.2024.345.0_x64__2p2nqsd0c76g0/app/ChatGPT.exe"
+    - "shell-exec %Userprofile%/.local/bin/chatgpt.bat"
     - "shell-exec %LocalAppData%/Programs/Notion/Notion.exe"
     - "shell-exec %LocalAppData%/Programs/cron-web/Notion Calendar.exe"
-    - "shell-exec %LocalAppData%/Discord/Update.exe --processStart Discord.exe"
+    - "shell-exec %Userprofile%/.local/bin/discord.bat"
     - "shell-exec %AppData%/Telegram Desktop/Telegram.exe"
-    - "shell-exec %ProgramFiles%/WindowsApps/5319275A.WhatsAppDesktop_2.2449.2.0_x64__cv1g1gvanyjgm/WhatsApp.exe"
+    - "shell-exec %Userprofile%/.local/bin/whatsapp.bat"
     - "shell-exec %LocalAppData%/proton_mail/Proton Mail.exe"
     - "shell-exec %ProgramFiles%/Mozilla Thunderbird/thunderbird.exe"
     - "shell-exec %AppData%/Spotify/Spotify.exe"
-    - "shell-exec arc"
-
+    - "shell-exec %ProgramFiles%/Zen Browser/zen.exe"
   shutdown_commands:
+  
     - "shell-exec taskkill /IM zebar.exe /F"
-
-  config_reload_commands:
-    - "shell-exec taskkill /IM zebar.exe /F"
-    - "shell-exec timeout /t 1 >nul"
-    - "shell-exec zebar"
+  config_reload_commands: []
 
   focus_follows_cursor: false
   toggle_workspace_on_refocus: false
@@ -147,7 +143,8 @@ window_rules:
 
   - commands: ["move --workspace web", focus --workspace web]
     match:
-      - window_process: { equals: "Arc" }
+      - window_process: { equals: "arc" }
+      - window_process: { equals: "zen" }
 
   - commands: ["move --workspace comms"]
     match:
@@ -189,6 +186,7 @@ window_rules:
 
 binding_modes:
   - name: "focus"
+    display_name: "Focus Mode"
     keybindings:
       - commands: ["focus --direction left"]
         bindings: ["j", "left"]
@@ -215,6 +213,7 @@ binding_modes:
         bindings: ["escape", "ctrl+d"]
 
   - name: "resize"
+    display_name: "Resize Mode"
     keybindings:
       - commands: ["resize --width -2%"]
         bindings: ["j", "left"]
@@ -229,6 +228,7 @@ binding_modes:
         bindings: ["escape", "ctrl+alt+d"]
 
   - name: "move"
+    display_name: "Move Mode"
     keybindings:
       - commands: ["move --direction left"]
         bindings: ["j", "left"]
@@ -259,6 +259,7 @@ binding_modes:
         bindings: ["escape", "ctrl+shift+d"]
 
   - name: "pause"
+    display_name: "Pause Mode"
     keybindings:
       - commands: ["wm-disable-binding-mode --name pause"]
         bindings: ["alt+shift+p"]
