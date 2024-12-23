@@ -16,7 +16,7 @@ properties:
         Type: EXE
         Arguments: ""
         Url: https://releases.arc.net/windows/ArcInstaller.exe
-        Ensure: Present
+        Ensure: Absent
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installBrave
