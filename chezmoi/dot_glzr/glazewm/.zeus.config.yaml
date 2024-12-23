@@ -1,0 +1,47 @@
+workspaces:
+  # Left portrait  monitor.
+  - name: git
+    display_name: Git
+    bind_to_monitor: 0
+  - name: unity
+    display_name: Unity
+    bind_to_monitor: 0
+
+  # Central widescreen monitor.
+  - name: main
+    display_name: Main
+    bind_to_monitor: 1
+  - name: gaming
+    display_name: Gaming
+    bind_to_monitor: 1
+  - name: scratch
+    display_name: Scratch
+    bind_to_monitor: 1
+
+  # Below central widescreen monitor.
+  - name: web
+    display_name: Web
+    bind_to_monitor: 2
+  - name: discord
+    display_name: Discord
+    bind_to_monitor: 2
+  - name: comms
+    display_name: Comms
+    bind_to_monitor: 2
+  - name: mail
+    display_name: Mail
+    bind_to_monitor: 2
+  - name: calendar
+    display_name: Calendar
+    bind_to_monitor: 2
+  - name: music
+    display_name: Music
+    bind_to_monitor: 2
+
+  # Right portrait monitor.
+  - name: chatgpt
+    display_name: ChatGPT
+    bind_to_monitor: 3
+  - name: claude
+    display_name: Claude
+    bind_to_monitor: 3

@@ -1,0 +1,8 @@
+# Common configuration.
+{{ include (joinPath .chezmoi.sourceDir "dot_glzr/glazewm/.common.config.yaml") }}
+
+# Host ({{ .chezmoi.hostname }}) specific configuration.
+{{- $hostConfig := (joinPath .chezmoi.sourceDir (printf "dot_glzr/glazewm/.%s.config.yaml" (.chezmoi.hostname | lower))) -}}
+{{- if stat $hostConfig -}}
+{{-   include $hostConfig -}}
+{{- end -}}
