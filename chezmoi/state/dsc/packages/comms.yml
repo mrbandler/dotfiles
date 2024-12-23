@@ -23,9 +23,15 @@ properties:
         description: Install Better Discord
       settings:
         Name: Better Discord
-        Type: EXE
+        Type: ZIP
         Arguments: ""
-        Url: https://github.com/BetterDiscord/Installer/releases/latest/download/BetterDiscord-Windows.exe
+        ZipInstall: |
+          $sourceDir = "${unzipped}"
+          $targetDir = "$env:USERPROFILE\.local\bin"
+
+          if (-not (Test-Path -Path $targetDir)) { New-Item -ItemType Directory -Path $targetDir | Out-Null }
+          Copy-Item -Path $sourceDir\bdcli.exe $targetDir\bdcli.exe -Force
+        Url: https://github.com/BetterDiscord/cli/releases/download/v0.1.0/bdcli_windows_amd64.zip
         Ensure: Present
       dependsOn:
         - installDiscord
