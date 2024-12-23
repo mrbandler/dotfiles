@@ -30,12 +30,12 @@ body {
   border-radius: 8px;
 }
 
-.app {
+.bar {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   height: 100%;
-  padding: 4px 1.5vw;
+  padding: 4px 12px;
 }
 
 .left,
@@ -45,22 +45,16 @@ body {
   align-items: center;
 }
 
+.left {
+  justify-self: start;
+}
+
 .center {
   justify-self: center;
 }
 
 .right {
   justify-self: end;
-}
-
-.logo,
-.binding-mode,
-.tiling-direction,
-.network,
-.memory,
-.cpu,
-.battery {
-  margin-right: 20px;
 }
 
 .workspaces {
@@ -91,25 +85,33 @@ body {
 
 .binding-mode,
 .tiling-direction {
-  border-radius: 2px;
+  border-radius: 16px;
   line-height: 1;
   padding: 4px 8px;
   border: 0;
-  cursor: pointer;
 }
 
 .tiling-direction {
   background: var(--surface1);
   color: var(--text);
+  cursor: pointer;
 }
 
 .binding-mode {
-  background: var(--yellow);
+  font-weight: bold;
+  font-size: 15px;
+  background: var(--maroon);
   color: var(--base);
+  border-bottom: 1px solid var(--yellow);
 }
 
-.binding-mode {
-  margin-right: 4px;
+.logo,
+.keyboard,
+.network,
+.memory,
+.cpu,
+.battery {
+  margin-right: 20px;
 }
 
 .cpu .high-usage {
@@ -125,4 +127,10 @@ body {
   font-size: 7px;
   left: -8px;
   top: 3px;
+}
+
+.time {
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 20px;
 }

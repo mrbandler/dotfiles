@@ -11,12 +11,131 @@ const providers = zebar.createProviderGroup({
   network: { type: "network" },
   battery: { type: "battery" },
   keyboard: { type: "keyboard" },
-  date: { type: "date", formatting: "DD | T" },
+  date: { type: "date", formatting: "T" },
 });
 
-createRoot(document.getElementById("root")).render(<App />);
+createRoot(document.getElementById("root")).render(<Bar />);
 
-function App() {
+/**
+ * Checks whether the current monitor is the main monitor.
+ * This is done by checking if the current monitor has a workspace named "main".
+ *
+ * @param {*} glazeOutput GlazeWM provider input.
+ * @returns Flag, whether the current monitor is the main monitor.
+ */
+function isMainMonitor(glazeOutput) {
+  if (!glazeOutput || !glazeOutput.currentMonitor) return false;
+
+  return glazeOutput.currentMonitor.children.some(
+    (c) => c.type === "workspace" && c.name === "main"
+  );
+}
+
+/**
+ * Host component.
+ *
+ * Renders host information on the bar of the main monitor.
+ */
+function Host() {
+  const [output, setOutput] = useState(providers.outputMap);
+
+  useEffect(() => {
+    providers.onOutput(() => setOutput(providers.outputMap));
+  }, []);
+
+  console.log(output);
+
+  function getOsIcon(osName) {
+    let normalizedOsName = osName.toLowerCase();
+    switch (normalizedOsName) {
+      case "windows":
+        return <i className="nf nf-custom-windows"></i>;
+      case "darwin":
+        return <i className="nf nf-custom-apple"></i>;
+      default: {
+        if (normalizedOsName.includes("debian")) {
+          return <i className="nf nf-linux-debian"></i>;
+        } else if (normalizedOsName.includes("ubuntu")) {
+          return <i className="nf nf-linux-ubuntu"></i>;
+        } else if (normalizedOsName.includes("arch")) {
+          return <i className="nf nf-linux-archlinux"></i>;
+        } else if (normalizedOsName.includes("nixos")) {
+          return <i className="nf nf-linux-nixos"></i>;
+        } else {
+          return <i className="nf nf-dev-linux"></i>;
+        }
+      }
+    }
+  }
+
+  return (
+    isMainMonitor(output.glazewm) &&
+    output.host &&
+    getOsIcon(output.host.osName)
+  );
+}
+
+/**
+ * Left bar component.
+ */
+function Left() {
+  const [output, setOutput] = useState(providers.outputMap);
+
+  useEffect(() => {
+    providers.onOutput(() => setOutput(providers.outputMap));
+  }, []);
+
+  return (
+    <div className="left">
+      <Host />
+      {output.glazewm && (
+        <div className="workspaces">
+          {output.glazewm.currentWorkspaces.map((workspace) => (
+            <button
+              className={`workspace ${workspace.hasFocus && "focused"} ${
+                workspace.isDisplayed && "displayed"
+              }`}
+              onClick={() =>
+                output.glazewm.runCommand(`focus --workspace ${workspace.name}`)
+              }
+              key={workspace.name}
+            >
+              {workspace.displayName ?? workspace.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Center bar component.
+ */
+function Center() {
+  const [output, setOutput] = useState(providers.outputMap);
+
+  useEffect(() => {
+    providers.onOutput(() => setOutput(providers.outputMap));
+  }, []);
+
+  return (
+    <div className="center">
+      {output.glazewm &&
+        output.glazewm.bindingModes.map((bindingMode) => (
+          <button className="binding-mode" key={bindingMode.name}>
+            {bindingMode.displayName.toUpperCase() ??
+              bindingMode.name.toUpperCase()}
+          </button>
+        ))}
+    </div>
+  );
+}
+
+/**
+ * Right bar component.
+ */
+function Right() {
   const [output, setOutput] = useState(providers.outputMap);
 
   useEffect(() => {
@@ -58,127 +177,78 @@ function App() {
     return <i className="nf nf-fa-battery_0"></i>;
   }
 
-  // Get icon to show for current weather status.
-  function getWeatherIcon(weatherOutput) {
-    switch (weatherOutput.status) {
-      case "clear_day":
-        return <i className="nf nf-weather-day_sunny"></i>;
-      case "clear_night":
-        return <i className="nf nf-weather-night_clear"></i>;
-      case "cloudy_day":
-        return <i className="nf nf-weather-day_cloudy"></i>;
-      case "cloudy_night":
-        return <i className="nf nf-weather-night_alt_cloudy"></i>;
-      case "light_rain_day":
-        return <i className="nf nf-weather-day_sprinkle"></i>;
-      case "light_rain_night":
-        return <i className="nf nf-weather-night_alt_sprinkle"></i>;
-      case "heavy_rain_day":
-        return <i className="nf nf-weather-day_rain"></i>;
-      case "heavy_rain_night":
-        return <i className="nf nf-weather-night_alt_rain"></i>;
-      case "snow_day":
-        return <i className="nf nf-weather-day_snow"></i>;
-      case "snow_night":
-        return <i className="nf nf-weather-night_alt_snow"></i>;
-      case "thunder_day":
-        return <i className="nf nf-weather-day_lightning"></i>;
-      case "thunder_night":
-        return <i className="nf nf-weather-night_alt_lightning"></i>;
-    }
-  }
-
   return (
-    <div className="app">
-      <div className="left">
-        <i className="logo nf nf-fa-windows"></i>
-        {output.glazewm && (
-          <div className="workspaces">
-            {output.glazewm.currentWorkspaces.map((workspace) => (
-              <button
-                className={`workspace ${workspace.hasFocus && "focused"} ${
-                  workspace.isDisplayed && "displayed"
-                }`}
-                onClick={() =>
-                  output.glazewm.runCommand(
-                    `focus --workspace ${workspace.name}`
-                  )
-                }
-                key={workspace.name}
-              >
-                {workspace.displayName ?? workspace.name}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+    <div className="right">
+      {output.keyboard && (
+        <div className="keyboard">
+          <i className="nf nf-md-keyboard"></i>
+          {output.keyboard.layout
+            .slice(output.keyboard.layout.indexOf("-") + 1)
+            .replace(/\u0000/g, "")}
+        </div>
+      )}
 
-      <div className="center">{output.date?.formatted}</div>
+      {output.network && (
+        <div className="network">
+          {getNetworkIcon(output.network)}
+          {output.network.defaultGateway?.ssid}
+        </div>
+      )}
 
-      <div className="right">
-        {output.glazewm && (
-          <>
-            {output.glazewm.bindingModes.map((bindingMode) => (
-              <button className="binding-mode" key={bindingMode.name}>
-                {bindingMode.displayName ?? bindingMode.name}
-              </button>
-            ))}
+      {/* {output.memory && (
+        <div className="memory">
+          <i className="nf nf-fae-chip"></i>
+          {Math.round(output.memory.usage)}%
+        </div>
+      )} */}
 
-            <button
-              className={`tiling-direction nf ${
-                output.glazewm.tilingDirection === "horizontal"
-                  ? "nf-md-swap_horizontal"
-                  : "nf-md-swap_vertical"
-              }`}
-              onClick={() =>
-                output.glazewm.runCommand("toggle-tiling-direction")
-              }
-            ></button>
-          </>
-        )}
+      {/* {output.cpu && (
+        <div className="cpu">
+          <i className="nf nf-oct-cpu"></i>
+          <span className={output.cpu.usage > 85 ? "high-usage" : ""}>
+            {Math.round(output.cpu.usage)}%
+          </span>
+        </div>
+      )} */}
 
-        {output.network && (
-          <div className="network">
-            {getNetworkIcon(output.network)}
-            {output.network.defaultGateway?.ssid}
-          </div>
-        )}
+      {output.battery && (
+        <div className="battery">
+          {/* Show icon for whether battery is charging. */}
+          {output.battery.isCharging && (
+            <i className="nf nf-md-power_plug charging-icon"></i>
+          )}
+          {getBatteryIcon(output.battery)}
+          {Math.round(output.battery.chargePercent)}%
+        </div>
+      )}
 
-        {output.memory && (
-          <div className="memory">
-            <i className="nf nf-fae-chip"></i>
-            {Math.round(output.memory.usage)}%
-          </div>
-        )}
+      {output.date && <div className="time">{output.date.formatted}</div>}
 
-        {output.cpu && (
-          <div className="cpu">
-            <i className="nf nf-oct-cpu"></i>
-            {/* Change the text color if the CPU usage is high. */}
-            <span className={output.cpu.usage > 85 ? "high-usage" : ""}>
-              {Math.round(output.cpu.usage)}%
-            </span>
-          </div>
-        )}
+      {output.glazewm && (
+        <button
+          className={`tiling-direction nf ${
+            output.glazewm.tilingDirection === "horizontal"
+              ? "nf-md-swap_horizontal"
+              : "nf-md-swap_vertical"
+          }`}
+          onClick={() => output.glazewm.runCommand("toggle-tiling-direction")}
+        ></button>
+      )}
+    </div>
+  );
+}
 
-        {output.battery && (
-          <div className="battery">
-            {/* Show icon for whether battery is charging. */}
-            {output.battery.isCharging && (
-              <i className="nf nf-md-power_plug charging-icon"></i>
-            )}
-            {getBatteryIcon(output.battery)}
-            {Math.round(output.battery.chargePercent)}%
-          </div>
-        )}
-
-        {output.weather && (
-          <div className="weather">
-            {getWeatherIcon(output.weather)}
-            {Math.round(output.weather.celsiusTemp)}°C
-          </div>
-        )}
-      </div>
+/**
+ * Bar component.
+ *
+ * Renders the while bar and is injected into the HTML.
+ */
+function Bar() {
+  return (
+    <div className="bar">
+      <Left />
+      <Center />
+      <Right />
     </div>
   );
 }

@@ -3,7 +3,7 @@
   "htmlPath": "./index.html",
   "zOrder": "normal",
   "shownInTaskbar": false,
-  "focused": false,
+  "focused": true,
   "resizable": false,
   "transparent": true,
   "presets": [
