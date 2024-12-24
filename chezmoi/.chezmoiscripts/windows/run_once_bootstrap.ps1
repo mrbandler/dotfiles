@@ -1,5 +1,5 @@
 # Adding this since chezmoi runs it on every change when I use `apply`.
-$response = Read-Host "Do you want to bootstrap your Windows environment? (yes/no)"
+$response = Read-Host "Do you want to bootstrap your Windows environment? (y/n)"
 
 if ($response -match '^(y|yes)$') {
     # Run the script
