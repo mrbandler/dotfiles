@@ -3,6 +3,7 @@ imports:
   - path: ../core/assertions.yml
   - path: ../core/debloat.yml
   - path: ../core/base.yml
+  - path: ../env/all.yml
   - path: ../fonts/all.yml
   - path: ../packages/browsers/all.yml
   - path: ../packages/creative/all.yml
@@ -13,6 +14,8 @@ imports:
     include:
       - installSteam
       - installEpicGames
+      - installGogGalaxy
+      - installBattleNet
   - path: ../packages/utilities/all.yml
   - path: ../packages/comms.yml
   - path: ../packages/experimental.yml
