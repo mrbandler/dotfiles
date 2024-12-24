@@ -23,6 +23,16 @@ properties:
           type: shortcut
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installZebar
+      directives:
+        description: Install Zebar
+        allowPrerelease: true
+      settings:
+        Id: glzr-io.zebar
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installFlow
       directives:
         description: Install Flow

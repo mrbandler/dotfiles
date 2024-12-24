@@ -7,13 +7,12 @@ properties:
   assertions: []
   parameters: []
   resources:
-    - resource: xPkg/PkgDownloadAndInstall
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installUHKAgent
       directives:
         description: Install UHK Agent
+        allowPrerelease: true
       settings:
-        Name: UHK Agent
-        Type: EXE
-        Arguments: /silent /NORESTART
-        Url: https://github.com/UltimateHackingKeyboard/agent/releases/download/v4.2.1/UHK.Agent-4.2.1-win.exe
+        Id: UltimateGadgetLaboratories.UHKAgent
+        Source: winget
         Ensure: Present

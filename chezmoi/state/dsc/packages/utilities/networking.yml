@@ -7,12 +7,12 @@ properties:
   assertions: []
   parameters: []
   resources:
-    - resource: cChoco/cChocoPackageInstaller
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installNetlimiter
       directives:
         description: Install Netlimiter
+        allowPrerelease: true
       settings:
-        Name: netlimiter
+        Id: LocktimeSoftware.NetLimiter
+        Source: winget
         Ensure: Present
-      dependsOn:
-        - installChoco
