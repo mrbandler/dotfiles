@@ -1,3 +1,12 @@
+# Adding this since chezmoi runs it on every change when I use `apply`.
+$response = Read-Host "Do you want to bootstrap your Windows environment? (yes/no)"
+
+if ($response -match '^(y|yes)$') {
+    # Run the script
+}
+if ($response -match '^(n|no)$') { exit }
+else { exit }
+
 # This script is meant to be run once to bootstrap the Windows environment.
 Write-Output "Bootstrapping Windows environment..."
 
@@ -25,7 +34,7 @@ winget configure --enable
 
 # Apply DSC configuration
 $env:PATH += ";C:\Program Files\PowerShell\7"
-pwsh "$HOME\.local\share\chezmoi\chezmoi\state\dsc\apply.ps1" -RunBefore -RunAfter
+pwsh "$HOME\.local\share\chezmoi\chezmoi\state\dsc\apply.ps1" -RunAfter
 
 # Setup PowerShell profile stubs.
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force | Out-Null
