@@ -1,4 +1,5 @@
 # 1. Install and setup WSL
+wsl --update
 wsl --install --no-distribution
 wsl --install Ubuntu --no-launch
 ubuntu install --root
