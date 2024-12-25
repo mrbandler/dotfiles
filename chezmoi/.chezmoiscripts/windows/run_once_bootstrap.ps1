@@ -2,7 +2,7 @@
 $response = Read-Host "Do you want to bootstrap your Windows environment? (y/n)"
 
 if ($response -match '^(y|yes)$') { }
-else if ($response -match '^(n|no)$') { exit }
+elseif ($response -match '^(n|no)$') { exit }
 else { exit }
 
 # This script is meant to be run once to bootstrap the Windows environment.
