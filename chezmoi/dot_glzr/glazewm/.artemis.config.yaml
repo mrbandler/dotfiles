@@ -1,1 +1,10 @@
-workspaces: []
+workspaces:
+  - name: main
+    display_name: Main
+    bind_to_monitor: 1
+  - name: gaming
+    display_name: Gaming
+    bind_to_monitor: 1
+  - name: scratch
+    display_name: Scratch
+    bind_to_monitor: 1
