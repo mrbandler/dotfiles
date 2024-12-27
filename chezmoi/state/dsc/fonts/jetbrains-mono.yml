@@ -21,9 +21,9 @@ properties:
     - resource: xScoop/ScoopApp
       id: installJetBrainsMonoNF
       directives:
-        description: Install JetBrains Mono NF
+        description: Install JetBrains Mono NF Normal Version
       settings:
-        Name: JetBrains-Mono-NF
+        Name: JetBrainsMono-NF
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
@@ -32,9 +32,20 @@ properties:
     - resource: xScoop/ScoopApp
       id: installJetBrainsMonoNFMono
       directives:
-        description: Install JetBrains Mono NF
+        description: Install JetBrains Mono NF Mono Version
       settings:
-        Name: JetBrains-Mono-NF-Mono
+        Name: JetBrainsMono-NF-Mono
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoopNerdFonts
+
+    - resource: xScoop/ScoopApp
+      id: installJetBrainsMonoNFPropo
+      directives:
+        description: Install JetBrains Mono NF Proportional
+      settings:
+        Name: JetBrainsMono-NF-Mono
         NoUpdateScoop: true
         Ensure: Present
       dependsOn:
