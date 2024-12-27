@@ -47,5 +47,3 @@ if ($RunAfter) {
     Write-Host "Running after script..."
     & "$PSScriptRoot/after.ps1"
 }
-
-Remove-Item -Path $configPath -Force -ErrorAction SilentlyContinue
