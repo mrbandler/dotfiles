@@ -2,9 +2,45 @@ workspaces:
   - name: main
     display_name: Main
     bind_to_monitor: 1
-  - name: gaming
-    display_name: Gaming
+  - name: web
+    display_name: Web
+    bind_to_monitor: 0
+  - name: notion
+    display_name: notion
     bind_to_monitor: 1
   - name: scratch
     display_name: Scratch
     bind_to_monitor: 1
+  - name: git
+    display_name: Git
+    bind_to_monitor: 0
+  - name: unity
+    display_name: Unity
+    bind_to_monitor: 0
+  - name: discord
+    display_name: Discord
+    bind_to_monitor: 1
+  - name: comms
+    display_name: Comms
+    bind_to_monitor: 2
+  - name: mail
+    display_name: Mail
+    bind_to_monitor: 0
+  - name: calendar
+    display_name: Calendar
+    bind_to_monitor: 1
+  - name: music
+    display_name: Music
+    bind_to_monitor: 0
+  - name: gaming
+    display_name: Gaming
+    bind_to_monitor: 1
+  - name: yt
+    display_name: YT
+    bind_to_monitor: 2
+  - name: chatgpt
+    display_name: ChatGPT
+    bind_to_monitor: 2
+  - name: claude
+    display_name: Claude
+    bind_to_monitor: 2

@@ -19,6 +19,9 @@ workspaces:
     bind_to_monitor: 1
 
   # Below central widescreen monitor.
+  - name: notion
+    display_name: notion
+    bind_to_monitor: 2
   - name: web
     display_name: Web
     bind_to_monitor: 2
