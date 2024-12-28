@@ -6,7 +6,7 @@ workspaces:
     display_name: Web
     bind_to_monitor: 0
   - name: notion
-    display_name: notion
+    display_name: Notion
     bind_to_monitor: 1
   - name: scratch
     display_name: Scratch

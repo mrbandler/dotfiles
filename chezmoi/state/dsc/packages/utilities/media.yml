@@ -7,12 +7,12 @@ properties:
   assertions: []
   parameters: []
   resources:
-    - resource: cChoco/cChocoPackageInstaller
+      - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installSpotify
       directives:
         description: Install Spotify
+        allowPrerelease: true
       settings:
-        Name: spotify
+        Id: Spotify.Spotify
+        Source: winget
         Ensure: Present
-      dependsOn:
-        - installChoco

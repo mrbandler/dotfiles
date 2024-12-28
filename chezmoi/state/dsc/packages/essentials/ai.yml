@@ -14,7 +14,7 @@ properties:
         allowPrerelease: true
       settings:
         Id: 9NT1R1C2HH7J
-        Source: winget
+        Source: msstore
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage

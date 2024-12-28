@@ -1,18 +1,18 @@
 general:
   startup_commands:
     - "shell-exec zebar"
+    - "shell-exec %Userprofile%/.local/bin/winapp.bat spotify"
+    - "shell-exec %Userprofile%/.local/bin/winapp.bat chatgpt"
+    - "shell-exec %Userprofile%/.local/bin/discord.bat"
+    - "shell-exec %Userprofile%/.local/bin/winapp.bat whatsapp"
+    - "shell-exec %AppData%/Telegram Desktop/Telegram.exe"
     - "shell-exec %ProgramFiles%/Unity Hub/Unity Hub.exe"
     - "shell-exec %LocalAppData%/Fork/Fork.exe"
     - "shell-exec %LocalAppData%/AnthropicClaude/claude.exe"
-    - "shell-exec %Userprofile%/.local/bin/chatgpt.bat"
-    - "shell-exec %LocalAppData%/Programs/Notion/Notion.exe"
-    - "shell-exec %LocalAppData%/Programs/cron-web/Notion Calendar.exe"
-    - "shell-exec %Userprofile%/.local/bin/discord.bat"
-    - "shell-exec %AppData%/Telegram Desktop/Telegram.exe"
-    - "shell-exec %Userprofile%/.local/bin/whatsapp.bat"
     - "shell-exec %LocalAppData%/proton_mail/Proton Mail.exe"
     - "shell-exec %ProgramFiles%/Mozilla Thunderbird/thunderbird.exe"
-    - "shell-exec %AppData%/Spotify/Spotify.exe"
+    - "shell-exec %LocalAppData%/Programs/cron-web/Notion Calendar.exe"
+    - "shell-exec %LocalAppData%/Programs/Notion/Notion.exe"
     - "shell-exec %ProgramFiles%/Zen Browser/zen.exe"
   shutdown_commands:
     - "shell-exec taskkill /IM zebar.exe /F"
@@ -86,6 +86,10 @@ window_rules:
       - window_process: { equals: "Code" }
       - window_process: { equals: "Unity" }
       - window_process: { equals: "Rider" }
+
+  - commands: ["move --workspace notion", focus --workspace notion]
+    match:
+      - window_process: { equals: "Notion" }
 
   - commands: ["move --workspace gaming", focus --workspace gaming]
     match:
@@ -291,7 +295,7 @@ keybindings:
 
   # Change the focused window to be fullscreen.
   - commands: ["toggle-fullscreen"]
-    bindings: ["ctrl+shift+f"]
+    bindings: ["ctrl+shift+g"]
 
   # Close focused window.
   - commands: ["close"]

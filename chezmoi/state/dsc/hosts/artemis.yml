@@ -10,6 +10,8 @@ imports:
   - path: ../packages/develop/all.yml
   - path: ../packages/drivers/gpu.yml
   - path: ../packages/essentials/all.yml
+    exclude:
+      - installVoicemeeterBanana
   - path: ../packages/gaming/launchers.yml
     include:
       - installSteam
