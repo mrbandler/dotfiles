@@ -7,12 +7,12 @@ properties:
   assertions: []
   parameters: []
   resources:
-      - resource: Microsoft.WinGet.DSC/WinGetPackage
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installSpotify
       directives:
         description: Install Spotify
         allowPrerelease: true
       settings:
-        Id: Spotify.Spotify
-        Source: winget
+        Id: 9NCBCSZSJRSB
+        Source: msstore
         Ensure: Present
