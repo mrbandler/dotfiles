@@ -18,12 +18,46 @@ if (-not ($isAdmin)) {
     exit
 }
 
+# Create dev drive.
+$drivePath = "$env:USERPROFILE\dev.vhdx"
+$driveLabel = "Dev"
+$driveLetter = "D"
+$size = "500GB"
+
+$regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+$autoMountBackup = (Get-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue).NoDriveTypeAutoRun
+Set-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -Value 255
+
+Write-Output "Creating dev drive..."
+
+try {
+    $vhd = New-VHD -Path $drivePath -Dynamic -SizeBytes $size
+    $disk = $vhd | Mount-VHD -Passthru
+    $init = $disk | Initialize-Disk -Passthru
+    $part = $init | New-Partition -UseMaximumSize
+    $part | Format-Volume -DevDrive -FileSystem ReFS -Confirm:$false -Force | Out-Null
+    $part | Set-Partition -NewDriveLetter $driveLetter
+    Set-Volume -DriveLetter $driveLetter -NewFileSystemLabel $driveLabel
+}
+finally {
+    if ($null -ne $autoMountBackup) {
+        Set-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -Value $autoMountBackup
+    }
+    else {
+        Remove-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue
+    }
+}
+
+
 # Set and update environment variables
+Write-Output "Setting home based environment variables..."
+
 [System.Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "$env:USERPROFILE\.config", [System.EnvironmentVariableTarget]::User)
 $currentPath = [Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User)
 [Environment]::SetEnvironmentVariable("Path", $currentPath + ";$env:USERPROFILE\bin;$env:USERPROFILE\.local\bin", [System.EnvironmentVariableTarget]::User)
 
 # Install enable winget configure and install the latest PowerShell
+Write-Output "Installing pwsh..."
 winget install --id Microsoft.PowerShell --silent --accept-source-agreements --accept-package-agreements
 winget configure --enable
 
@@ -32,6 +66,8 @@ $env:PATH += ";C:\Program Files\PowerShell\7"
 pwsh "$HOME\.local\share\chezmoi\chezmoi\state\dsc\apply.ps1" -RunAfter
 
 # Setup PowerShell profile stubs.
+Write-Output "Setting up PS profiles..."
+
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell" -Force | Out-Null
 New-Item -ItemType Directory -Path "C:\Users\$env:USERNAME\Documents\PowerShell" -Force | Out-Null
 
@@ -39,6 +75,8 @@ Set-Content -Path "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Microsoft.
 Set-Content -Path "C:\Users\$env:USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '. $HOME/.config/pwsh/profile.ps1'
 
 # Remove all pinned items from the taskbar
+Write-Output "Removing pinned items from the taskbar..."
+
 $taskbandRegistryPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband"
 Remove-ItemProperty -Path $taskbandRegistryPath -Name "Favorites" -Force -ErrorAction SilentlyContinue
 
@@ -58,10 +96,14 @@ catch {
 }
 
 # Transfer ownership of ~/.local/share/chezmoi to the current user
+Write-Output "Taking ownership of .local\share\chezmoi..."
+
 Takeown /F "$env:USERPROFILE\.local\share\chezmoi" /R /D Y | Out-Null
 icacls "$env:USERPROFILE\.local\share\chezmoi" /grant "%USERNAME%:F" /T | Out-Null
 
 # Schedule at logon after bootstrap script.
+Write-Output "Scheduling after boot script..."
+
 $chezmoiStorePath = "$HOME\.local\share\chezmoi\chezmoi"
 $afterBootstrapScriptPath = [System.IO.Path]::Combine($chezmoiStorePath, "scripts\windows\after_bootstrap.ps1")
 $trigger = New-ScheduledTaskTrigger -AtLogOn
