@@ -14,9 +14,6 @@ workspaces:
   - name: git
     display_name: Git
     bind_to_monitor: 0
-  - name: unity
-    display_name: Unity
-    bind_to_monitor: 0
   - name: discord
     display_name: Discord
     bind_to_monitor: 1

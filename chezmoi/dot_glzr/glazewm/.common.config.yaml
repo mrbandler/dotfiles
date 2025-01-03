@@ -6,7 +6,6 @@ general:
     - "shell-exec %Userprofile%/.local/bin/discord.bat"
     - "shell-exec %Userprofile%/.local/bin/winapp.bat whatsapp"
     - "shell-exec %AppData%/Telegram Desktop/Telegram.exe"
-    - "shell-exec %ProgramFiles%/Unity Hub/Unity Hub.exe"
     - "shell-exec %LocalAppData%/Fork/Fork.exe"
     - "shell-exec %LocalAppData%/AnthropicClaude/claude.exe"
     - "shell-exec %LocalAppData%/proton_mail/Proton Mail.exe"
@@ -14,6 +13,7 @@ general:
     - "shell-exec %LocalAppData%/Programs/cron-web/Notion Calendar.exe"
     - "shell-exec %LocalAppData%/Programs/Notion/Notion.exe"
     - "shell-exec %ProgramFiles%/Zen Browser/zen.exe"
+    - "focus --workspace notion"
   shutdown_commands:
     - "shell-exec taskkill /IM zebar.exe /F"
   config_reload_commands: []
@@ -122,10 +122,6 @@ window_rules:
   - commands: ["move --workspace git"]
     match:
       - window_process: { equals: "Fork" }
-
-  - commands: ["move --workspace unity"]
-    match:
-      - window_process: { equals: "Unity Hub" }
 
   - commands: ["move --workspace music"]
     match:
