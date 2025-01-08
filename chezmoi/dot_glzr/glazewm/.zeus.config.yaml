@@ -8,6 +8,9 @@ workspaces:
   - name: scratch
     display_name: Scratch
     bind_to_monitor: 1
+  - name: pomodoro
+    display_name: Pomodoro
+    bind_to_monitor: 2
   - name: web
     display_name: Web
     bind_to_monitor: 2
