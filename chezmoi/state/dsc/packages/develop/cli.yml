@@ -53,7 +53,7 @@ properties:
     - resource: xScoop/ScoopApp
       id: installLazygit
       directives:
-        description: Install Lazygit
+        description: Install lazygit
       settings:
         Name: lazygit
         NoUpdateScoop: true
@@ -61,6 +61,17 @@ properties:
       dependsOn:
         - installScoop
         - installScoopExtras
+
+    - resource: xScoop/ScoopApp
+      id: installLazydocker
+      directives:
+        description: Install lazydocker
+      settings:
+        Name: lazydocker
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
 
     - resource: xScoop/ScoopApp
       id: installZoxide
