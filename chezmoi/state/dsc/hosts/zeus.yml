@@ -35,3 +35,14 @@ properties:
           Start-Process -FilePath $installer -ArgumentList "/S" -Wait
         Url: https://gscs-b2c.lge.com/downloadFile?fileId=LtfQlk4JRr6no8OnWggXQ
         Ensure: Present
+
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installLumina
+      directives:
+        description: Install Lumina
+      settings:
+        Name: Lumina
+        Type: EXE
+        Arguments: /S
+        Url: https://dist.getlumina.com/beta/Lumina-0.2.6-3-win64.exe
+        Ensure: Present
