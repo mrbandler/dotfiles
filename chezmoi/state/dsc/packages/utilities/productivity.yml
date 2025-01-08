@@ -28,6 +28,16 @@ properties:
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installLogseq
+      directives:
+        description: Install Logseq
+        allowPrerelease: true
+      settings:
+        Id: Logseq.Logseq
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installNotion
       directives:
         description: Install Notion
