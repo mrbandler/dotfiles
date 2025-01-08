@@ -1,15 +1,18 @@
 workspaces:
+  - name: pomodoro
+    display_name: Pomodoro
+    bind_to_monitor: 0
   - name: main
     display_name: Main
-    bind_to_monitor: 1
-  - name: gaming
-    display_name: Gaming
     bind_to_monitor: 1
   - name: scratch
     display_name: Scratch
     bind_to_monitor: 1
-  - name: pomodoro
-    display_name: Pomodoro
+  - name: gaming
+    display_name: Gaming
+    bind_to_monitor: 1
+  - name: glance
+    display_name: Glance
     bind_to_monitor: 2
   - name: web
     display_name: Web
@@ -32,12 +35,6 @@ workspaces:
   - name: music
     display_name: Music
     bind_to_monitor: 2
-  - name: git
-    display_name: Git
-    bind_to_monitor: 0
   - name: chatgpt
     display_name: ChatGPT
-    bind_to_monitor: 3
-  - name: claude
-    display_name: Claude
     bind_to_monitor: 3

@@ -6,13 +6,12 @@ general:
     - "shell-exec %Userprofile%/.local/bin/winapp.bat whatsapp"
     - "shell-exec %Userprofile%/.local/bin/discord.bat"
     - "shell-exec %AppData%/Telegram Desktop/Telegram.exe"
-    - "shell-exec %LocalAppData%/Fork/Fork.exe"
-    - "shell-exec %LocalAppData%/AnthropicClaude/claude.exe"
     - "shell-exec %LocalAppData%/proton_mail/Proton Mail.exe"
     - "shell-exec %LocalAppData%/Programs/cron-web/Notion Calendar.exe"
     - "shell-exec %LocalAppData%/Programs/Notion/Notion.exe"
     - "shell-exec %ProgramFiles%/Mozilla Thunderbird/thunderbird.exe"
     - "shell-exec %ProgramFiles%/Zen Browser/zen.exe"
+    - 'shell-exec "%ProgramFiles(x86)%/Microsoft/Edge/Application/msedge.exe" --app=https://app.flocus.com'
     - "focus --workspace notion"
   shutdown_commands:
     - "shell-exec taskkill /IM zebar.exe /F"
@@ -70,6 +69,7 @@ window_rules:
       - window_process: { regex: "Focusrite Control 2" }
       - window_process: { regex: "VoiceMeeter" }
       - window_process: { regex: "LG UltraGear Control Center" }
+      - window_class: { equals: "UnitySplashWindow" }
       - window_title: { regex: "[Pp]icture.in.[Pp]icture" }
         window_class: { regex: "Chrome_WidgetWin_1|MozillaDialogClass" }
 
@@ -88,7 +88,7 @@ window_rules:
 
   - commands: ["move --workspace pomodoro", focus --workspace pomodoro]
     match:
-      - window_process: { equals: "Hourglass" }
+      - window_title: { equals: "Flocus" }
 
   - commands: ["move --workspace notion", focus --workspace notion]
     match:
@@ -122,10 +122,6 @@ window_rules:
     match:
       - window_process: { equals: "Notion Calendar" }
 
-  - commands: ["move --workspace git"]
-    match:
-      - window_process: { equals: "Fork" }
-
   - commands: ["move --workspace music"]
     match:
       - window_process: { equals: "Spotify" }
@@ -133,10 +129,6 @@ window_rules:
   - commands: ["move --workspace chatgpt"]
     match:
       - window_process: { equals: "ChatGPT" }
-
-  - commands: ["move --workspace claude"]
-    match:
-      - window_process: { equals: "claude" }
 
 binding_modes:
   - name: "focus"
@@ -160,29 +152,16 @@ binding_modes:
         bindings: ["r"]
 
       - commands: ["focus --workspace main"]
-        bindings: ["1", "a"]
+        bindings: ["1"]
       - commands: ["focus --workspace web"]
-        bindings: ["2", "s"]
+        bindings: ["2"]
       - commands: ["focus --workspace scratch"]
-        bindings: ["3", "d"]
+        bindings: ["3"]
+      - commands: ["focus --workspace glance"]
+        bindings: ["4"]
 
       - commands: ["wm-disable-binding-mode --name focus"]
-        bindings: ["escape", "ctrl+shift+d"]
-
-  - name: "resize"
-    display_name: "Resize Mode"
-    keybindings:
-      - commands: ["resize --width -2%"]
-        bindings: ["j", "left"]
-      - commands: ["resize --width +2%"]
-        bindings: ["l", "right"]
-      - commands: ["resize --height +2%"]
-        bindings: ["k", "up"]
-      - commands: ["resize --height -2%"]
-        bindings: ["i", "down"]
-
-      - commands: ["wm-disable-binding-mode --name resize"]
-        bindings: ["escape", "ctrl+alt+shift+d"]
+        bindings: ["escape", "ctrl+alt+x"]
 
   - name: "move"
     display_name: "Move Mode"
@@ -197,11 +176,11 @@ binding_modes:
         bindings: ["k", "down"]
 
       - commands: ["move --workspace main", "focus --workspace main"]
-        bindings: ["1", "a"]
-      - commands: ["move --workspace web", "focus --workspace web"]
-        bindings: ["2", "s"]
+        bindings: ["1"]
       - commands: ["move --workspace scratch", "focus --workspace scratch"]
-        bindings: ["3", "d"]
+        bindings: ["2"]
+      - commands: ["move --workspace glance", "focus --workspace glance"]
+        bindings: ["3"]
 
       - commands: ["move-workspace --direction left"]
         bindings: ["ctrl+j"]
@@ -213,7 +192,22 @@ binding_modes:
         bindings: ["ctrl+k"]
 
       - commands: ["wm-disable-binding-mode --name move"]
-        bindings: ["escape", "ctrl+alt+d"]
+        bindings: ["escape", "ctrl+shift+x"]
+
+  - name: "resize"
+    display_name: "Resize Mode"
+    keybindings:
+      - commands: ["resize --width -2%"]
+        bindings: ["s", "left"]
+      - commands: ["resize --width +2%"]
+        bindings: ["f", "right"]
+      - commands: ["resize --height +2%"]
+        bindings: ["e", "up"]
+      - commands: ["resize --height -2%"]
+        bindings: ["d", "down"]
+
+      - commands: ["wm-disable-binding-mode --name resize"]
+        bindings: ["escape", "ctrl+alt+shift+x"]
 
   - name: "pause"
     display_name: "Pause Mode"
@@ -222,63 +216,76 @@ binding_modes:
         bindings: ["alt+shift+p"]
 
 keybindings:
-  # Focusing (leader = ctrl+shift).
+  # ------------------------------------ #
+  # Launching apps.
+  # ------------------------------------ #
+
+  - commands: ["shell-exec wezterm-gui"]
+    bindings: ["ctrl+shift+enter"]
+
+  # ------------------------------------ #
+  # Focusing (leader = ctrl+alt).
+  # ------------------------------------ #
 
   # Enable focus mode.
   - commands: ["wm-enable-binding-mode --name focus"]
-    bindings: ["ctrl+shift+d"]
+    bindings: ["ctrl+alt+x"]
 
   # Shift focus in a given direction.
   - commands: ["focus --direction left"]
-    bindings: ["ctrl+shift+j"]
+    bindings: ["ctrl+alt+j"]
   - commands: ["focus --direction right"]
-    bindings: ["ctrl+shift+l"]
+    bindings: ["ctrl+alt+l"]
   - commands: ["focus --direction up"]
-    bindings: ["ctrl+shift+i"]
+    bindings: ["ctrl+alt+i"]
   - commands: ["focus --direction down"]
-    bindings: ["ctrl+shift+k"]
+    bindings: ["ctrl+alt+k"]
 
   # Focus the next/previous workspace defined in `workspaces` config.
   - commands: ["focus --next-workspace"]
-    bindings: ["ctrl+shift+o"]
+    bindings: ["ctrl+alt+o"]
   - commands: ["focus --prev-workspace"]
-    bindings: ["ctrl+shift+u"]
+    bindings: ["ctrl+alt+u"]
 
   # Focus the workspace that last had focus.
   - commands: ["focus --recent-workspace"]
-    bindings: ["ctrl+shift+r"]
+    bindings: ["ctrl+alt+."]
 
   # Change focus to a workspace defined in `workspaces` config.
   - commands: ["focus --workspace main"]
-    bindings: ["ctrl+shift+1"]
+    bindings: ["ctrl+alt+1"]
   - commands: ["focus --workspace web"]
-    bindings: ["ctrl+shift+2"]
-  - commands: ["focus --workspace scatch"]
-    bindings: ["ctrl+shift+3"]
+    bindings: ["ctrl+alt+2"]
+  - commands: ["focus --workspace scratch"]
+    bindings: ["ctrl+alt+3"]
+  - commands: ["focus --workspace glance"]
+    bindings: ["ctrl+alt+4"]
 
-  # Movement (leader = ctrl+alt).
+  # ------------------------------------ #
+  # Movement (leader = ctrl+shift).
+  # ------------------------------------ #
 
   # Enable move mode.
   - commands: ["wm-enable-binding-mode --name move"]
-    bindings: ["ctrl+alt+d"]
+    bindings: ["ctrl+shift+x"]
 
   # Move focused window in a given direction.
   - commands: ["move --direction left"]
-    bindings: ["ctrl+alt+j"]
+    bindings: ["ctrl+shift+j"]
   - commands: ["move --direction right"]
-    bindings: ["ctrl+alt+l"]
+    bindings: ["ctrl+shift+l"]
   - commands: ["move --direction up"]
-    bindings: ["ctrl+alt+i"]
+    bindings: ["ctrl+shift+i"]
   - commands: ["move --direction down"]
-    bindings: ["ctrl+alt+k"]
+    bindings: ["ctrl+shift+k"]
 
   # Move focused window to a workspace defined in `workspaces` config.
   - commands: ["move --workspace main", "focus --workspace main"]
-    bindings: ["ctrl+alt+1"]
-  - commands: ["move --workspace web", "focus --workspace web"]
-    bindings: ["ctrl+alt+2"]
+    bindings: ["ctrl+shift+1"]
   - commands: ["move --workspace scratch", "focus --workspace scratch"]
-    bindings: ["ctrl+alt+3"]
+    bindings: ["ctrl+shift+2"]
+  - commands: ["move --workspace glance", "focus --workspace glance"]
+    bindings: ["ctrl+shift+3"]
 
   # Move the focused window's parent workspace to a monitor in a given
   # direction.
@@ -291,53 +298,52 @@ keybindings:
   - commands: ["move-workspace --direction down"]
     bindings: ["ctrl+alt+shift+k"]
 
-  # Minimize focused window.
-  - commands: ["toggle-minimized"]
-    bindings: ["ctrl+alt+m"]
+  # Close focused window.
+  - commands: ["close"]
+    bindings: ["ctrl+shift+q"]
 
   # Change the focused window to be fullscreen.
   - commands: ["toggle-fullscreen"]
-    bindings: ["ctrl+alt+f"]
+    bindings: ["ctrl+shift+w"]
 
-  # Close focused window.
-  - commands: ["close"]
-    bindings: ["ctrl+alt+x"]
+  # Minimize focused window.
+  - commands: ["toggle-minimized"]
+    bindings: ["ctrl+shift+r"]
+
+  # Change the focused window to be tiling.
+  - commands: ["toggle-tiling"]
+    bindings: ["ctrl+shift+t"]
+
+  # Change the focused window to be floating.
+  - commands: ["toggle-floating"]
+    bindings: ["ctrl+shift+space"]
 
   # Change tiling direction. This determines where new tiling windows will
   # be inserted.
   - commands: ["toggle-tiling-direction"]
-    bindings: ["ctrl+alt+v"]
+    bindings: ["ctrl+shift+v"]
 
-  # Change the focused window to be tiling.
-  - commands: ["toggle-tiling"]
-    bindings: ["ctrl+alt+space"]
-
-  # Not sure what this does.
-  # Change focus from tiling windows -> floating -> fullscreen.
-  # - commands: ["wm-cycle-focus"]
-  #   bindings: ["alt+space"]
-
+  # ------------------------------------ #
   # Resizing (leader = ctrl+alt+shift).
+  # ------------------------------------ #
 
   # Enable resize modek.
   - commands: ["wm-enable-binding-mode --name resize"]
-    bindings: ["ctrl+alt+shift+d"]
+    bindings: ["ctrl+alt+shift+x"]
 
   # Resize focused window by a percentage or pixel amount.
-  # - commands: ["resize --width -2%"]
-  #   bindings: ["ctrl+alt+shift+j"]
-  # - commands: ["resize --width +2%"]
-  #   bindings: ["ctrl+alt+shift+l"]
-  # - commands: ["resize --height +2%"]
-  #   bindings: ["ctrl+alt+shift+k"]
-  # - commands: ["resize --height -2%"]
-  #   bindings: ["ctrl+alt+shift+i"]
+  - commands: ["resize --width +2%"]
+    bindings: ["ctrl+alt+shift+f"]
+  - commands: ["resize --width -2%"]
+    bindings: ["ctrl+alt+shift+s"]
+  - commands: ["resize --height +2%"]
+    bindings: ["ctrl+alt+shift+d"]
+  - commands: ["resize --height -2%"]
+    bindings: ["ctrl+alt+shift+e"]
 
-  # Launching apps.
-  - commands: ["shell-exec wezterm-gui"]
-    bindings: ["ctrl+shift+enter"]
-
+  # ------------------------------------ #
   # Misc.
+  # ------------------------------------ #
 
   # Enable pause mode.
   - commands: ["wm-enable-binding-mode --name pause"]
