@@ -19,6 +19,7 @@ if (-not ($isAdmin)) {
 }
 
 # Create dev drive.
+$autoMountRegKeyPath = "HKLM:\SYSTEM\CurrentControlSet\Services\VHDMP\Parameters"
 $drivePath = "$env:USERPROFILE\dev.vhdx"
 $driveLabel = "Dev"
 $driveLetter = "D"
@@ -38,6 +39,14 @@ try {
     $part | Format-Volume -DevDrive -FileSystem ReFS -Confirm:$false -Force | Out-Null
     $part | Set-Partition -NewDriveLetter $driveLetter
     Set-Volume -DriveLetter $driveLetter -NewFileSystemLabel $driveLabel
+
+    Write-Output "Auto mounting created dev drive..."
+
+    if (-not (Test-Path $autoMountRegKeyPath)) {
+        New-Item -Path $autoMountRegKeyPath -Force | Out-Null
+    }
+
+    New-ItemProperty -Path $regKeyPath -Name "AttachOnStartup" -PropertyType MultiString -Value @($drivePath) -Force
 }
 finally {
     if ($null -ne $autoMountBackup) {
