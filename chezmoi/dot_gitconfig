@@ -3,16 +3,20 @@
 	name = Michael Baudler
 
 [core]
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 	autocrlf = input
 
-[includeIf "gitdir:~/Develop/ffg/"]
+[includeIf "gitdir:D:/ffg/"]
   path = .gitconfig-ffg
+
+[includeIf "gitdir:D:/gmg/"]
+  path = .gitconfig-gmg
+
+[includeIf "gitdir:D:/ss/"]
+  path = .gitconfig-ss
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-
-[credential "helperselector"]
-	selected = manager
