@@ -36,3 +36,15 @@ properties:
         Id: DevToys-app.DevToys
         Source: winget
         Ensure: Present
+
+    - resource: xScoop/ScoopApp
+      id: installWinspy
+      directives:
+        description: Install winspy
+      settings:
+        Name: winspy
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+        - installScoopExtras
