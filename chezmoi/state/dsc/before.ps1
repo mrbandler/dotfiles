@@ -13,8 +13,7 @@ $wingetPackageIdBlacklist = @(
     "Microsoft.DevHome",
     "Microsoft.Edge",
     "Canonical.Ubuntu",
-    "FocusriteControl2",
-    "Spotify.Spotify" # Is installed via choco, not winget.
+    "FocusriteControl2"
 )
 
 Write-Host "Checking for uninstallable winget packages..."
