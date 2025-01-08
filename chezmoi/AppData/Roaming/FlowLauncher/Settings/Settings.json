@@ -47,9 +47,9 @@
   "DateFormat": "dddd dd\u0027, \u0027MMMM",
   "FirstLaunch": false,
   "SettingWindowWidth": 954,
-  "SettingWindowHeight": 1080,
-  "SettingWindowTop": 280,
-  "SettingWindowLeft": 1443,
+  "SettingWindowHeight": 918,
+  "SettingWindowTop": 228,
+  "SettingWindowLeft": 1446,
   "SettingWindowState": 0,
   "CustomExplorerIndex": 0,
   "CustomExplorerList": [
@@ -128,7 +128,7 @@
   "CustomWindowTop": 0,
   "KeepMaxResults": false,
   "MaxResultsToShow": 5,
-  "ActivateTimes": 444,
+  "ActivateTimes": 679,
   "CustomPluginHotkeys": [],
   "CustomShortcuts": [],
   "DontPromptUpdateMsg": false,
@@ -153,8 +153,8 @@
   "AnimationSpeed": "Fast",
   "CustomAnimationLength": 360,
   "PluginSettings": {
-    "PythonExecutablePath": "",
-    "NodeExecutablePath": "",
+    "PythonExecutablePath": "C:\\Users\\mrbandler\\AppData\\Roaming\\FlowLauncher\\Environments\\Python\\PythonEmbeddable-v3.11.4\\pythonw.exe",
+    "NodeExecutablePath": "C:\\Users\\mrbandler\\AppData\\Roaming\\FlowLauncher\\Environments\\Node.js\\Node-v16.18.0\\node-v16.18.0-win-x64\\node.exe",
     "Plugins": {
       "0ECADE17459B49F587BF81DC3A125110": {
         "ID": "0ECADE17459B49F587BF81DC3A125110",
@@ -306,6 +306,96 @@
         "Version": "1.3.3",
         "ActionKeywords": [
           "*"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "F8775498-BD72-4ECA-893F-B33863D81CB5": {
+        "ID": "F8775498-BD72-4ECA-893F-B33863D81CB5",
+        "Name": "Unity Engine",
+        "Version": "1.0.2",
+        "ActionKeywords": [
+          "u"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "02D91372A4C9429B93BA6365E38FBD4C": {
+        "ID": "02D91372A4C9429B93BA6365E38FBD4C",
+        "Name": "Epic Games Store Launcher",
+        "Version": "2.0.0",
+        "ActionKeywords": [
+          "eg"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "3AF7F9DD4367439AA4730641D99EDA21": {
+        "ID": "3AF7F9DD4367439AA4730641D99EDA21",
+        "Name": "FlowTrumpet",
+        "Version": "1.1.0",
+        "ActionKeywords": [
+          "vol"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "14b986ef-45ec-44c1-be66-cab460a771f7": {
+        "ID": "14b986ef-45ec-44c1-be66-cab460a771f7",
+        "Name": "DevToys Launcher",
+        "Version": "1.3.0",
+        "ActionKeywords": [
+          "dtoys"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "D8AF059F555C48A380AAD5D57B4A5D61": {
+        "ID": "D8AF059F555C48A380AAD5D57B4A5D61",
+        "Name": "Godot",
+        "Version": "1.0.3",
+        "ActionKeywords": [
+          "gd"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "4D5DF575E4964C6AAADCF86134F09CC0": {
+        "ID": "4D5DF575E4964C6AAADCF86134F09CC0",
+        "Name": "Steam Search",
+        "Version": "9.0.1",
+        "ActionKeywords": [
+          "st"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "SY91U1N7H9D0X1DTZ8IOP4YV43KT7C5M": {
+        "ID": "SY91U1N7H9D0X1DTZ8IOP4YV43KT7C5M",
+        "Name": "SpotifyPremium",
+        "Version": "1.1.7",
+        "ActionKeywords": [
+          "sp"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "7D530704C68E4838896BBA5C4C1DE7DF": {
+        "ID": "7D530704C68E4838896BBA5C4C1DE7DF",
+        "Name": "Win Hotkey",
+        "Version": "4.0.0",
+        "ActionKeywords": [
+          "*"
+        ],
+        "Priority": 0,
+        "Disabled": false
+      },
+      "a0d7601f81a942e58b4952be3eb17fb2": {
+        "ID": "a0d7601f81a942e58b4952be3eb17fb2",
+        "Name": "Timer",
+        "Version": "1.1.0",
+        "ActionKeywords": [
+          "timer"
         ],
         "Priority": 0,
         "Disabled": false
