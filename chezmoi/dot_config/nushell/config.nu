@@ -4,6 +4,8 @@ use aliases.nu *
 use themes/catpuccin.nu
 use scripts/state.nu
 
+source zoxide.nu
+
 let dark_theme = catpuccin "macchiato"
 let light_theme = catpuccin "latte"
 

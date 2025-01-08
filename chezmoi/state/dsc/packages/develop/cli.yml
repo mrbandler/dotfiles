@@ -50,6 +50,51 @@ properties:
       dependsOn:
         - installScoop
 
+    - resource: xScoop/ScoopApp
+      id: installLazygit
+      directives:
+        description: Install Lazygit
+      settings:
+        Name: lazygit
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+        - installScoopExtras
+
+    - resource: xScoop/ScoopApp
+      id: installZoxide
+      directives:
+        description: Install zoxide
+      settings:
+        Name: zoxide
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installFzt
+      directives:
+        description: Install fzf
+      settings:
+        Name: fzf
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installBat
+      directives:
+        description: Install bat
+      settings:
+        Name: bat
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installStarship
       directives:

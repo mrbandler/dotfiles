@@ -1,5 +1,5 @@
 use std "path add"
-use ~/.config/nushell/starship.nu
+use starship.nu
 
 # Specifies how environment variables are:
 # - converted from a string to a value on Nushell startup (from_string)
@@ -33,3 +33,5 @@ $env.EDITOR = "nvim"
 # Custom entries to path.
 path add "~/.local/bin"
 path add "~/bin"
+
+zoxide init nushell | save -f ~/.config/nushell/zoxide.nu
