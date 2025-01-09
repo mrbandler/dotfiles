@@ -1600,19 +1600,25 @@
                   "r": 255
                 },
                 {
-                  "keyActionType": "none",
+                  "keyActionType": "keystroke",
+                  "type": "media",
+                  "scancode": 182,
                   "b": 255,
                   "g": 255,
                   "r": 255
                 },
                 {
-                  "keyActionType": "none",
+                  "keyActionType": "keystroke",
+                  "type": "media",
+                  "scancode": 205,
                   "b": 255,
                   "g": 255,
                   "r": 255
                 },
                 {
-                  "keyActionType": "none",
+                  "keyActionType": "keystroke",
+                  "type": "media",
+                  "scancode": 181,
                   "b": 255,
                   "g": 255,
                   "r": 255
