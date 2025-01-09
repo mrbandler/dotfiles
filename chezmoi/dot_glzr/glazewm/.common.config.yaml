@@ -11,7 +11,7 @@ general:
     - "shell-exec %LocalAppData%/Programs/Notion/Notion.exe"
     - "shell-exec %ProgramFiles%/Mozilla Thunderbird/thunderbird.exe"
     - "shell-exec %ProgramFiles%/Zen Browser/zen.exe"
-    - 'shell-exec "%ProgramFiles(x86)%/Microsoft/Edge/Application/msedge.exe" --app=https://app.flocus.com'
+    - "shell-exec %ProgramFiles(x86)%/Microsoft/Edge/Application/msedge.exe --app=https://app.flocus.com"
     - "focus --workspace notion"
   shutdown_commands:
     - "shell-exec taskkill /IM zebar.exe /F"
@@ -30,6 +30,7 @@ gaps:
     top: "50px"
     bottom: "10x"
     right: "10px"
+
     left: "10px"
 
 window_effects:
