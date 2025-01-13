@@ -12,8 +12,10 @@ $wingetPackageIdBlacklist = @(
     "Microsoft.PowerShell",
     "Microsoft.DevHome",
     "Microsoft.Edge",
+    "Microsoft.EdgeWebView2Runtime",
     "Canonical.Ubuntu",
-    "FocusriteControl2"
+    "FocusriteControl2",
+    "Nvidia*"
 )
 
 Write-Host "Checking for uninstallable winget packages..."
