@@ -19,41 +19,43 @@ if (-not ($isAdmin)) {
 }
 
 # Create dev drive.
-$autoMountRegKeyPath = "HKLM:\SYSTEM\CurrentControlSet\Services\VHDMP\Parameters"
 $drivePath = "$env:USERPROFILE\dev.vhdx"
 $driveLabel = "Dev"
 $driveLetter = "D"
-$size = "500GB"
+$size = 500GB
 
-$regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
-$autoMountBackup = (Get-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue).NoDriveTypeAutoRun
-Set-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -Value 255
+if (-not (Test-Path $drivePath)) {
+    $autoMonutRegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+    $autoMountBackup = (Get-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue).NoDriveTypeAutoRun
+    Set-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -Value 255
 
-Write-Output "Creating dev drive..."
+    Write-Output "Creating dev drive..."
 
-try {
-    $vhd = New-VHD -Path $drivePath -Dynamic -SizeBytes $size
-    $disk = $vhd | Mount-VHD -Passthru
-    $init = $disk | Initialize-Disk -Passthru
-    $part = $init | New-Partition -UseMaximumSize
-    $part | Format-Volume -DevDrive -FileSystem ReFS -Confirm:$false -Force | Out-Null
-    $part | Set-Partition -NewDriveLetter $driveLetter
-    Set-Volume -DriveLetter $driveLetter -NewFileSystemLabel $driveLabel
+    try {
+        $vhd = New-VHD -Path $drivePath -Dynamic -SizeBytes $size
+        $disk = $vhd | Mount-VHD -Passthru
+        $init = $disk | Initialize-Disk -Passthru
+        $part = $init | New-Partition -UseMaximumSize
+        $part | Format-Volume -DevDrive -FileSystem ReFS -Confirm:$false -Force | Out-Null
+        $part | Set-Partition -NewDriveLetter $driveLetter
+        Set-Volume -DriveLetter $driveLetter -NewFileSystemLabel $driveLabel
 
-    Write-Output "Auto mounting created dev drive..."
+        Write-Output "Auto mounting created dev drive..."
 
-    if (-not (Test-Path $autoMountRegKeyPath)) {
-        New-Item -Path $autoMountRegKeyPath -Force | Out-Null
+        $attachOnStartupRegPath = "HKLM:\SYSTEM\CurrentControlSet\Services\VHDMP\Parameters"
+        if (-not (Test-Path $attachOnStartupRegPath)) {
+            New-Item -Path $attachOnStartupRegPath -Force | Out-Null
+        }
+
+        New-ItemProperty -Path $attachOnStartupRegPath -Name "AttachOnStartup" -PropertyType MultiString -Value @($drivePath) -Force | Out-Null
     }
-
-    New-ItemProperty -Path $regKeyPath -Name "AttachOnStartup" -PropertyType MultiString -Value @($drivePath) -Force
-}
-finally {
-    if ($null -ne $autoMountBackup) {
-        Set-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -Value $autoMountBackup
-    }
-    else {
-        Remove-ItemProperty -Path $regPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue
+    finally {
+        if ($null -ne $autoMountBackup) {
+            Set-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -Value $autoMountBackup
+        }
+        else {
+            Remove-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue
+        }
     }
 }
 
