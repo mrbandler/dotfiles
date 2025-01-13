@@ -28,4 +28,13 @@ properties:
   configurationVersion: "0.2.0"
   assertions: []
   parameters: []
-  resources: []
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installRazerSynapse
+      directives:
+        description: Install Razer Synapse
+        allowPrerelease: true
+      settings:
+        Id: RazerInc.RazerInstaller
+        Source: winget
+        Ensure: Present
