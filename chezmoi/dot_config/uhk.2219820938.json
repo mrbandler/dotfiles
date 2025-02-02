@@ -1649,7 +1649,7 @@
                 {
                   "keyActionType": "keystroke",
                   "type": "basic",
-                  "scancode": 44,
+                  "scancode": 23,
                   "modifierMask": 3,
                   "b": 255,
                   "g": 255,
