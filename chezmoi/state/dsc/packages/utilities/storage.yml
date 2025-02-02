@@ -66,3 +66,13 @@ properties:
         Id: Ventoy.Ventoy
         Source: winget
         Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installWinFSP
+      directives:
+        description: Install WinFSP
+        allowPrerelease: true
+      settings:
+        Id: WinFsp.WinFsp
+        Source: winget
+        Ensure: Present

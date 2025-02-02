@@ -38,8 +38,6 @@ properties:
         Ensure: Present
       config:
         name: 1Password
-        bootstrap:
-          startAfter: true
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installProtonPass
@@ -52,5 +50,3 @@ properties:
         Ensure: Present
       config:
         name: Proton Pass
-        bootstrap:
-          startAfter: true

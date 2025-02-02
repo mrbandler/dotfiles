@@ -15,7 +15,8 @@ $wingetPackageIdBlacklist = @(
     "Microsoft.EdgeWebView2Runtime",
     "Canonical.Ubuntu",
     "FocusriteControl2",
-    "Nvidia*"
+    "Nvidia*",
+    "Unity*"
 )
 
 Write-Host "Checking for uninstallable winget packages..."
@@ -92,7 +93,9 @@ $chocoPackageIdBlacklist = @(
     "vcredist*"
 )
 
-Write-Host "Checking for uninstallable choco packages..."
+Write-Host "Checking for uninstallable choco
+
+packages..."
 choco export -o "$PSScriptRoot/choco.xml" | Out-Null
 $chocoExport = [xml](Get-Content -Path "$PSScriptRoot/choco.xml")
 

@@ -43,8 +43,6 @@ properties:
         Ensure: Present
       config:
         name: Flow Launcher
-        bootstrap:
-          startAfter: true
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installZoomIt

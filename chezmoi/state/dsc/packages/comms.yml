@@ -66,5 +66,3 @@ properties:
         Ensure: Present
       config:
         name: Thunderbird
-        bootstrap:
-          startAfter: true
