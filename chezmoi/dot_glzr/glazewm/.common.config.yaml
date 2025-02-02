@@ -79,6 +79,7 @@ window_rules:
       - window_process: { equals: "Flow.Launcher" }
       - window_title: { equals: "Settings" }
       - window_title: { equals: "Task Manager" }
+      - window_process: { equals: "vlc" }
 
   - commands: ["move --workspace main", focus --workspace main]
     match:
@@ -86,6 +87,10 @@ window_rules:
       - window_process: { equals: "Code" }
       - window_process: { equals: "Unity" }
       - window_process: { equals: "Rider" }
+
+  - commands: ["move --workspace scratch", focus --workspace scratch]
+    match:
+      - window_process: { equals: "Unity Hub" }
 
   - commands: ["move --workspace pomodoro", focus --workspace pomodoro]
     match:
@@ -314,10 +319,6 @@ keybindings:
   # Change the focused window to be tiling.
   - commands: ["toggle-tiling"]
     bindings: ["ctrl+shift+t"]
-
-  # Change the focused window to be floating.
-  - commands: ["toggle-floating"]
-    bindings: ["ctrl+shift+space"]
 
   # Change tiling direction. This determines where new tiling windows will
   # be inserted.

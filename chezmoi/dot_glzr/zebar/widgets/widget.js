@@ -17,65 +17,6 @@ const providers = zebar.createProviderGroup({
 createRoot(document.getElementById("root")).render(<Bar />);
 
 /**
- * Checks whether the current monitor is the main monitor.
- * This is done by checking if the current monitor has a workspace named "main".
- *
- * @param {*} glazeOutput GlazeWM provider input.
- * @returns Flag, whether the current monitor is the main monitor.
- */
-function isMainMonitor(glazeOutput) {
-  if (!glazeOutput || !glazeOutput.currentMonitor) return false;
-
-  return glazeOutput.currentMonitor.children.some(
-    (c) => c.type === "workspace" && c.name === "main"
-  );
-}
-
-/**
- * Host component.
- *
- * Renders host information on the bar of the main monitor.
- */
-function Host() {
-  const [output, setOutput] = useState(providers.outputMap);
-
-  useEffect(() => {
-    providers.onOutput(() => setOutput(providers.outputMap));
-  }, []);
-
-  console.log(output);
-
-  function getOsIcon(osName) {
-    let normalizedOsName = osName.toLowerCase();
-    switch (normalizedOsName) {
-      case "windows":
-        return <i className="nf nf-custom-windows"></i>;
-      case "darwin":
-        return <i className="nf nf-custom-apple"></i>;
-      default: {
-        if (normalizedOsName.includes("debian")) {
-          return <i className="nf nf-linux-debian"></i>;
-        } else if (normalizedOsName.includes("ubuntu")) {
-          return <i className="nf nf-linux-ubuntu"></i>;
-        } else if (normalizedOsName.includes("arch")) {
-          return <i className="nf nf-linux-archlinux"></i>;
-        } else if (normalizedOsName.includes("nixos")) {
-          return <i className="nf nf-linux-nixos"></i>;
-        } else {
-          return <i className="nf nf-dev-linux"></i>;
-        }
-      }
-    }
-  }
-
-  return (
-    isMainMonitor(output.glazewm) &&
-    output.host &&
-    getOsIcon(output.host.osName)
-  );
-}
-
-/**
  * Left bar component.
  */
 function Left() {
@@ -87,7 +28,6 @@ function Left() {
 
   return (
     <div className="left">
-      <Host />
       {output.glazewm && (
         <div className="workspaces">
           {output.glazewm.currentWorkspaces.map((workspace) => (
@@ -195,21 +135,21 @@ function Right() {
         </div>
       )}
 
-      {/* {output.memory && (
+      {output.memory && (
         <div className="memory">
           <i className="nf nf-fae-chip"></i>
           {Math.round(output.memory.usage)}%
         </div>
-      )} */}
+      )}
 
-      {/* {output.cpu && (
+      {output.cpu && (
         <div className="cpu">
           <i className="nf nf-oct-cpu"></i>
           <span className={output.cpu.usage > 85 ? "high-usage" : ""}>
             {Math.round(output.cpu.usage)}%
           </span>
         </div>
-      )} */}
+      )}
 
       {output.battery && (
         <div className="battery">
