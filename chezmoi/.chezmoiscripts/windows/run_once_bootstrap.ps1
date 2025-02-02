@@ -2,6 +2,8 @@
 $response = Read-Host "Do you want to bootstrap your Windows environment? (Y/n)"
 if ($response -match '^(n|no)$') { exit }
 
+$completedInitialBootstrap = Test-Path "$HOME\.bootstrapped"
+
 # This script is meant to be run once to bootstrap the Windows environment.
 Write-Output "Bootstrapping Windows environment..."
 
@@ -25,9 +27,9 @@ $driveLetter = "D"
 $size = 500GB
 
 if (-not (Test-Path $drivePath)) {
-    $autoMonutRegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
-    $autoMountBackup = (Get-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue).NoDriveTypeAutoRun
-    Set-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -Value 255
+    $autoMountRegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+    $autoMountBackup = (Get-ItemProperty -Path $autoMountRegPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue).NoDriveTypeAutoRun
+    Set-ItemProperty -Path $autoMountRegPath -Name NoDriveTypeAutoRun -Value 255
 
     Write-Output "Creating dev drive..."
 
@@ -40,25 +42,22 @@ if (-not (Test-Path $drivePath)) {
         $part | Set-Partition -NewDriveLetter $driveLetter
         Set-Volume -DriveLetter $driveLetter -NewFileSystemLabel $driveLabel
 
-        Write-Output "Auto mounting created dev drive..."
+        Write-Output "Registring dev drive to auto attach on startup..."
 
-        $attachOnStartupRegPath = "HKLM:\SYSTEM\CurrentControlSet\Services\VHDMP\Parameters"
-        if (-not (Test-Path $attachOnStartupRegPath)) {
-            New-Item -Path $attachOnStartupRegPath -Force | Out-Null
-        }
-
-        New-ItemProperty -Path $attachOnStartupRegPath -Name "AttachOnStartup" -PropertyType MultiString -Value @($drivePath) -Force | Out-Null
+        $id = $vhd.DiskIdentifier.ToLower()
+        $autoAttachVirtualDiskPath = "HKLM:\SYSTEM\CurrentControlSet\Control\AutoAttachVirtualDisks\{$id}"
+        if (-not (Test-Path $autoAttachVirtualDiskPath)) { New-Item -Path $autoAttachVirtualDiskPath -Force | Out-Null }
+        New-ItemProperty -Path $autoAttachVirtualDiskPath -Name "Path" -PropertyType String -Value $drivePath -Force | Out-Null
     }
     finally {
         if ($null -ne $autoMountBackup) {
-            Set-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -Value $autoMountBackup
+            Set-ItemProperty -Path $autoMountRegPath -Name NoDriveTypeAutoRun -Value $autoMountBackup
         }
         else {
-            Remove-ItemProperty -Path $autoMonutRegPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue
+            Remove-ItemProperty -Path $autoMountRegPath -Name NoDriveTypeAutoRun -ErrorAction SilentlyContinue
         }
     }
 }
-
 
 # Set and update environment variables
 Write-Output "Setting home based environment variables..."
@@ -121,6 +120,12 @@ $trigger = New-ScheduledTaskTrigger -AtLogOn
 $action = New-ScheduledTaskAction -Execute "pwsh" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$afterBootstrapScriptPath`""
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName "AfterBootstrap" -Trigger $trigger -Action $action -Settings $settings -Description "After bootstrap setup" -User "$env:USERNAME" -RunLevel Highest | Out-Null
+
+# Write file to user directory to indicate that initial bootstrapping has been completed.
+if (-not (Test-Path "$HOME\.bootstrapped")) {
+    Write-Output "Writing bootstrapping completion file..."
+    Set-Content -Path "$HOME\.bootstrapped" -Value "true"
+}
 
 # Ask for restart
 Write-Output "Windows environment bootstrapped."
