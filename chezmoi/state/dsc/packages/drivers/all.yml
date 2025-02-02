@@ -8,4 +8,17 @@ properties:
   configurationVersion: "0.2.0"
   assertions: []
   parameters: []
-  resources: []
+  resources:
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installLGUltraGearControlCenter
+      directives:
+        description: Install LG Ultra Gear Control Center
+      settings:
+        Name: LG UltraGear™ Control Center
+        Type: ZIP
+        Arguments: ""
+        ZipInstall: |
+          $installer = $file = Get-ChildItem -Path ${unzipped} -Filter "LGUltraGearControlCenter_Setup*" | Select-Object -First 1
+          Start-Process -FilePath $installer -ArgumentList "/S" -Wait
+        Url: https://gscs-b2c.lge.com/downloadFile?fileId=LtfQlk4JRr6no8OnWggXQ
+        Ensure: Present
