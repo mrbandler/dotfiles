@@ -111,6 +111,23 @@ Write-Output "Taking ownership of .local\share\chezmoi..."
 Takeown /F "$env:USERPROFILE\.local\share\chezmoi" /R /D Y | Out-Null
 icacls "$env:USERPROFILE\.local\share\chezmoi" /grant "%USERNAME%:F" /T | Out-Null
 
+# Change git remote URL to SSH
+Write-Output "Changing git remote URL to SSH..."
+
+# Save the current directory
+$currentDir = Get-Location
+Set-Location "$HOME/.local/share/chezmoi"
+
+$remoteUrl = git remote get-url origin
+if ($remoteUrl -match "^https://github.com/(.+)/(.+)\.git$") {
+    $username = $matches[1]
+    $repo = $matches[2]
+
+    $sshUrl = "git@github.com:$username/$repo.git"
+    git remote set-url origin $sshUrl
+}
+Set-Location $currentDir
+
 # Schedule at logon after bootstrap script.
 Write-Output "Scheduling after boot script..."
 
