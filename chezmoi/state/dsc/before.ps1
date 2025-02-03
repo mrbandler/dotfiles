@@ -23,15 +23,13 @@ Write-Host "Checking for uninstallable winget packages..."
 winget export -o "$PSScriptRoot/winget.json" | Out-Null
 $winget = Get-Content -Path "$PSScriptRoot/winget.json" -Raw | ConvertFrom-Json
 
-$wingetPackages = $winget.Sources
-| ForEach-Object {
+$wingetPackages = $winget.Sources | ForEach-Object {
     $_.Packages | ForEach-Object {
         [PSCustomObject]@{
             Id = $_.PackageIdentifier
         }
     }
-}
-| Where-Object {
+} | Where-Object {
     $isBlacklisted = $false
     foreach ($pattern in $wingetPackageIdBlacklist) {
         if ($_.Id -like $pattern) {
@@ -93,9 +91,8 @@ $chocoPackageIdBlacklist = @(
     "vcredist*"
 )
 
-Write-Host "Checking for uninstallable choco
+Write-Host "Checking for uninstallable choco packages..."
 
-packages..."
 choco export -o "$PSScriptRoot/choco.xml" | Out-Null
 $chocoExport = [xml](Get-Content -Path "$PSScriptRoot/choco.xml")
 
