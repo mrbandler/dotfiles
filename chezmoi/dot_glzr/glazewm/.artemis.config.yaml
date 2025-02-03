@@ -11,6 +11,9 @@ workspaces:
   - name: music
     display_name: Music
     bind_to_monitor: 0
+  - name: unity
+    display_name: Unity
+    bind_to_monitor: 0
   - name: main
     display_name: Main
     bind_to_monitor: 1
@@ -41,3 +44,81 @@ workspaces:
   - name: chatgpt
     display_name: ChatGPT
     bind_to_monitor: 2
+
+window_rules:
+  - commands: ["ignore"]
+    match:
+      - window_process: { equals: "zebar" }
+      - window_process: { regex: "Focusrite Control 2" }
+      - window_process: { regex: "VoiceMeeter" }
+      - window_process: { regex: "LG UltraGear Control Center" }
+      - window_class: { equals: "UnitySplashWindow" }
+      - window_title: { regex: "[Pp]icture.in.[Pp]icture" }
+        window_class: { regex: "Chrome_WidgetWin_1|MozillaDialogClass" }
+
+  - commands: ["set-floating"]
+    match:
+      - window_process: { equals: "Flow.Launcher" }
+      - window_title: { equals: "Settings" }
+      - window_title: { equals: "Task Manager" }
+      - window_process: { equals: "vlc" }
+
+  - commands: ["move --workspace main", focus --workspace main]
+    match:
+      - window_title: { regex: ".*WezTerm.*" }
+      - window_process: { equals: "Code" }
+      - window_process: { equals: "Unity" }
+      - window_process: { equals: "rider" }
+      - window_process: { equals: "rider64" }
+
+  - commands: ["move --workspace unity", focus --workspace unity]
+    match:
+      - window_process: { equals: "Unity" }
+
+  - commands: ["move --workspace scratch", focus --workspace scratch]
+    match:
+      - window_process: { equals: "Unity Hub" }
+
+  - commands: ["move --workspace pomodoro", focus --workspace pomodoro]
+    match:
+      - window_title: { equals: "Flocus" }
+
+  - commands: ["move --workspace notion", focus --workspace notion]
+    match:
+      - window_process: { equals: "Notion" }
+
+  - commands: ["move --workspace gaming", focus --workspace gaming]
+    match:
+      - window_title: { regex: ".*Steam.*" }
+      - window_process: { equals: "EpicGamesLauncher" }
+
+  - commands: ["move --workspace web", focus --workspace web]
+    match:
+      - window_process: { equals: "arc" }
+      - window_process: { equals: "zen" }
+
+  - commands: ["move --workspace comms"]
+    match:
+      - window_process: { equals: "Telegram" }
+      - window_title: { equals: "WhatsApp" }
+
+  - commands: ["move --workspace discord"]
+    match:
+      - window_process: { equals: "Discord" }
+
+  - commands: ["move --workspace mail"]
+    match:
+      - window_process: { equals: "Proton Mail" }
+      - window_title: { regex: ".*Thunderbird.*" }
+
+  - commands: ["move --workspace calendar"]
+    match:
+      - window_process: { equals: "Notion Calendar" }
+
+  - commands: ["move --workspace music"]
+    match:
+      - window_process: { equals: "Spotify" }
+
+  - commands: ["move --workspace chatgpt"]
+    match:
+      - window_process: { equals: "ChatGPT" }
