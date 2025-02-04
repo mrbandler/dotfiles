@@ -1,3 +1,6 @@
 [user]
 	email = michael.baudler@fivefingergames.com
 	name = Michael Baudler
+
+[pull]
+	rebase = false
