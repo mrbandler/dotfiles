@@ -17,6 +17,21 @@ const providers = zebar.createProviderGroup({
 createRoot(document.getElementById("root")).render(<Bar />);
 
 /**
+ * Checks whether the current monitor is the main monitor.
+ * This is done by checking if the current monitor has a workspace named "main".
+ *
+ * @param {*} glazeOutput GlazeWM provider input.
+ * @returns Flag, whether the current monitor is the main monitor.
+ */
+function isMainMonitor(glazeOutput) {
+  if (!glazeOutput || !glazeOutput.currentMonitor) return false;
+
+  return glazeOutput.currentMonitor.children.some(
+    (c) => c.type === "workspace" && c.name === "main"
+  );
+}
+
+/**
  * Left bar component.
  */
 function Left() {
@@ -119,7 +134,7 @@ function Right() {
 
   return (
     <div className="right">
-      {output.keyboard && (
+      {isMainMonitor(output.glazewm) && output.keyboard && (
         <div className="keyboard">
           <i className="nf nf-md-keyboard"></i>
           {output.keyboard.layout
@@ -128,21 +143,7 @@ function Right() {
         </div>
       )}
 
-      {output.network && (
-        <div className="network">
-          {getNetworkIcon(output.network)}
-          {output.network.defaultGateway?.ssid}
-        </div>
-      )}
-
-      {output.memory && (
-        <div className="memory">
-          <i className="nf nf-fae-chip"></i>
-          {Math.round(output.memory.usage)}%
-        </div>
-      )}
-
-      {output.cpu && (
+      {isMainMonitor(output.glazewm) && output.cpu && (
         <div className="cpu">
           <i className="nf nf-oct-cpu"></i>
           <span className={output.cpu.usage > 85 ? "high-usage" : ""}>
@@ -151,7 +152,14 @@ function Right() {
         </div>
       )}
 
-      {output.battery && (
+      {isMainMonitor(output.glazewm) && output.memory && (
+        <div className="memory">
+          <i className="nf nf-fae-chip"></i>
+          {Math.round(output.memory.usage)}%
+        </div>
+      )}
+
+      {isMainMonitor(output.glazewm) && output.battery && (
         <div className="battery">
           {/* Show icon for whether battery is charging. */}
           {output.battery.isCharging && (
@@ -162,8 +170,14 @@ function Right() {
         </div>
       )}
 
-      {output.date && <div className="time">{output.date.formatted}</div>}
+      {isMainMonitor(output.glazewm) && output.network && (
+        <div className="network">
+          {getNetworkIcon(output.network)}
+          {output.network.defaultGateway?.ssid}
+        </div>
+      )}
 
+      {output.date && <div className="time">{output.date.formatted}</div>}
       {output.glazewm && (
         <button
           className={`tiling-direction nf ${
