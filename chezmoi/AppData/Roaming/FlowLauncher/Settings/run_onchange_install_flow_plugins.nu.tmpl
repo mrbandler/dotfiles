@@ -1,0 +1,2 @@
+# Settings.json hash: {{ include (joinPath .chezmoi.sourceDir "AppData/Roaming/FlowLauncher/Settings/Settings.json") | sha256sum }}
+nu {{ joinPath .chezmoi.sourceDir "scripts/windows/install_flow_plugins.nu" | quote }}
