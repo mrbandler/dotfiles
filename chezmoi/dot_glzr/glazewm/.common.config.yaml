@@ -2,9 +2,9 @@ general:
   startup_commands:
     - "shell-exec zebar"
     - "shell-exec %Userprofile%/.local/bin/winapp.bat spotify"
-    - "shell-exec %Userprofile%/.local/bin/winapp.bat chatgpt"
     - "shell-exec %Userprofile%/.local/bin/winapp.bat whatsapp"
     - "shell-exec %Userprofile%/.local/bin/discord.bat"
+    - "shell-exec %LocalAppData%/AnthropicClaude/claude.exe"
     - "shell-exec %AppData%/Telegram Desktop/Telegram.exe"
     - "shell-exec %LocalAppData%/proton_mail/Proton Mail.exe"
     - "shell-exec %LocalAppData%/Programs/cron-web/Notion Calendar.exe"

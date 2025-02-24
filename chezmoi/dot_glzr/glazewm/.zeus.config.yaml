@@ -35,8 +35,8 @@ workspaces:
   - name: music
     display_name: Music
     bind_to_monitor: 2
-  - name: chatgpt
-    display_name: ChatGPT
+  - name: claude
+    display_name: Claude
     bind_to_monitor: 3
 
 window_rules:
@@ -108,6 +108,6 @@ window_rules:
     match:
       - window_process: { equals: "Spotify" }
 
-  - commands: ["move --workspace chatgpt"]
+  - commands: ["move --workspace claude"]
     match:
-      - window_process: { equals: "ChatGPT" }
+      - window_process: { equals: "claude" }
