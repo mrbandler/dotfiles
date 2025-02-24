@@ -38,6 +38,16 @@ properties:
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installObsidian
+      directives:
+        description: Install Obsidian
+        allowPrerelease: true
+      settings:
+        Id: Obsidian.Obsidian
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installNotion
       directives:
         description: Install Notion
