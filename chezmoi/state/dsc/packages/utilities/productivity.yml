@@ -37,6 +37,17 @@ properties:
         Source: winget
         Ensure: Present
 
+    - resource: xPkg/PkgDownloadAndInstall
+      id: installTana
+      directives:
+        description: Install Tana
+      settings:
+        Name: Tana
+        Type: EXE
+        Arguments: ""
+        Url: https://desktop-update.tana.inc/download/exe
+        Ensure: Present
+
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installObsidian
       directives:
