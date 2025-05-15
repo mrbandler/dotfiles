@@ -18,6 +18,16 @@ properties:
         Ensure: Present
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installJetBrainsToolbox
+      directives:
+        description: Install JetBrains Toolbox
+        allowPrerelease: true
+      settings:
+        Id: JetBrains.Toolbox
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installVisualStudioCode
       directives:
         description: Install Visual Studio Code
