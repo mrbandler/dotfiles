@@ -16,3 +16,13 @@ properties:
         Id: 9NCBCSZSJRSB
         Source: msstore
         Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installTidal
+      directives:
+        description: Install Tidal
+        allowPrerelease: true
+      settings:
+        Id: TIDALMusicAS.TIDAL
+        Source: winget
+        Ensure: Present
