@@ -19,6 +19,17 @@ properties:
         - installScoop
 
     - resource: xScoop/ScoopApp
+      id: installBun
+      directives:
+        description: Install Bun
+      settings:
+        Name: bun
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
       id: installRustup
       directives:
         description: Install rustup
@@ -39,3 +50,34 @@ properties:
         Ensure: Present
       dependsOn:
         - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installQuarkusCli
+      directives:
+        description: Install Quarkus CLI
+      settings:
+        Name: quarkus-cli
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installBuildTools
+      directives:
+        description: Install Build Tools
+        allowPrerelease: true
+      settings:
+        Id: Microsoft.VisualStudio.2022.BuildTools
+        Source: winget
+        Ensure: Present
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: installEclipseAdoptiumTemurin
+      directives:
+        description: Install Eclipse Adoptium Temurin
+        allowPrerelease: true
+      settings:
+        Id: EclipseAdoptium.Temurin.21.JDK
+        Source: winget
+        Ensure: Present
