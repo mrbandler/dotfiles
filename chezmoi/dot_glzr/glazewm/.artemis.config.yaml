@@ -89,8 +89,10 @@ window_rules:
 
   - commands: ["move --workspace gaming", focus --workspace gaming]
     match:
-      - window_title: { regex: ".*Steam.*" }
+      - window_process: { regex: ".*steam.*" }
       - window_process: { equals: "EpicGamesLauncher" }
+      - window_process: { equals: "EADesktop" }
+      - window_process: { equals: "Skate" }
 
   - commands: ["move --workspace web", focus --workspace web]
     match:

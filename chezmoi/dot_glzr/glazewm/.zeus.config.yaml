@@ -1,43 +1,43 @@
 workspaces:
-  - name: pomodoro
-    display_name: Pomodoro
-    bind_to_monitor: 0
   - name: main
     display_name: Main
-    bind_to_monitor: 1
+    bind_to_monitor: 0
   - name: scratch
     display_name: Scratch
-    bind_to_monitor: 1
+    bind_to_monitor: 0
   - name: gaming
     display_name: Gaming
+    bind_to_monitor: 0
+  - name: pomodoro
+    display_name: Pomodoro
     bind_to_monitor: 1
   - name: glance
     display_name: Glance
-    bind_to_monitor: 2
+    bind_to_monitor: 1
   - name: web
     display_name: Web
-    bind_to_monitor: 2
+    bind_to_monitor: 1
   - name: notion
     display_name: Notion
-    bind_to_monitor: 2
-  - name: discord
-    display_name: Discord
-    bind_to_monitor: 2
-  - name: comms
-    display_name: Comms
-    bind_to_monitor: 2
-  - name: mail
-    display_name: Mail
-    bind_to_monitor: 2
-  - name: calendar
-    display_name: Calendar
-    bind_to_monitor: 2
-  - name: music
-    display_name: Music
-    bind_to_monitor: 2
+    bind_to_monitor: 1
   - name: claude
     display_name: Claude
-    bind_to_monitor: 3
+    bind_to_monitor: 1
+  - name: discord
+    display_name: Discord
+    bind_to_monitor: 1
+  - name: comms
+    display_name: Comms
+    bind_to_monitor: 1
+  - name: mail
+    display_name: Mail
+    bind_to_monitor: 1
+  - name: calendar
+    display_name: Calendar
+    bind_to_monitor: 1
+  - name: music
+    display_name: Music
+    bind_to_monitor: 1
 
 window_rules:
   - commands: ["ignore"]
@@ -78,8 +78,16 @@ window_rules:
 
   - commands: ["move --workspace gaming", focus --workspace gaming]
     match:
-      - window_title: { regex: ".*Steam.*" }
+      - window_process: { regex: ".*steam.*" }
       - window_process: { equals: "EpicGamesLauncher" }
+      - window_process: { equals: "EADesktop" }
+
+  - commands:
+      - move --workspace gaming
+      - focus --workspace gaming
+      - ignore
+    match:
+      - window_process: { equals: "Skate" }
 
   - commands: ["move --workspace web", focus --workspace web]
     match:
@@ -107,6 +115,7 @@ window_rules:
   - commands: ["move --workspace music"]
     match:
       - window_process: { equals: "Spotify" }
+      - window_process: { equals: "TIDAL" }
 
   - commands: ["move --workspace claude"]
     match:

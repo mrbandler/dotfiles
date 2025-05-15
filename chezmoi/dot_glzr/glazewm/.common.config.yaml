@@ -88,10 +88,8 @@ binding_modes:
         bindings: ["1"]
       - commands: ["focus --workspace web"]
         bindings: ["2"]
-      - commands: ["focus --workspace scratch"]
-        bindings: ["3"]
       - commands: ["focus --workspace glance"]
-        bindings: ["4"]
+        bindings: ["3"]
 
       - commands: ["wm-disable-binding-mode --name focus"]
         bindings: ["escape", "ctrl+alt+x"]
@@ -189,10 +187,8 @@ keybindings:
     bindings: ["ctrl+alt+1"]
   - commands: ["focus --workspace web"]
     bindings: ["ctrl+alt+2"]
-  - commands: ["focus --workspace scratch"]
-    bindings: ["ctrl+alt+3"]
   - commands: ["focus --workspace glance"]
-    bindings: ["ctrl+alt+4"]
+    bindings: ["ctrl+alt+3"]
 
   # ------------------------------------ #
   # Movement (leader = ctrl+shift).
@@ -256,7 +252,7 @@ keybindings:
   # Resizing (leader = ctrl+alt+shift).
   # ------------------------------------ #
 
-  # Enable resize modek.
+  # Enable resize mode.
   - commands: ["wm-enable-binding-mode --name resize"]
     bindings: ["ctrl+alt+shift+x"]
 
