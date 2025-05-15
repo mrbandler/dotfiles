@@ -143,22 +143,6 @@ function Right() {
         </div>
       )}
 
-      {isMainMonitor(output.glazewm) && output.cpu && (
-        <div className="cpu">
-          <i className="nf nf-oct-cpu"></i>
-          <span className={output.cpu.usage > 85 ? "high-usage" : ""}>
-            {Math.round(output.cpu.usage)}%
-          </span>
-        </div>
-      )}
-
-      {isMainMonitor(output.glazewm) && output.memory && (
-        <div className="memory">
-          <i className="nf nf-fae-chip"></i>
-          {Math.round(output.memory.usage)}%
-        </div>
-      )}
-
       {isMainMonitor(output.glazewm) && output.battery && (
         <div className="battery">
           {/* Show icon for whether battery is charging. */}
