@@ -14,9 +14,6 @@
       inherit inputs;
 
       src = ./.;
-      snowfall = {
-        root = ./nix;
-      };
       channels-config.allowUnfree = true;
     };
 }

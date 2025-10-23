@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   ...
 }:
 
@@ -10,12 +8,14 @@
     ./hardware-configuration.nix
   ];
 
+  system.stateVersion = "25.05";
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 2;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "zeus";
@@ -44,18 +44,28 @@
     ];
   };
 
-  internal.example.enable = true;
+  internal.core = {
+    enable = true;
+    boot.plymouth.enable = true;
+    networking = {
+      hostName = "zeus";
+    };
+  };
 
+  # Move this to modules, etc.
   environment.systemPackages = with pkgs; [
+    tree
     git
     vscode
     zed
     btop
     nil
     nixpkgs-fmt
+    traceroute
+    dig
+    parted
   ];
 
-  # Move this to modules, etc.
   programs.firefox.enable = true;
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
@@ -71,5 +81,4 @@
     jack.enable = true;
   };
 
-  system.stateVersion = "25.05";
 }
