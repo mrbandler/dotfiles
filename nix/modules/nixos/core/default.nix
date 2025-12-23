@@ -14,6 +14,7 @@ in
     ./nix.nix
     ./boot.nix
     ./env.nix
+    ./packages.nix
     ./user.nix
     ./networking.nix
     ./locale.nix

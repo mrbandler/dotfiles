@@ -10,33 +10,45 @@
 
   system.stateVersion = "25.05";
 
-  hardware.graphics.enable = true;
-
   internal = {
     core = {
       enable = true;
       networking = {
         hostName = "zeus";
       };
-      env = {
+      packages = {
         additionalPackages = with pkgs; [
+          # Development tools
           vscode
-          nil
-          nixpkgs-fmt
+          zed-editor
+          nodejs_22
+          claude-code
         ];
       };
     };
 
     desktop = {
       enable = true;
+      plasma.enable = true;
+
+      # Display manager configuration
+      sddm = {
+        enable = true;
+        themePackage = pkgs.catppuccin-sddm.override {
+          background = "${pkgs.internal.wallpapers}/share/wallpapers/12-5/mocha-3840x1600.png";
+          loginBackground = true;
+        };
+      };
     };
   };
 
+  # Browser
   programs.firefox.enable = true;
-  services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+
+  # Printing
   services.printing.enable = true;
+
+  # Audio
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
