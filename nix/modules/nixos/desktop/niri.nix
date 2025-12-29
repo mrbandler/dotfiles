@@ -28,26 +28,13 @@ in
   config = mkIf (cfg.enable && cfg.niri.enable) {
     programs.niri.enable = true;
 
+    services.displayManager.sessionPackages = [ pkgs.niri ];
     environment.systemPackages =
       with pkgs;
       [
-        # Niri essentials
         niri
-
-        # Panel/bar
       ]
       ++ optional (cfg.niri.panel == "waybar") waybar
       ++ optional (cfg.niri.panel == "quickshell") quickshell;
-
-    # Essential portal support for Niri
-    xdg.portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-      ];
-      config.niri = {
-        default = [ "gtk" ];
-      };
-    };
   };
 }

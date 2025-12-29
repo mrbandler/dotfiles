@@ -38,7 +38,6 @@ in
     # Plasma-specific portal configuration
     xdg.portal = {
       extraPortals = with pkgs; [
-        xdg-desktop-portal-kde
       ];
       config.plasma = {
         default = [ "kde" ];

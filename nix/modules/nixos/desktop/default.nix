@@ -13,9 +13,19 @@ in
 {
   imports = [
     ./sddm.nix
+    ./greetd.nix
     ./gpu.nix
     ./niri.nix
     ./plasma.nix
+    ./audio.nix
+    ./bluetooth.nix
+    ./printing.nix
+    ./portals.nix
+    ./input.nix
+    ./media.nix
+    ./applications.nix
+    ./virtualization.nix
+    ./gaming.nix
   ];
 
   options.${namespace}.desktop = {
@@ -31,7 +41,6 @@ in
 
   config = mkIf cfg.enable {
     security.polkit.enable = true;
-    xdg.portal.enable = true;
 
     services.displayManager = {
       defaultSession = mkIf (cfg.defaultSession != null) cfg.defaultSession;
