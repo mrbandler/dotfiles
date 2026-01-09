@@ -18,6 +18,7 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    _1password-shell-plugins.url = "github:1Password/shell-plugins";
   };
 
   outputs =
@@ -47,10 +48,12 @@
         let
           stylix = inputs.stylix.homeModules.stylix;
           niri = inputs.niri.homeModules.niri;
+          _1password-shell-plugins = inputs._1password-shell-plugins.hmModules.default;
         in
         [
           stylix
           niri
+          _1password-shell-plugins
         ];
     };
 }

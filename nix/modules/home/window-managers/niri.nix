@@ -111,37 +111,37 @@ with lib;
         ];
 
         binds = {
-          "Super+D".action.spawn-sh = "vicinae toggle";
+          "Super+D".action.spawn = [ "vicinae" "toggle" ];
           "Super+T".action.spawn = [ "wezterm" ];
 
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
-            action.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0";
+            action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" "-l" "1.0" ];
           };
           "XF86AudioLowerVolume" = {
             allow-when-locked=true;
-            action.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+            action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-" ];
           };
           "XF86AudioMute" = {
             allow-when-locked = true;
-            action.spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
           };
           "XF86AudioMicMute" = {
             allow-when-locked = true;
-            action.spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+            action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
           };
 
           "XF86AudioPlay" = {
             allow-when-locked = true;
-            action.spawn-sh = "playerctl play-pause";
+            action.spawn = [ "playerctl" "play-pause" ];
           };
           "XF86AudioStop" = {
             allow-when-locked = true;
-            action.spawn-sh = "playerctl stop";
+            action.spawn = [ "playerctl" "stop" ];
           };
           "XF86AudioPrev" = {
             allow-when-locked = true;
-            action.spawn-sh = "playerctl previous";
+            action.spawn = [ "playerctl previous" ];
           };
           "XF86AudioNext" = {
             allow-when-locked = true;
