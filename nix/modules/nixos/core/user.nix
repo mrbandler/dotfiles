@@ -32,22 +32,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    # security.sudo = {
-    # enable = true;
-    # wheelNeedsPassword = true;
-    # };
-
     users = {
-      defaultUserShell = pkgs.bash;
+      defaultUserShell = mkDefault pkgs.bash;
       users.${cfg.user.name} = {
         isNormalUser = true;
         description = cfg.user.description;
-        shell = pkgs.nushell;
         extraGroups = [
           "wheel"
           "networkmanager"
-          "libvirtd"
-          "docker"
         ]
         ++ cfg.user.additionalGroups;
       };

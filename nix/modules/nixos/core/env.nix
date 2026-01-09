@@ -14,8 +14,8 @@ in
   options.${namespace}.core.env = {
     editor = mkOption {
       type = types.str;
-      default = "hx";
-      description = "Default text editor (EDITOR environment variable).";
+      default = "nano";
+      description = "System default text editor (EDITOR environment variable).";
     };
 
     pager = mkOption {

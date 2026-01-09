@@ -32,48 +32,24 @@ in
         unzip
         p7zip
 
-        # Text editors (system-level fallbacks)
+        # System text editor (minimal fallback)
         nano
-        neovim
-        helix
 
-        # Shells
+        # System shell
         bash
-        nushell
 
-        # Terminal utilities
-        zellij
-        bat
-        eza
-        ripgrep
-        fzf
-        fd
-        sd
-        dust
-        bottom
-        procs
-        btop
-
-        # Network tools
-        httpie
-        nmap
-        dig
-        traceroute
-
-        # Version control
+        # Version control (system-level)
         git
-        jj
 
-        # System information
-        fastfetch
+        # System information and monitoring
         lshw
         pciutils
         usbutils
         killall
+        htop
 
-        # Data tools
-        jq
-        yq-go
+        # Command-not-found functionality
+        nix-index
 
         # Disk utilities
         parted
@@ -87,27 +63,6 @@ in
         smartmontools
         hdparm
         nvme-cli
-
-        # Performance tools
-        hyperfine
-
-        # Documentation
-        tldr
-
-        # Build essentials
-        gcc
-        gnumake
-        cmake
-        pkg-config
-        binutils
-
-        # Development environment
-        direnv
-
-        # Nix tooling
-        nil
-        nixd
-        nixpkgs-fmt
       ]
       ++ cfg.packages.additionalPackages;
   };

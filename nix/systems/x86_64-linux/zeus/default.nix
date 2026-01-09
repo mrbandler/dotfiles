@@ -8,55 +8,50 @@
     ./hardware-configuration.nix
   ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
+  home-manager = {
+    backupFileExtension = "bak";
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 
   internal = {
     core = {
       enable = true;
-      networking = {
-        hostName = "zeus";
-      };
-      packages = {
-        additionalPackages = with pkgs; [
-          # Development tools
-          vscode
-          zed-editor
-          nodejs_22
-          claude-code
-        ];
-      };
+      networking.hostName = "zeus";
+      nix.settings.additionalSubstituters = [ "https://niri.cachix.org" ];
     };
 
     desktop = {
       enable = true;
-      plasma.enable = true;
 
-      # Display manager configuration
-      sddm = {
-        enable = true;
-        themePackage = pkgs.catppuccin-sddm.override {
-          background = "${pkgs.internal.wallpapers}/share/wallpapers/12-5/mocha-3840x1600.png";
-          loginBackground = true;
+      managers.sddm.enable = true;
+      environments = {
+        plasma.enable = true;
+        niri.enable = true;
+      };
+
+      hardware = {
+        gpu.amd.enable = true;
+        audio.backend = "pipewire";
+        input.wacom.enable = true;
+      };
+      media.hardwareAcceleration.amd = true;
+
+      services = {
+        virtualization = {
+          enable = true;
+          docker.enable = true;
+          libvirt = {
+            enable = true;
+            gui = true;
+          };
+        };
+
+        gaming = {
+          enable = true;
         };
       };
     };
   };
-
-  # Browser
-  programs.firefox.enable = true;
-
-  # Printing
-  services.printing.enable = true;
-
-  # Audio
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
 }

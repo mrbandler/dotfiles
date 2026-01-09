@@ -18,6 +18,14 @@ in
     ./user.nix
     ./networking.nix
     ./locale.nix
+    ./security.nix
+    ./documentation.nix
+    ./services.nix
+    ./ssh.nix
+    ./firmware.nix
+    ./logging.nix
+    ./swap.nix
+    ./kernel.nix
   ];
 
   options.${namespace}.core = {

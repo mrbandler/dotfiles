@@ -1,0 +1,21 @@
+{
+  "eval": {
+    "target": {
+      "installable": "../../../#nixosConfigurations.zeus.config.system.build.toplevel"
+    }
+  },
+  "formatting": {
+    "command": ["nixpkgs-fmt"]
+  },
+  "options": {
+    "nixos": {
+      "expr": "(builtins.getFlake (\"git+file://\" + toString ../../..)).nixosConfigurations.zeus.options"
+    },
+    "home-manager": {
+      "expr": "(builtins.getFlake (\"git+file://\" + toString ../../..)).nixosConfigurations.zeus.config.home-manager.users.type.getSubOptions []"
+    }
+  },
+  "nixpkgs": {
+    "expr": "import (builtins.getFlake (\"git+file://\" + toString ../../..)).inputs.nixpkgs { }"
+  }
+}

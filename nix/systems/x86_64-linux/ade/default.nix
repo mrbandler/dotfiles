@@ -1,7 +1,5 @@
 {
   pkgs,
-  inputs,
-  system,
   ...
 }:
 
@@ -10,41 +8,43 @@
     ./hardware-configuration.nix
   ];
 
-  system.stateVersion = "25.05";
-  nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "25.11";
 
   internal = {
     core = {
       enable = true;
-      networking = {
-        hostName = "ade";
-      };
-      packages = {
-        additionalPackages = with pkgs; [
-          # Development tools
-          vscode
-          zed-editor
-          nodejs_22
-          claude-code
-        ];
-      };
+      networking.hostName = "ade";
     };
 
     desktop = {
       enable = true;
-      plasma.enable = true;
-      niri.enable = true;
 
-      sddm = {
-        enable = true;
-        themePackage = pkgs.catppuccin-sddm.override {
-          background = "${pkgs.internal.wallpapers}/share/wallpapers/12-5/mocha-3840x1600.png";
-          loginBackground = true;
-        };
+      managers.sddm.enable = true;
+      environments = {
+        plasma.enable = true;
+        niri.enable = true;
       };
 
-      gaming = {
-        enable = true;
+      hardware = {
+        gpu.nvidia.enable = true;
+        audio.backend = "pipewire";
+        input.wacom.enable = true;
+      };
+      media.hardwareAcceleration.nvidia = true;
+
+      services = {
+        virtualization = {
+          enable = true;
+          docker.enable = true;
+          libvirt = {
+            enable = true;
+            gui = true;
+          };
+        };
+
+        gaming = {
+          enable = true;
+        };
       };
     };
   };

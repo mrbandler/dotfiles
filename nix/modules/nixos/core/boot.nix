@@ -33,19 +33,6 @@ in
       description = "Kernel console log level (0-7, lower = less verbose).";
     };
 
-    plymouth = {
-      enable = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable Plymouth boot splash.";
-      };
-      theme = mkOption {
-        type = types.nullOr types.str;
-        default = null;
-        description = "Plymouth theme name.";
-      };
-    };
-
     kernelParams = mkOption {
       type = types.listOf types.str;
       default = [ ];
@@ -55,13 +42,18 @@ in
     tmp = {
       useTmpfs = mkOption {
         type = types.bool;
-        default = false;
-        description = "Use tmpfs for /tmp.";
+        default = true;
+        description = "Use tmpfs (RAM) for /tmp for better performance and reduced disk wear.";
       };
       cleanOnBoot = mkOption {
         type = types.bool;
         default = true;
-        description = "Clear /tmp on boot.";
+        description = "Clear /tmp on boot (automatic when useTmpfs is true).";
+      };
+      nixTmpdir = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Use /var/tmp for Nix builds to prevent large builds from exhausting RAM.";
       };
     };
   };
@@ -81,17 +73,15 @@ in
       consoleLogLevel = cfg.boot.consoleLogLevel;
       kernelParams = cfg.boot.kernelParams;
 
-      plymouth = {
-        enable = cfg.boot.plymouth.enable;
-      }
-      // optionalAttrs (cfg.boot.plymouth.theme != null) {
-        theme = cfg.boot.plymouth.theme;
-      };
-
       tmp = {
         useTmpfs = cfg.boot.tmp.useTmpfs;
         cleanOnBoot = cfg.boot.tmp.cleanOnBoot;
       };
+    };
+
+    # Redirect Nix daemon to use /var/tmp for large builds
+    systemd.services.nix-daemon.environment = mkIf cfg.boot.tmp.nixTmpdir {
+      TMPDIR = "/var/tmp";
     };
   };
 }

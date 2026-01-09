@@ -59,8 +59,8 @@ in
     networking = {
       hostName = cfg.networking.hostName;
       nameservers = cfg.networking.nameservers;
-      useDHCP = false;
-      dhcpcd.enable = false;
+      useDHCP = mkDefault false;
+      dhcpcd.enable = mkDefault false;
 
       firewall = {
         enable = cfg.networking.firewall.enable;
@@ -69,8 +69,8 @@ in
       };
 
       networkmanager = {
-        enable = true;
-        dns = "none";
+        enable = mkDefault true;
+        dns = mkDefault "none";
         insertNameservers = cfg.networking.nameservers;
         wifi.powersave = cfg.networking.wifi.powersave;
 
