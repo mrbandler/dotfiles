@@ -52,13 +52,35 @@ properties:
         - installScoop
 
     - resource: xScoop/ScoopApp
+      id: installPython
+      directives:
+        description: Install Python
+      settings:
+        Name: python
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
+      id: installUV
+      directives:
+        description: Install uv
+      settings:
+        Name: uv
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
+    - resource: xScoop/ScoopApp
       id: installQuarkusCli
       directives:
         description: Install Quarkus CLI
       settings:
         Name: quarkus-cli
         NoUpdateScoop: true
-        Ensure: Present
+        Ensure: Absent
       dependsOn:
         - installScoop
 
@@ -80,4 +102,4 @@ properties:
       settings:
         Id: EclipseAdoptium.Temurin.21.JDK
         Source: winget
-        Ensure: Present
+        Ensure: Absent
