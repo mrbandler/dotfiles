@@ -33,5 +33,3 @@ $env.EDITOR = "nvim"
 # Custom entries to path.
 path add "~/.local/bin"
 path add "~/bin"
-
-zoxide init nushell | save -f ~/.config/nushell/zoxide.nu
