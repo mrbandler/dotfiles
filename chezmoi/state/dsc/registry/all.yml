@@ -5,4 +5,14 @@ properties:
   configurationVersion: "0.2.0"
   assertions: []
   parameters: []
-  resources: []
+  resources:
+    - resource: xRegistry
+      id: enableLongPaths
+      directives:
+        description: Enable Long Paths
+        allowPrerelease: true
+      settings:
+        Key: HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem
+        ValueName: LongPathsEnabled
+        ValueData: 1
+        Ensure: Present

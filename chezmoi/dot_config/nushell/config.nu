@@ -3,6 +3,7 @@ use menus.nu *
 use aliases.nu *
 use themes/catpuccin.nu
 use scripts/state.nu
+use scripts/proxy.nu
 
 source zoxide.nu
 
