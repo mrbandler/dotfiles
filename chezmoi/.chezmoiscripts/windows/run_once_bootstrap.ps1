@@ -60,6 +60,9 @@ if (-not (Test-Path $drivePath)) {
 }
 
 if (-not $completedInitialBootstrap) {
+    Write-Output "Enable long paths..."
+    Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
+
     # Set and update environment variables
     Write-Output "Setting home based environment variables..."
 
