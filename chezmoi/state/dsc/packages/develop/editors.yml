@@ -37,6 +37,17 @@ properties:
         Source: winget
         Ensure: Present
 
+    - resource: xScoop/ScoopApp
+      id: installZed
+      directives:
+        description: Install Zed
+      settings:
+        Name: zed
+        NoUpdateScoop: true
+        Ensure: Present
+      dependsOn:
+        - installScoop
+
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: installEmacs
       directives:
