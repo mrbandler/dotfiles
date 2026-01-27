@@ -20,3 +20,7 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+[safe]
+	directory = ~/scoop/apps/scoop/current
+	directory = ~/scoop/buckets/main
