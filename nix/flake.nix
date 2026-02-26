@@ -74,6 +74,7 @@
           _1password-shell-plugins = inputs._1password-shell-plugins.hmModules.default;
           zen-browser = inputs.zen-browser.homeModules.twilight;
           opnix = inputs.opnix.homeManagerModules.default;
+          dms = inputs.dms.homeModules.dank-material-shell;
         in
         [
           stylix
@@ -81,6 +82,7 @@
           _1password-shell-plugins
           zen-browser
           opnix
+          dms
         ];
     };
 }
