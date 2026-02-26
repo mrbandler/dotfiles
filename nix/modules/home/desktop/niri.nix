@@ -9,7 +9,7 @@
 with lib;
 {
   imports = [
-    (mkAliasOptionModule [ "internal" "window-managers" "niri" ] [ "programs" "niri" ])
+    (mkAliasOptionModule [ "internal" "desktop" "niri" ] [ "programs" "niri" ])
   ];
 
   config = {

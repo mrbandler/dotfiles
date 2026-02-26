@@ -9,5 +9,6 @@ with lib;
 {
   imports = [
     ./firefox.nix
+    ./zen.nix
   ];
 }

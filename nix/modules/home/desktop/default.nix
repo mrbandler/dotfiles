@@ -9,5 +9,6 @@ with lib;
 {
   imports = [
     ./niri.nix
+    ./wpaperd.nix
   ];
 }

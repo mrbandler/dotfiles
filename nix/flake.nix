@@ -10,15 +10,34 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri = {
-      url = "github:sodiboo/niri-flake";
+    nur = {
+      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    _1password-shell-plugins.url = "github:1Password/shell-plugins";
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    _1password-shell-plugins = {
+      url = "github:1Password/shell-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    opnix = {
+      url = "github:brizzbuzz/opnix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -36,24 +55,32 @@
       channels-config.allowUnfree = true;
       snowfall.namespace = "internal";
 
-      # systems.modules.nixos =
-      #   let
-      #     stylix = inputs.stylix.nixosModules.stylix;
-      #   in
-      #   [
-      #     stylix
-      #   ];
+      overlays = with inputs; [
+        nur.overlays.default
+      ];
+
+      systems.modules.nixos =
+        let
+          nur = inputs.nur.modules.nixos.default;
+        in
+        [
+          nur
+        ];
 
       homes.modules =
         let
           stylix = inputs.stylix.homeModules.stylix;
           niri = inputs.niri.homeModules.niri;
           _1password-shell-plugins = inputs._1password-shell-plugins.hmModules.default;
+          zen-browser = inputs.zen-browser.homeModules.twilight;
+          opnix = inputs.opnix.homeManagerModules.default;
         in
         [
           stylix
           niri
           _1password-shell-plugins
+          zen-browser
+          opnix
         ];
     };
 }

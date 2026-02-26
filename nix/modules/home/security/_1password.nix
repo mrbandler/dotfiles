@@ -11,6 +11,12 @@ let
   cfg = config.internal.security._1password;
 in
 {
+  imports = [
+    (mkAliasOptionModule
+      [ "internal" "security" "_1password" "opnix" ]
+      [ "programs" "onepassword-secrets" ])
+  ];
+
   options.internal.security._1password = {
     enable = mkEnableOption "1Password";
 
@@ -61,14 +67,12 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    # Install packages
     {
       home.packages = with pkgs;
         (optional cfg.enableCli _1password-cli)
         ++ (optional cfg.enableGui _1password-gui);
     }
 
-    # Shell plugins configuration
     (mkIf cfg.shellPlugins.enable {
       programs._1password-shell-plugins = {
         enable = true;
@@ -77,7 +81,6 @@ in
       };
     })
 
-    # SSH agent configuration
     (mkIf cfg.enableSshAgent {
       programs.ssh = {
         enable = true;
@@ -88,7 +91,6 @@ in
       };
     })
 
-    # Git signing configuration
     (mkIf cfg.enableGitSigning {
       programs.git = {
         extraConfig = {
