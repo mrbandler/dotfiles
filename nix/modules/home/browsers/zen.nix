@@ -1,7 +1,6 @@
-{
-  lib,
+{ lib,
   config,
-  input
+  pkgs,
   ...
 }:
 
@@ -12,7 +11,11 @@ with lib;
   ];
 
   config = {
-    programs.zen-browser {
+    # Workaround for custom profiles issue: https://github.com/0xc000022070/zen-browser-flake/issues/179
+    home.sessionVariables.MOZ_LEGACY_PROFILES = "1";
+    stylix.targets.zen-browser.profileNames = [ config.home.username ];
+
+    programs.zen-browser = {
       policies = {
         AutofillAddressEnabled = false;
         AutofillCreditCardEnabled = false;
@@ -31,15 +34,47 @@ with lib;
           Fingerprinting = true;
         };
       };
-      extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; {
-        ublock-origin
-        onepassword-password-manager
-      };
-      profiles..${config.home.username} = {
+
+      profiles.${config.home.username} =
+        let
+          containers = {};
+          spaces = {};
+          pins = {};
+        in
+      {
+        id = 0;
+        name = config.home.username;
+        isDefault = true;
+
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          ublock-origin
+          onepassword-password-manager
+          darkreader
+        ];
+
         search = {
           force = true;
-          default = "ddg";
+          default = "duckduckgo";
         };
+
+        settings = {
+          extensions = {
+            autoDisableScopes = 0;
+            allowPrivateBrowsingByDefault = true;
+          };
+        };
+      }
+      // lib.optionalAttrs (containers != {}) {
+        containersForce = true;
+        inherit containers;
+      }
+      // lib.optionalAttrs (spaces != {}) {
+        spacesForce = true;
+        inherit spaces;
+      }
+      // lib.optionalAttrs (pins != {}) {
+        pinsForce = true;
+        inherit pins;
       };
     };
   };

@@ -12,10 +12,12 @@ let
 in
 {
   imports = [
-    (mkAliasOptionModule [ "internal" "browsers" "zen" ] [ "programs" "firefox" ])
+    (mkAliasOptionModule [ "internal" "browsers" "firefox" ] [ "programs" "firefox" ])
   ];
 
   config = {
+    stylix.targets.firefox.profileNames = [ config.home.username ];
+
     programs.firefox = {
     };
   };
