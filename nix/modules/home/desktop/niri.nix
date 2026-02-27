@@ -17,6 +17,7 @@ with lib;
       package = pkgs.niri;
       settings = {
         prefer-no-csd = true;
+        hotkey-overlay.skip-at-startup = true;
 
         spawn-at-startup = [
           { command = ["vicinae" "server"]; }
@@ -49,12 +50,12 @@ with lib;
         };
 
         overview = {
-          backdrop-color = "#${config.lib.stylix.colors.base01}";
+          backdrop-color = "#${config.lib.stylix.colors.base00}";
         };
 
         layout = {
           center-focused-column = "never";
-          gaps = 20;
+          gaps = 10;
 
           preset-column-widths = [
             { proportion = 0.33333; }
@@ -68,7 +69,7 @@ with lib;
 
           background-color = "#${config.lib.stylix.colors.base00}";
           focus-ring = {
-            width = 3;
+            width = 1;
             active.gradient = {
               from = "#${config.lib.stylix.colors.base0C}";
               to = "#${config.lib.stylix.colors.base0D}";
@@ -102,10 +103,10 @@ with lib;
           {
             clip-to-geometry = true;
             geometry-corner-radius = {
-              top-left = 12.0;
-              top-right = 12.0;
-              bottom-left = 12.0;
-              bottom-right = 12.0;
+              top-left = 5.0;
+              top-right = 5.0;
+              bottom-left = 5.0;
+              bottom-right = 5.0;
             };
           }
         ];
