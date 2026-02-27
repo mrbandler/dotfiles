@@ -13,6 +13,7 @@ in
 {
   imports = [
     ./sddm.nix
+    ./dms.nix
   ];
 
   options.${namespace}.desktop.managers = {
