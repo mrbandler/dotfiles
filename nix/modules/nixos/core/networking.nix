@@ -53,9 +53,26 @@ in
         description = "Enable WiFi power saving.";
       };
     };
+
+    tailscale = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable Tailscale.";
+      };
+      port = mkOption {
+        type = types.int;
+        default = 0;
+        description = "Custom Tailscale port to use.";
+      };
+    };
   };
 
   config = mkIf cfg.enable {
+    services.tailscale =  {
+      enable = cfg.networking.tailscale.enable;
+      port = cfg.networking.tailscale.port;
+    };
     networking = {
       hostName = cfg.networking.hostName;
       nameservers = cfg.networking.nameservers;
