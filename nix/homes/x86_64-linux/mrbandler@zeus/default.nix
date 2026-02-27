@@ -7,9 +7,20 @@
 }:
 
 {
+  imports = [
+    ./wpaperd.nix
+    ./niri.nix
+    ./dms.nix
+  ];
+
   home.stateVersion = "25.11";
   home.username = "mrbandler";
   home.homeDirectory = "/home/mrbandler";
+  home.packages = with pkgs; [
+    jq
+    just
+    lazygit
+  ];
 
   internal = {
     browsers = {
@@ -21,57 +32,8 @@
     security._1password = {
       enable = true;
       opnix = {
-        enable = true;
+        enable = false;
         secrets = {};
-      };
-    };
-
-    desktop = {
-      wpaperd = {
-        enable = true;
-        mode = "center";
-        monitors = {
-          "DP-1" = {
-            path = ../../../wallpapers/12-5/mocha-3840x1600.png;
-            mode = "center";
-          };
-          "DP-2" = {
-            path = ../../../wallpapers/16-9/mocha-1920x1080.png;
-            mode = "center";
-          };
-        };
-      };
-
-      niri = {
-        enable = true;
-        settings = {
-          outputs = {
-            "DP-1" = {
-              mode = {
-                width = 3840;
-                height = 1600;
-                refresh = 74.977;
-              };
-              position = {
-                x = 0;
-                y = 0;
-              };
-              variable-refresh-rate = true;
-            };
-            "DP-2" = {
-              mode = {
-                width = 1920;
-                height = 1080;
-                refresh = 60.000;
-              };
-              position = {
-                x = (3840 - 1920) / 2;
-                y = 1600;
-              };
-              variable-refresh-rate = true;
-            };
-          };
-        };
       };
     };
 

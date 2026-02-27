@@ -25,7 +25,15 @@
     desktop = {
       enable = true;
 
-      managers.sddm.enable = true;
+      managers = {
+        sddm.enable = false;
+        dms = {
+          enable = true;
+          configHome = "/home/mrbandler";
+          compositor = "niri";
+        };
+      };
+
       environments = {
         plasma.enable = true;
         niri.enable = true;
