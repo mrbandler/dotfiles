@@ -38,6 +38,10 @@
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -62,9 +66,13 @@
       systems.modules.nixos =
         let
           nur = inputs.nur.modules.nixos.default;
+          dms = inputs.dms.nixosModules.dank-material-shell;
+          dms-greeter = inputs.dms.nixosModules.greeter;
         in
         [
           nur
+          dms
+          dms-greeter
         ];
 
       homes.modules =
@@ -75,6 +83,8 @@
           zen-browser = inputs.zen-browser.homeModules.twilight;
           opnix = inputs.opnix.homeManagerModules.default;
           dms = inputs.dms.homeModules.dank-material-shell;
+          dms-niri = inputs.dms.homeModules.niri;
+          dms-plugins = inputs.dms-plugin-registry.modules.default;
         in
         [
           stylix
@@ -83,6 +93,8 @@
           zen-browser
           opnix
           dms
+          dms-niri
+          dms-plugins
         ];
     };
 }
