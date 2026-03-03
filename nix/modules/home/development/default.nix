@@ -8,8 +8,8 @@
 with lib;
 {
   imports = [
-    ./nodejs.nix
-    ./claude-code.nix
-    ./git.nix
+    ./vcs
+    ./runtimes
+    ./agents
   ];
 }

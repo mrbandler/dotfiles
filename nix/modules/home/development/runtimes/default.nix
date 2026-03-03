@@ -1,0 +1,10 @@
+{
+  lib,
+  ...
+}:
+
+{
+  imports = [
+    ./nodejs.nix
+  ];
+}
