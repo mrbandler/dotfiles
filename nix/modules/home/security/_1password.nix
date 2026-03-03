@@ -93,7 +93,12 @@ in
     (mkIf cfg.sshAgent.enable {
       programs.ssh = {
         enable = true;
-        matchBlocks."*".identityAgent = "~/.1password/agent.sock";
+        matchBlocks."*" = {
+          identityAgent = "~/.1password/agent.sock";
+          extraOptions = {
+            IPQoS = "none";
+          };
+        };
       };
 
       home.file.".config/1Password/ssh/agent.toml".text = ''
