@@ -32,10 +32,19 @@ in
       description = "Enable 1Password GUI";
     };
 
-    enableSshAgent = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable 1Password SSH agent";
+    sshAgent = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable 1Password SSH agent";
+      };
+
+      vaults = mkOption {
+        type = types.listOf types.str;
+        default = [ "Development" ];
+        description = "List of vaults to expose SSH keys from (in order of preference)";
+        example = [ "Development" "Private" "Keys" ];
+      };
     };
 
     enableGitSigning = mkOption {
@@ -81,7 +90,7 @@ in
       };
     })
 
-    (mkIf cfg.enableSshAgent {
+    (mkIf cfg.sshAgent.enable {
       programs.ssh = {
         enable = true;
         extraConfig = ''
@@ -89,6 +98,14 @@ in
             IdentityAgent ~/.1password/agent.sock
         '';
       };
+
+      home.file.".config/1Password/ssh/agent.toml".text = ''
+        # Managed by Home Manager
+        ${concatMapStringsSep "\n" (vault: ''
+        [[ssh-keys]]
+        vault = "${vault}"
+        '') cfg.sshAgent.vaults}
+      '';
     })
 
     (mkIf cfg.enableGitSigning {
