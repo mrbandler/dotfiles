@@ -47,12 +47,6 @@ in
       };
     };
 
-    enableGitSigning = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Enable 1Password Git commit signing";
-    };
-
     shellPlugins = {
       enable = mkOption {
         type = types.bool;
@@ -108,16 +102,6 @@ in
         vault = "${vault}"
         '') cfg.sshAgent.vaults}
       '';
-    })
-
-    (mkIf cfg.enableGitSigning {
-      programs.git = {
-        extraConfig = {
-          gpg.format = "ssh";
-          gpg.ssh.program = "${pkgs._1password-gui}/bin/op-ssh-sign";
-          commit.gpgsign = true;
-        };
-      };
     })
   ]);
 }
