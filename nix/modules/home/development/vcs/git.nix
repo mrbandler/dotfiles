@@ -48,37 +48,39 @@ in
     programs.git = {
       enable = true;
 
-      userName = vcsCfg.identity.default.name;
-      userEmail = vcsCfg.identity.default.email;
-
       signing = mkIf vcsCfg.signing.enable {
         key = vcsCfg.signing.publicKey;
         signByDefault = true;
       };
 
-      extraConfig = mkMerge [
-        (mkIf vcsCfg.signing.enable {
-          gpg.format = "ssh";
-          gpg.ssh.program = vcsCfg.signing.program;
-        })
+      settings = mkMerge [
         {
+          user = {
+            name = vcsCfg.identity.default.name;
+            email = vcsCfg.identity.default.email;
+          };
           init.defaultBranch = "main";
           pull.rebase = true;
           push.autoSetupRemote = true;
         }
+        (mkIf vcsCfg.signing.enable {
+          gpg.format = "ssh";
+          gpg.ssh.program = vcsCfg.signing.program;
+        })
       ];
 
-      delta = mkIf cfg.delta.enable {
-        enable = true;
-        options = {
-          navigate = true;
-          syntax-theme = cfg.delta.theme;
-          line-numbers = true;
-          side-by-side = false;
-        };
-      };
-
       includes = contextIncludes;
+    };
+
+    programs.delta = mkIf cfg.delta.enable {
+      enable = true;
+      enableGitIntegration = true;
+      options = {
+        navigate = true;
+        syntax-theme = cfg.delta.theme;
+        line-numbers = true;
+        side-by-side = false;
+      };
     };
   };
 }
