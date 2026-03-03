@@ -1,15 +1,15 @@
 {
   lib,
   config,
+  pkgs,
   namespace,
   ...
 }:
 
-with lib;
 {
   imports = [
-    ./nodejs.nix
-    ./claude-code.nix
-    ./git.nix
+    ./wpaperd.nix
+    ./niri.nix
+    ./dms.nix
   ];
 }

@@ -8,9 +8,7 @@
 
 {
   imports = [
-    ./wpaperd.nix
-    ./niri.nix
-    ./dms.nix
+    ./desktop
   ];
 
   home.stateVersion = "25.11";

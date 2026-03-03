@@ -1,0 +1,10 @@
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
+
+{
+}
