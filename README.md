@@ -7,62 +7,32 @@
 ╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝
 ```
 
-**My personal dotfiles that I use across all my machines (🐧 &amp;&amp; 🪟)**
+My personal dotfiles, primarily NixOS with home-manager.
 
-## 📥 Installation
+## NixOS
 
-### ⚠️ **WARNING: THESE COMMANDS WILL MODIFIY YOUR SYSTEM!**
+```bash
+# Clone and enter
+git clone https://github.com/mrbandler/dotfiles ~/.dotfiles
+cd ~/.dotfiles/nix
 
----
+# Build and switch (replace <host> with your hostname)
+sudo nixos-rebuild switch --flake .#<host>
+```
 
-The following one-liners will download and install [`chezmoi`](https://chezmoi.io/), and initialize it with this repository.
+### Hosts
 
-### 🪟 Windows
+| Host | Description |
+|------|-------------|
+| `zeus` | Main workstation |
+| `ade` | (unmaintained) |
+
+## Legacy
+
+### Windows (abandoned)
+
+The `chezmoi/` directory contains Windows configuration via [chezmoi](https://chezmoi.io/). No longer maintained.
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply mrbandler"
 ```
-
-### 🐧 Linux
-
-```bash
-sh -c "$(curl -fsLS get.chezmoi.io) -- init --apply mrbandler"
-```
-
----
-
-### ❄️ NixOS
-
-```bash
-Coming soon...
-```
-
-### 🐂 Guix
-
-```bash
-Coming soon...
-```
-
-## ✅ To-Do's
-
-### 🪟 Windows
-
-- [x] Boostrapping
-- [ ] DSC-based State Configuration
-  - [x] Debloat
-  - [ ] Settings
-  - [x] Package Management (Download & Install, winget, choco, scoop)
-- [ ] Configuration Files
-- [ ] Secret Management
-
-### 🐧 Linux
-
-**_TBD_**
-
-### ❄️ Nix
-
-**_TBD_**
-
-### 🐂 Guix
-
-**_TBD_**
