@@ -7,9 +7,5 @@
 
 with lib;
 {
-  imports = [
-    ./vcs
-    ./runtimes
-    ./agents
-  ];
+  # Subdirectories (vcs/, runtimes/, agents/) are auto-imported by snowfall-lib
 }
