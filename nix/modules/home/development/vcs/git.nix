@@ -45,6 +45,11 @@ in
   };
 
   config = mkIf (vcsCfg.enable && cfg.enable) {
+    # Ensure ~/.gitconfig points to the XDG config managed by home-manager
+    # This prevents legacy gitconfig files from overriding our declarative config
+    home.file.".gitconfig".source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.config/git/config";
+
     programs.git = {
       enable = true;
 
