@@ -42,6 +42,10 @@
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    xremap = {
+      url = "github:xremap/nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -85,6 +89,7 @@
           dms = inputs.dms.homeModules.dank-material-shell;
           dms-niri = inputs.dms.homeModules.niri;
           dms-plugins = inputs.dms-plugin-registry.modules.default;
+          xremap = inputs.xremap.homeManagerModules.default;
         in
         [
           stylix
@@ -95,6 +100,7 @@
           dms
           dms-niri
           dms-plugins
+          xremap
         ];
     };
 }

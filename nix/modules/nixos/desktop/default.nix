@@ -18,6 +18,10 @@ in
   config = mkIf cfg.enable {
     security.polkit.enable = true;
 
+    services.udev.extraRules = ''
+      KERNEL=="uinput", GROUP="input", MODE="0660"
+    '';
+
     environment.systemPackages = with pkgs; [
       xdg-utils
       xdg-user-dirs

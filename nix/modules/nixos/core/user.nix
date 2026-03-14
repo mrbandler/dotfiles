@@ -40,6 +40,7 @@ in
         extraGroups = [
           "wheel"
           "networkmanager"
+          "input"
         ]
         ++ cfg.user.additionalGroups;
       };
