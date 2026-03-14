@@ -2,7 +2,7 @@
 
 - Conventional Commits with hierarchical scopes: `type(nix/scope): message`
 - No "Co-Authored-By" or "Generated with Claude" in commits
-- Don't commit `docs/plans/` — keep plans local only
+- Don't commit `docs/` — keep plans and specs local only
 
 # Nix
 
