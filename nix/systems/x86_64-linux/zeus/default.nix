@@ -9,6 +9,9 @@
   ];
 
   system.stateVersion = "25.11";
+
+  # UHK (Ultimate Hacking Keyboard) support
+  hardware.keyboard.uhk.enable = true;
   home-manager = {
     backupFileExtension = "bak";
     useGlobalPkgs = true;

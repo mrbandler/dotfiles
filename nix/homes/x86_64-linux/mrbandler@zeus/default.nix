@@ -17,6 +17,7 @@
     jq
     just
     lazygit
+    uhk-agent
   ];
 
   internal = {
