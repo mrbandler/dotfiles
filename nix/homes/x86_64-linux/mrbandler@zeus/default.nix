@@ -18,6 +18,7 @@
     just
     lazygit
     uhk-agent
+    spotify
   ];
 
   internal = {

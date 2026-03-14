@@ -224,37 +224,37 @@ in
             "Alt+Print".action.screenshot-window = {};
           }
 
-          # === Media keys (preserved, troubleshoot later) ===
+          # === Media keys ===
           // {
-            "XF86AudioRaiseVolume" = {
+            ${cfg.media.volumeUp} = {
               allow-when-locked = true;
               action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" "-l" "1.0" ];
             };
-            "XF86AudioLowerVolume" = {
+            ${cfg.media.volumeDown} = {
               allow-when-locked = true;
               action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-" ];
             };
-            "XF86AudioMute" = {
+            ${cfg.media.mute} = {
               allow-when-locked = true;
               action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
             };
-            "XF86AudioMicMute" = {
+            ${cfg.media.micMute} = {
               allow-when-locked = true;
               action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
             };
-            "XF86AudioPlay" = {
+            ${cfg.media.play} = {
               allow-when-locked = true;
               action.spawn = [ "playerctl" "play-pause" ];
             };
-            "XF86AudioStop" = {
+            ${cfg.media.stop} = {
               allow-when-locked = true;
               action.spawn = [ "playerctl" "stop" ];
             };
-            "XF86AudioPrev" = {
+            ${cfg.media.prev} = {
               allow-when-locked = true;
               action.spawn = [ "playerctl" "previous" ];
             };
-            "XF86AudioNext" = {
+            ${cfg.media.next} = {
               allow-when-locked = true;
               action.spawn = [ "playerctl" "next" ];
             };

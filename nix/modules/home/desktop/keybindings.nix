@@ -97,6 +97,18 @@ in
       inhibitShortcuts = mkOption { type = types.str; default = "Super+Escape"; };
     };
 
+    # === Media ===
+    media = {
+      volumeUp = mkOption { type = types.str; default = "XF86AudioRaiseVolume"; };
+      volumeDown = mkOption { type = types.str; default = "XF86AudioLowerVolume"; };
+      mute = mkOption { type = types.str; default = "XF86AudioMute"; };
+      micMute = mkOption { type = types.str; default = "XF86AudioMicMute"; };
+      play = mkOption { type = types.str; default = "XF86AudioPlay"; };
+      stop = mkOption { type = types.str; default = "XF86AudioStop"; };
+      prev = mkOption { type = types.str; default = "XF86AudioPrev"; };
+      next = mkOption { type = types.str; default = "XF86AudioNext"; };
+    };
+
     # === Escape hatches ===
     extraNiri = mkOption {
       type = types.listOf (types.submodule {

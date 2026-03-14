@@ -116,7 +116,10 @@ in
     # Media codecs and GStreamer
     environment.systemPackages =
       with pkgs;
-      [ ]
+      [
+        # Media playback control
+        playerctl
+      ]
       # Media codecs
       ++ optionals cfg.codecs.enable (optionals cfg.codecs.openh264 [ openh264 ])
       # GStreamer with plugins
