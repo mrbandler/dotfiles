@@ -85,6 +85,8 @@ in
     })
 
     (mkIf cfg.sshAgent.enable {
+      internal.desktop.init.spawn = [ [ "1password" "--silent" ] ];
+
       programs.ssh = {
         enable = true;
         matchBlocks."*" = {

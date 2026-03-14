@@ -12,6 +12,8 @@ with lib;
   ];
 
   config = {
+    internal.desktop.init.spawn = [ [ "vicinae" "server" ] ];
+
     programs.vicinae = {
     };
   };
