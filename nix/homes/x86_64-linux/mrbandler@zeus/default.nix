@@ -21,6 +21,8 @@
   ];
 
   internal = {
+    desktop.keybindings.enable = true;
+
     browsers = {
       firefox.enable = true;
       zen.enable = true;
