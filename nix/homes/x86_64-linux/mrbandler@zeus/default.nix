@@ -12,19 +12,18 @@
   home.homeDirectory = "/home/mrbandler";
 
   internal = {
+    theme = {
+      enable = true;
+      wallpaper = ../../../wallpapers/12-5/mocha-3840x1600.png;
+      colorScheme = "catppuccin-mocha";
+      polarity = "dark";
+    };
+
     maintenance = {
       enable = true;
       autoUpdate.enable = true;
     };
 
-    desktop.core.keybindings.enable = true;
-
-    web = {
-      firefox.enable = true;
-      zen.enable = true;
-    };
-
-    cli.terminals.wezterm.enable = true;
     security._1password = {
       enable = true;
       opnix = {
@@ -33,13 +32,18 @@
       };
     };
 
-    desktop.launchers = {
-      vicinae.enable = true;
+    desktop = {
+      core.keybindings.enable = true;
+      launchers.vicinae.enable = true;
+      fileManagers.nautilus.enable = true;
     };
 
-    desktop.fileManagers = {
-      nautilus.enable = true;
+    apps.web = {
+      firefox.enable = true;
+      zen.enable = true;
     };
+
+    cli.terminals.wezterm.enable = true;
 
     development = {
       editors = {
@@ -60,13 +64,6 @@
       };
 
       claude-code.enable = true;
-    };
-
-    theme = {
-      enable = true;
-      wallpaper = ../../../wallpapers/12-5/mocha-3840x1600.png;
-      colorScheme = "catppuccin-mocha";
-      polarity = "dark";
     };
   };
 }
