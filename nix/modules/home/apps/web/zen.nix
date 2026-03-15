@@ -7,7 +7,7 @@
 with lib;
 {
   imports = [
-    (mkAliasOptionModule [ "internal" "web" "zen" ] [ "programs" "zen-browser" ])
+    (mkAliasOptionModule [ "internal" "apps" "web" "zen" ] [ "programs" "zen-browser" ])
   ];
 
   config = {

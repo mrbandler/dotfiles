@@ -7,11 +7,11 @@
 
 with lib;
 let
-  cfg = config.internal.web.firefox;
+  cfg = config.internal.apps.web.firefox;
 in
 {
   imports = [
-    (mkAliasOptionModule [ "internal" "web" "firefox" ] [ "programs" "firefox" ])
+    (mkAliasOptionModule [ "internal" "apps" "web" "firefox" ] [ "programs" "firefox" ])
   ];
 
   config = {
