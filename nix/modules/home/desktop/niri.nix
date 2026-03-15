@@ -8,6 +8,7 @@
 with lib;
 let
   cfg = config.internal.desktop.keybindings;
+  cmds = config.internal.desktop.commands;
   initCfg = config.internal.desktop.init;
 in
 {
@@ -130,12 +131,12 @@ in
           in
           {
             # === Launcher (via xremap F-key) ===
-            "${cfg.launcherKey}".action.spawn = [ "sh" "-c" "$LAUNCHER" ];
+            "${cfg.launcherKey}".action.spawn = cmds.applications.launcher;
 
             # === Applications ===
-            "${app.terminal}".action.spawn = [ "sh" "-c" "$TERMINAL" ];
-            "${app.fileManager}".action.spawn = [ "sh" "-c" "$FILEMANAGER" ];
-            "${app.browser}".action.spawn = [ "sh" "-c" "$BROWSER" ];
+            "${app.terminal}".action.spawn = cmds.applications.terminal;
+            "${app.fileManager}".action.spawn = cmds.applications.fileManager;
+            "${app.browser}".action.spawn = cmds.applications.browser;
 
             # === Window actions ===
             "${win.overview}" = {
@@ -228,36 +229,45 @@ in
           // {
             ${cfg.media.volumeUp} = {
               allow-when-locked = true;
-              action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" "-l" "1.0" ];
+              action.spawn = cmds.media.volumeUp;
             };
             ${cfg.media.volumeDown} = {
               allow-when-locked = true;
-              action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-" ];
+              action.spawn = cmds.media.volumeDown;
             };
             ${cfg.media.mute} = {
               allow-when-locked = true;
-              action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
+              action.spawn = cmds.media.mute;
             };
             ${cfg.media.micMute} = {
               allow-when-locked = true;
-              action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
+              action.spawn = cmds.media.micMute;
             };
             ${cfg.media.play} = {
               allow-when-locked = true;
-              action.spawn = [ "playerctl" "play-pause" ];
+              action.spawn = cmds.media.play;
             };
             ${cfg.media.stop} = {
               allow-when-locked = true;
-              action.spawn = [ "playerctl" "stop" ];
+              action.spawn = cmds.media.stop;
             };
             ${cfg.media.prev} = {
               allow-when-locked = true;
-              action.spawn = [ "playerctl" "previous" ];
+              action.spawn = cmds.media.prev;
             };
             ${cfg.media.next} = {
               allow-when-locked = true;
-              action.spawn = [ "playerctl" "next" ];
+              action.spawn = cmds.media.next;
             };
+          }
+
+          # === Desktop Shell (DMS) ===
+          // {
+            "${cfg.desktopShell.spotlight}".action.spawn = cmds.desktopShell.spotlight;
+            "${cfg.desktopShell.notifications}".action.spawn = cmds.desktopShell.notifications;
+            "${cfg.desktopShell.lock}".action.spawn = cmds.desktopShell.lock;
+            "${cfg.desktopShell.powerMenu}".action.spawn = cmds.desktopShell.powerMenu;
+            "${cfg.desktopShell.processlist}".action.spawn = cmds.desktopShell.processlist;
           }
 
           # === Extra custom bindings from escape hatch ===

@@ -7,7 +7,8 @@
 with lib;
 {
   imports = [
-    ./keybindings.nix
+    ./keybinds.nix
+    ./commands.nix
     ./xremap.nix
     ./niri.nix
     ./init.nix
