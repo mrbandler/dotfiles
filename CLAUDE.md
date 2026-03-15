@@ -29,5 +29,6 @@
 
 # Verification
 
-- Build specific config before committing: `nix build .#homeConfigurations.mrbandler@zeus`
-- For system changes: `nix build .#nixosConfigurations.zeus`
+- Standalone home config build does NOT work with Snowfall Lib (`nix build .#homeConfigurations.mrbandler@zeus` fails with type error)
+- Use `nix flake check` (or `just check`) to validate the full flake
+- For full system build (includes home-manager): `nix build .#nixosConfigurations.zeus.config.system.build.toplevel` (or `just build`)
