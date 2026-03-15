@@ -1,0 +1,4 @@
+- [ ] Create a Raycast/Vicinae plugin to send `niri msg` for additional functionality beyond keybindings
+- [x] Integrate Ultimate Hacking Keyboard (UHK)
+- [ ] Setup Nushell and starship
+- [ ] Think about named workspaces for Niri
