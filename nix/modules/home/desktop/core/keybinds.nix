@@ -12,25 +12,23 @@ in
   options.internal.desktop.core.keybindings = {
     enable = mkEnableOption "desktop keybindings configuration";
 
-    # === Coordination keys (used by both xremap and Niri) ===
-    # These use XF86 keysyms because xremap sends evdev keycodes,
-    # and XKB translates them to XF86* keysyms (not F13-F24).
-    # xremap key → XKB keysym: Prog1→XF86Launch1, Mail→XF86Mail, etc.
+    # === Launcher coordination key (xremap sends evdev Prog1 → XKB translates to XF86Launch1) ===
     launcherKey = mkOption {
       type = types.str;
       default = "XF86Launch1";
       description = "Key sent by Super tap for launcher (xremap: Prog1)";
     };
 
-    monitorMode = {
-      focusLeft = mkOption { type = types.str; default = "XF86Launch2"; };
-      focusRight = mkOption { type = types.str; default = "XF86Launch3"; };
-      focusDown = mkOption { type = types.str; default = "XF86Launch4"; };
-      focusUp = mkOption { type = types.str; default = "XF86Mail"; };
-      moveLeft = mkOption { type = types.str; default = "XF86Calculator"; };
-      moveRight = mkOption { type = types.str; default = "XF86HomePage"; };
-      moveDown = mkOption { type = types.str; default = "XF86Favorites"; };
-      moveUp = mkOption { type = types.str; default = "XF86Search"; };
+    # === Monitor navigation ===
+    monitor = {
+      focusMonitorLeft = mkOption { type = types.str; default = "Super+N"; };
+      focusMonitorRight = mkOption { type = types.str; default = "Super+Period"; };
+      focusMonitorDown = mkOption { type = types.str; default = "Super+M"; };
+      focusMonitorUp = mkOption { type = types.str; default = "Super+Comma"; };
+      moveToMonitorLeft = mkOption { type = types.str; default = "Super+Alt+N"; };
+      moveToMonitorRight = mkOption { type = types.str; default = "Super+Alt+Period"; };
+      moveToMonitorDown = mkOption { type = types.str; default = "Super+Alt+M"; };
+      moveToMonitorUp = mkOption { type = types.str; default = "Super+Alt+Comma"; };
     };
 
     # === Navigation ===
@@ -55,12 +53,6 @@ in
       consumeFromRight = mkOption { type = types.str; default = "Super+BracketRight"; };
       expelToLeft = mkOption { type = types.str; default = "Super+Alt+BracketLeft"; };
       expelToRight = mkOption { type = types.str; default = "Super+Alt+BracketRight"; };
-    };
-
-    # === Monitor (mode entry keys) ===
-    monitor = {
-      enterFocusMode = mkOption { type = types.str; default = "Super+M"; };
-      enterMoveMode = mkOption { type = types.str; default = "Super+Alt+M"; };
     };
 
     # === Layout ===
@@ -112,7 +104,7 @@ in
     # === Desktop Shell ===
     desktopShell = {
       spotlight = mkOption { type = types.str; default = "Super+D"; };
-      notifications = mkOption { type = types.str; default = "Super+N"; };
+      notifications = mkOption { type = types.str; default = "Super+G"; };
       lock = mkOption { type = types.str; default = "Super+A"; };
       powerMenu = mkOption { type = types.str; default = "Super+P"; };
       processlist = mkOption { type = types.str; default = "Ctrl+Shift+Escape"; };

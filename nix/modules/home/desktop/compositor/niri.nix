@@ -149,7 +149,7 @@ in
             lay = cfg.layout;
             win = cfg.window;
             app = cfg.applications;
-            mon = cfg.monitorMode;
+            mon = cfg.monitor;
           in
           {
             # === Launcher (via xremap F-key) ===
@@ -211,16 +211,16 @@ in
             };
           }
 
-          # === Monitor navigation (via xremap F-keys) ===
+          # === Monitor navigation ===
           // {
-            "${mon.focusLeft}".action.focus-monitor-left = {};
-            "${mon.focusRight}".action.focus-monitor-right = {};
-            "${mon.focusDown}".action.focus-monitor-down = {};
-            "${mon.focusUp}".action.focus-monitor-up = {};
-            "${mon.moveLeft}".action.move-column-to-monitor-left = {};
-            "${mon.moveRight}".action.move-column-to-monitor-right = {};
-            "${mon.moveDown}".action.move-column-to-monitor-down = {};
-            "${mon.moveUp}".action.move-column-to-monitor-up = {};
+            "${mon.focusMonitorLeft}".action.focus-monitor-left = {};
+            "${mon.focusMonitorRight}".action.focus-monitor-right = {};
+            "${mon.focusMonitorDown}".action.focus-monitor-down = {};
+            "${mon.focusMonitorUp}".action.focus-monitor-up = {};
+            "${mon.moveToMonitorLeft}".action.move-column-to-monitor-left = {};
+            "${mon.moveToMonitorRight}".action.move-column-to-monitor-right = {};
+            "${mon.moveToMonitorDown}".action.move-column-to-monitor-down = {};
+            "${mon.moveToMonitorUp}".action.move-column-to-monitor-up = {};
           }
 
           # === Layout ===
