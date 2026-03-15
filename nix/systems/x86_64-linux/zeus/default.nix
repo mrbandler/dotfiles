@@ -1,5 +1,4 @@
 {
-  pkgs,
   ...
 }:
 
@@ -12,11 +11,6 @@
 
   # UHK (Ultimate Hacking Keyboard) support
   hardware.keyboard.uhk.enable = true;
-  home-manager = {
-    backupFileExtension = "bak";
-    useGlobalPkgs = true;
-    useUserPackages = true;
-  };
 
   internal = {
     core = {
