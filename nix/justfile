@@ -1,3 +1,51 @@
 # Rebuilds the system configuration using the flake in the current directory.
 rebuild:
     sudo nixos-rebuild switch --flake .#$(hostname)
+
+# Builds the system configuration without switching (dry run).
+build:
+    nix build .#nixosConfigurations.$(hostname).config.system.build.toplevel
+
+# Validates the flake without building.
+check:
+    nix flake check
+
+# Updates all flake inputs to their latest versions.
+update:
+    nix flake update
+
+# Updates a specific flake input to its latest version.
+update-input input:
+    nix flake update {{input}}
+
+# Updates all flake inputs and rebuilds the system.
+upgrade:
+    just update && just rebuild
+
+# Rolls back to the previous system generation.
+rollback:
+    sudo nixos-rebuild switch --rollback
+
+# Lists all system generations.
+history:
+    sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
+
+# Garbage collects unreachable store paths.
+gc:
+    nix-collect-garbage
+
+# Deletes all old generations and garbage collects.
+gc-all:
+    sudo nix-collect-garbage -d && nix-collect-garbage -d
+
+# Optimizes the nix store by deduplicating identical files.
+optimize:
+    nix store optimise
+
+# Searches for packages in nixpkgs.
+search query:
+    nix search nixpkgs {{query}}
+
+# Opens a nix repl with the flake loaded.
+repl:
+    nix repl .
