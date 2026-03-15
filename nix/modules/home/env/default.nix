@@ -42,7 +42,7 @@ in
 
     browser = mkOption {
       type = types.nullOr types.str;
-      default = "zen";
+      default = "zen-beta";
       description = "Default web browser ($BROWSER)";
     };
 
@@ -53,20 +53,22 @@ in
     };
   };
 
-  config = let
-    envVars = filterAttrs (n: v: v != null) {
-      TERMINAL = cfg.terminal;
-      LAUNCHER = cfg.launcher;
-      EDITOR = cfg.editor;
-      VISUAL = cfg.visual;
-      PAGER = cfg.pager;
-      BROWSER = cfg.browser;
-      FILEMANAGER = cfg.fileManager;
+  config =
+    let
+      envVars = filterAttrs (n: v: v != null) {
+        TERMINAL = cfg.terminal;
+        LAUNCHER = cfg.launcher;
+        EDITOR = cfg.editor;
+        VISUAL = cfg.visual;
+        PAGER = cfg.pager;
+        BROWSER = cfg.browser;
+        FILEMANAGER = cfg.fileManager;
+      };
+    in
+    {
+      # For shell sessions
+      home.sessionVariables = envVars;
+      # For systemd user session (visible to Niri and other graphical apps)
+      systemd.user.sessionVariables = envVars;
     };
-  in {
-    # For shell sessions
-    home.sessionVariables = envVars;
-    # For systemd user session (visible to Niri and other graphical apps)
-    systemd.user.sessionVariables = envVars;
-  };
 }
