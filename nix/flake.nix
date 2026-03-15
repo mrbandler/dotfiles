@@ -84,7 +84,7 @@
           stylix = inputs.stylix.homeModules.stylix;
           niri = inputs.niri.homeModules.niri;
           _1password-shell-plugins = inputs._1password-shell-plugins.hmModules.default;
-          zen-browser = inputs.zen-browser.homeModules.twilight;
+          zen-browser = inputs.zen-browser.homeModules.beta;
           opnix = inputs.opnix.homeManagerModules.default;
           dms = inputs.dms.homeModules.dank-material-shell;
           dms-niri = inputs.dms.homeModules.niri;
