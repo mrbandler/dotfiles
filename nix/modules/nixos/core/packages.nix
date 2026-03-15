@@ -51,6 +51,13 @@ in
         # Command-not-found functionality
         nix-index
 
+        # Nix language servers
+        nixd
+        nil
+
+        # Desktop notifications
+        libnotify
+
         # Disk utilities
         parted
         gptfdisk
