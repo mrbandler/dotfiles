@@ -10,5 +10,9 @@
     lazygit
     uhk-agent
     spotify
+    telegram-desktop
+    whatsapp-electron
+    vesktop
+    claude-desktop
   ];
 }
