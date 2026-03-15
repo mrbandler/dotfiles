@@ -109,6 +109,15 @@ in
       next = mkOption { type = types.str; default = "XF86AudioNext"; };
     };
 
+    # === Desktop Shell ===
+    desktopShell = {
+      spotlight = mkOption { type = types.str; default = "Super+D"; };
+      notifications = mkOption { type = types.str; default = "Super+N"; };
+      lock = mkOption { type = types.str; default = "Super+A"; };
+      powerMenu = mkOption { type = types.str; default = "Super+P"; };
+      processlist = mkOption { type = types.str; default = "Ctrl+Shift+Escape"; };
+    };
+
     # === Escape hatches ===
     extraNiri = mkOption {
       type = types.listOf (types.submodule {
