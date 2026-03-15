@@ -1,4 +1,4 @@
 chezmoi/state/dsc/configuration.dsc.yml
 chezmoi/dot_ssh
 history.txt
-docs/plans
+**/docs/
