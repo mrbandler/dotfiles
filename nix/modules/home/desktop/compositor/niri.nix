@@ -10,6 +10,22 @@ let
   cfg = config.internal.desktop.core.keybindings;
   cmds = config.internal.desktop.core.commands;
   initCfg = config.internal.desktop.core.init;
+  wsCfg = config.internal.desktop.core.workspaces;
+  wrCfg = config.internal.desktop.core.windowRules;
+
+  # Translate a core match/exclude entry to niri's attribute names
+  toNiriMatch = m:
+    lib.filterAttrs (_: v: v != null) (
+      (lib.optionalAttrs (m.appId != null) { app-id = m.appId; })
+      // (lib.optionalAttrs (m.title != null) { title = m.title; })
+      // (lib.optionalAttrs (m.atStartup != null) { at-startup = m.atStartup; })
+    );
+
+  # Translate a core window rule to a niri window rule
+  toNiriWindowRule = rule:
+    (lib.optionalAttrs (rule.matches != []) { matches = map toNiriMatch rule.matches; })
+    // (lib.optionalAttrs (rule.excludes != []) { excludes = map toNiriMatch rule.excludes; })
+    // rule.properties;
 in
 {
   imports = [
@@ -24,6 +40,12 @@ in
         hotkey-overlay.skip-at-startup = true;
 
         spawn-at-startup = map (cmd: { command = cmd; }) initCfg.spawn;
+
+        workspaces = builtins.listToAttrs (map (ws: {
+          name = ws.name;
+          value = { name = if ws.displayName != null then ws.displayName else ws.name; }
+            // lib.optionalAttrs (ws.monitor != null) { open-on-output = ws.monitor; };
+        }) wsCfg);
 
         input = {
           keyboard = {
@@ -119,7 +141,7 @@ in
               bottom-right = 5.0;
             };
           }
-        ];
+        ] ++ (map toNiriWindowRule wrCfg);
 
         binds = mkIf cfg.enable (
           let
