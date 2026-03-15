@@ -78,10 +78,45 @@ in
       };
 
       plugins = {
-        dankPomodoroTimer.enable = true;
+        dankPomodoroTimer = {
+          enable = true;
+          settings = {
+            workDuration = "50";
+            shortBreakDuration = "10";
+            longBreakDuration = "20";
+            autoStartBreaks = true;
+            autoStartPomodoros = true;
+            autoSetDND = true;
+          };
+        };
+
+
+        dankBatteryAlerts = {
+          enable = true;
+          settings = {
+            criticalThreshold = 10;
+            criticalTitle = "Critical Battery Level";
+            criticalMessage = "Battery at \${level}% - Connect charger immediately!";
+            enableWarningAlert = true;
+            warningThreshold = 20;
+            warningTitle = "Low Battery";
+            warningMessage = "Battery at \${level}% - Consider charging soon";
+          };
+        };
+
+        nixMonitor = {
+          enable = true;
+          settings = {
+            showGenerations = true;
+            showStoreSize = true;
+            gcThresholdGB = 50;
+            checkUpdates = true;
+            updateCheckInterval = 3570;
+            updateInterval = 300;
+          };
+        };
+
         dankActions.enable = true;
-        dankBatteryAlerts.enable = true;
-        nixMonitor.enable = true;
         sshMonitor.enable = true;
         claudeCodeUsage.enable = true;
       };
