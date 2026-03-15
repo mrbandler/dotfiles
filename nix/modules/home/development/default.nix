@@ -6,5 +6,5 @@
 
 with lib;
 {
-  # Subdirectories (vcs/, runtimes/, agents/) are auto-imported by snowfall-lib
+  # Subdirectories (vcs/, runtimes/, agents/, editors/, engines/) are auto-imported by snowfall-lib
 }

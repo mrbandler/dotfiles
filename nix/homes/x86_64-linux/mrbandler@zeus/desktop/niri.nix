@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  internal.desktop.niri = {
+  internal.desktop.compositor.niri = {
     enable = true;
     settings = {
       outputs = {

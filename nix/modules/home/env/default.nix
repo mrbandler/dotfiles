@@ -42,13 +42,13 @@ in
 
     browser = mkOption {
       type = types.nullOr types.str;
-      default = "zen-twilight";
+      default = "zen";
       description = "Default web browser ($BROWSER)";
     };
 
     fileManager = mkOption {
       type = types.nullOr types.str;
-      default = "dolphin";
+      default = "nautilus";
       description = "Default file manager ($FILEMANAGER)";
     };
   };

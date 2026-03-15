@@ -1,14 +1,8 @@
 { config, ... }:
 
 {
-  internal.desktop.dms = {
+  internal.desktop.shell.dms = {
     enable = true;
-
-    theme = {
-      name = "catppuccin";
-      flavor = "macchiato";
-      accent = "sapphire";
-    };
 
     session = {
       weatherLocation = "Arnstorf, 94424";
@@ -133,18 +127,18 @@
               minimumWidth = true;
               showInGb = false;
             }
-            {
-              id = "nixMonitor";
-              enabled = true;
-            }
-            {
-              id = "sshMonitor";
-              enabled = true;
-            }
-            {
-              id = "vpn";
-              enabled = true;
-            }
+            # {
+            #   id = "nixMonitor";
+            #   enabled = true;
+            # }
+            # {
+            #   id = "sshMonitor";
+            #   enabled = true;
+            # }
+            # {
+            #   id = "vpn";
+            #   enabled = true;
+            # }
             {
               id = "keyboard_layout_name";
               enabled = true;

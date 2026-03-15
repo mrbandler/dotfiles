@@ -84,10 +84,11 @@ in
     })
 
     (mkIf cfg.sshAgent.enable {
-      internal.desktop.init.spawn = [ [ "1password" "--silent" ] ];
+      internal.desktop.core.init.spawn = [ [ "1password" "--silent" ] ];
 
       programs.ssh = {
         enable = true;
+        enableDefaultConfig = false;
         matchBlocks."*" = {
           identityAgent = "~/.1password/agent.sock";
           extraOptions = {

@@ -1,18 +1,7 @@
 {
-  lib,
-  config,
   ...
 }:
 
-with lib;
 {
-  imports = [
-    ./keybinds.nix
-    ./commands.nix
-    ./xremap.nix
-    ./niri.nix
-    ./init.nix
-    ./dms.nix
-    ./wpaperd.nix
-  ];
+  # Subdirectories (core/, compositor/, shell/, wallpaper/, input/, launchers/, fileManagers/) are auto-imported by snowfall-lib
 }

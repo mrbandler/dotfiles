@@ -1,7 +1,7 @@
 { config, ... }:
 
 {
-  internal.desktop.wpaperd = {
+  internal.desktop.wallpaper.wpaperd = {
     enable = true;
 
     mode = "fit";

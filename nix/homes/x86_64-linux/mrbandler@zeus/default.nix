@@ -1,7 +1,4 @@
 {
-  lib,
-  config,
-  pkgs,
   ...
 }:
 
@@ -13,42 +10,44 @@
   home.stateVersion = "25.11";
   home.username = "mrbandler";
   home.homeDirectory = "/home/mrbandler";
-  home.packages = with pkgs; [
-    jq
-    just
-    lazygit
-    uhk-agent
-    spotify
-  ];
 
   internal = {
-    desktop.keybindings.enable = true;
+    maintenance = {
+      enable = true;
+      autoUpdate.enable = true;
+    };
 
-    browsers = {
+    desktop.core.keybindings.enable = true;
+
+    web = {
       firefox.enable = true;
       zen.enable = true;
     };
 
-    terminals.wezterm.enable = true;
+    cli.terminals.wezterm.enable = true;
     security._1password = {
       enable = true;
       opnix = {
         enable = false;
-        secrets = {};
+        secrets = { };
       };
     };
 
-    launchers = {
+    desktop.launchers = {
       vicinae.enable = true;
     };
 
-    editors = {
-      vscode.enable = true;
-      zed.enable = true;
-      helix.enable = true;
+    desktop.fileManagers = {
+      nautilus.enable = true;
     };
 
     development = {
+      editors = {
+        vscode.enable = true;
+        zed.enable = true;
+        helix.enable = true;
+      };
+
       vcs = {
         enable = true;
         signing.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2G7J57J+2prp4UH/oWhIk6q+/rrvIhlsCypkK6Ak+d";
@@ -66,7 +65,7 @@
     theme = {
       enable = true;
       wallpaper = ../../../wallpapers/12-5/mocha-3840x1600.png;
-      colorScheme = "catppuccin-macchiato";
+      colorScheme = "catppuccin-mocha";
       polarity = "dark";
     };
   };
