@@ -13,8 +13,6 @@ with lib;
   config.programs.wezterm.extraConfig = ''
     config.window_close_confirmation = 'NeverPrompt'
     config.line_height = 0.9
-    config.initial_rows = 60
-    config.initial_cols = 238
     config.enable_scroll_bar = true
     config.enable_tab_bar = false
     config.hide_tab_bar_if_only_one_tab = true
