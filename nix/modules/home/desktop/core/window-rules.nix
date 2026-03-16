@@ -24,34 +24,28 @@ let
 in
 {
   options.internal.desktop.core.windowRules = mkOption {
-    type = types.listOf (types.submodule {
-      options = {
-        matches = mkOption {
-          type = types.listOf matchModule;
-          default = [];
-          description = "Match conditions (any must match)";
+    type = types.listOf (
+      types.submodule {
+        options = {
+          matches = mkOption {
+            type = types.listOf matchModule;
+            default = [ ];
+            description = "Match conditions (any must match)";
+          };
+          excludes = mkOption {
+            type = types.listOf matchModule;
+            default = [ ];
+            description = "Exclude conditions (any excludes the window)";
+          };
+          properties = mkOption {
+            type = types.attrs;
+            default = { };
+            description = "Freeform properties passed through to the compositor (e.g. open-on-workspace, open-floating)";
+          };
         };
-        excludes = mkOption {
-          type = types.listOf matchModule;
-          default = [];
-          description = "Exclude conditions (any excludes the window)";
-        };
-        properties = mkOption {
-          type = types.attrs;
-          default = {};
-          description = "Freeform properties passed through to the compositor (e.g. open-on-workspace, open-floating)";
-        };
-      };
-    });
-    default = [];
+      }
+    );
+    default = [ ];
     description = "Window rules for controlling window placement and behavior.";
-  };
-
-  options.internal.desktop.core.scratchTerminal = {
-    height = mkOption {
-      type = types.float;
-      default = 0.5;
-      description = "Scratch terminal floating window height as proportion of screen (0.0-1.0).";
-    };
   };
 }

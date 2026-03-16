@@ -14,7 +14,6 @@ let
   wrCfg = config.internal.desktop.core.windowRules;
 
   stCmds = config.internal.desktop.core.commands.scratchTerminal;
-  stHeight = config.internal.desktop.core.scratchTerminal.height;
 
   # Translate a core match/exclude entry to niri's attribute names
   toNiriMatch = m:
@@ -149,7 +148,6 @@ in
           {
             matches = [{ app-id = "^${lib.escape [ "." ] stCmds.appId}$"; }];
             open-floating = true;
-            default-window-height.proportion = stHeight;
           }
         ];
 

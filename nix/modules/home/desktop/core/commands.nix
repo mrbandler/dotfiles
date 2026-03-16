@@ -19,7 +19,8 @@ let
       # Nix replaces {id} with literal $id, shell expands the variable
       ${builtins.replaceStrings [ "{id}" ] [ "$id" ] st.close}
     else
-      ${st.spawn}${lib.optionalString (st.command != null) " -- ${st.command}"}
+      ${st.spawn}${lib.optionalString (st.command != null) " -- ${st.command}"} &
+      ${lib.optionalString (st.postSpawn != null) st.postSpawn}
     fi
   '';
 in
@@ -80,6 +81,11 @@ in
         type = types.str;
         default = "niri msg action close-window --id {id}";
         description = "Command to close the window. {id} is substituted at runtime.";
+      };
+      postSpawn = mkOption {
+        type = types.nullOr types.str;
+        default = "sleep 0.3 && niri msg action set-window-height -- 50% && niri msg action set-column-width -- 80%";
+        description = "Command to run after spawning the scratch terminal. Null to skip.";
       };
       script = mkOption {
         type = types.path;
