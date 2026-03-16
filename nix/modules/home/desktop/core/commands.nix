@@ -26,7 +26,7 @@ let
       ${st.spawn}${lib.optionalString (st.command != null) " -- ${st.command}"} &
       # Poll until the window appears
       while true; do
-        sleep 0.3
+        sleep 0.1
         id=$(${st.check} | ${pkgs.jq}/bin/jq -r '${stFilter}')
         if [ -n "$id" ]; then break; fi
       done
@@ -110,7 +110,7 @@ in
       };
       postSpawn = mkOption {
         type = types.nullOr types.str;
-        default = "niri msg action set-window-height -- 50% && niri msg action set-window-width -- 50% && sleep 0.001 && niri msg action center-window";
+        default = "niri msg action set-window-height -- 75% && niri msg action set-window-width -- 75% && sleep 0.005 && niri msg action center-window";
         description = "Command to run after spawning the scratch terminal. {id} is substituted at runtime with the window id. Null to skip.";
       };
       script = mkOption {
