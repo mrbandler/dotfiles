@@ -1,7 +1,7 @@
 - [x] Integrate Ultimate Hacking Keyboard (UHK)
 - [x] Think about named workspaces for Niri
 - [x] Remove monitor keybind mode, and add direct keybindings for monitor management (e.g., Super+Shift+Arrow keys to move windows between monitors)
-- [ ] Add a scratch (floating) terminal which can be toggled with a keybinding (Super+Alt+Return)
+- [x] Add a scratch (floating) terminal which can be toggled with a keybinding (Super+Alt+Return)
 - [ ] Configure vicinae
 - [ ] Configure WezTerm
 - [ ] Configure Zen browser
