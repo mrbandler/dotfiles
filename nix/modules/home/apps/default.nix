@@ -14,5 +14,7 @@
     whatsapp-electron
     vesktop
     claude-desktop
+    sqlite
+    sqlitebrowser
   ];
 }
