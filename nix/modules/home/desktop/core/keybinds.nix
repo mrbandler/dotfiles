@@ -77,6 +77,7 @@ in
       terminal = mkOption { type = types.str; default = "Super+Return"; };
       fileManager = mkOption { type = types.str; default = "Super+E"; };
       browser = mkOption { type = types.str; default = "Super+B"; };
+      scratchTerminal = mkOption { type = types.str; default = "Super+Alt+Return"; };
     };
 
     # === Window & System ===
