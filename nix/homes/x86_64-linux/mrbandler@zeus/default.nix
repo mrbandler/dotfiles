@@ -33,7 +33,10 @@
     };
 
     desktop = {
-      core.keybindings.enable = true;
+      core = {
+        keybindings.enable = true;
+        commands.scratchTerminal.command = "zellij attach --create scratch";
+      };
       launchers.vicinae.enable = true;
       fileManagers.nautilus.enable = true;
     };
@@ -43,7 +46,10 @@
       zen.enable = true;
     };
 
-    cli.terminals.wezterm.enable = true;
+    cli = {
+      terminals.wezterm.enable = true;
+      multiplexers.zellij.enable = true;
+    };
 
     development = {
       editors = {

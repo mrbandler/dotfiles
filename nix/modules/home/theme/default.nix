@@ -49,6 +49,20 @@ in
     };
 
     fonts = {
+      monospace = {
+        package = mkOption {
+          type = types.package;
+          default = pkgs.nerd-fonts.jetbrains-mono;
+          description = "Monospace font package.";
+        };
+
+        name = mkOption {
+          type = types.str;
+          default = "JetBrainsMono Nerd Font";
+          description = "Monospace font name.";
+        };
+      };
+
       sizes = {
         applications = mkOption {
           type = types.int;
@@ -128,11 +142,18 @@ in
       {
         enable = true;
 
-        fonts.sizes = {
-          applications = cfg.fonts.sizes.applications;
-          terminal = cfg.fonts.sizes.terminal;
-          desktop = cfg.fonts.sizes.desktop;
-          popups = cfg.fonts.sizes.popups;
+        fonts = {
+          monospace = {
+            package = cfg.fonts.monospace.package;
+            name = cfg.fonts.monospace.name;
+          };
+
+          sizes = {
+            applications = cfg.fonts.sizes.applications;
+            terminal = cfg.fonts.sizes.terminal;
+            desktop = cfg.fonts.sizes.desktop;
+            popups = cfg.fonts.sizes.popups;
+          };
         };
 
         cursor = {

@@ -8,3 +8,4 @@
 - [ ] Create a Raycast/Vicinae plugin to send `niri msg` for additional functionality beyond keybindings
 - [ ] Check for possible Nix based configuration for WhatsApp, Telegram, and Discord (especially for theming)
 - [ ] Setup Nushell and starship
+- [ ] Setup the rest of the CLI workflow (e.g., fzf, fd, ripgrep, lazygit, gh (+ dash), delta, etc.)
