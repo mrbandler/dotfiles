@@ -29,9 +29,17 @@ in
         favicon_service = "duckduckgo";
 
         providers = {
+          "@khasbilegt/1password" = {
+            preferences = {
+              cliPath = "/etc/profiles/per-user/mrbandler/bin/op";
+              zshPath = "/etc/profiles/per-user/mrbandler/bin/zsh";
+            };
+          };
+
           "@samlinville/tailscale" = {
             preferences.tailscalePath = "/run/current-system/sw/bin/tailscale";
           };
+
           "@mattisssa/spotify-player" = {
             entrypoints = {
               like.enabled = true;
@@ -67,6 +75,11 @@ in
         ])
         ++ [
           # Raycast extensions
+          (mkRaycastExt {
+            name = "1password";
+            inherit rev;
+            sha256 = "sha256-94h3i5bMKDAtaCvkE7BM0bTFsx1YuzUDC9vg2mJ3Yq0=";
+          })
           (mkRaycastExt {
             name = "linear";
             inherit rev;
@@ -117,6 +130,10 @@ in
             inherit rev;
             sha256 = "sha256-mjcGBDiFPj+K7jc7g8BKrChbE5oYQelDj01Ryvm1Ip8=";
           })
+        ]
+        ++ [
+          # Custom extensions
+          inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.praxis
         ];
     };
   };
