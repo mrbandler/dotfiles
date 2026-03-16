@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   namespace,
   ...
 }:
@@ -49,6 +50,8 @@ in
   };
 
   config = mkIf (desktopCfg.enable && audioCfg.backend == "pipewire") {
+    environment.systemPackages = mkIf cfg.pulse [ pkgs.pulseaudio ];
+
     services.pipewire = {
       enable = true;
       alsa.enable = cfg.alsa;
