@@ -1,6 +1,28 @@
-{ lib, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 with lib;
+let
+  st = config.internal.desktop.core.commands.scratchTerminal;
+
+  # Build the filter with {appId} substituted at Nix eval time
+  stFilter = builtins.replaceStrings [ "{appId}" ] [ st.appId ] st.filter;
+
+  toggleScratchTerminal = pkgs.writeShellScript "toggle-scratch-terminal" ''
+    id=$(${st.check} | ${pkgs.jq}/bin/jq -r '${stFilter}')
+
+    if [ -n "$id" ]; then
+      # Nix replaces {id} with literal $id, shell expands the variable
+      ${builtins.replaceStrings [ "{id}" ] [ "$id" ] st.close}
+    else
+      ${st.spawn}${lib.optionalString (st.command != null) " -- ${st.command}"}
+    fi
+  '';
+in
 {
   options.internal.desktop.core.commands = {
     # === Applications ===
@@ -58,6 +80,11 @@ with lib;
         type = types.str;
         default = "niri msg action close-window --id {id}";
         description = "Command to close the window. {id} is substituted at runtime.";
+      };
+      script = mkOption {
+        type = types.path;
+        readOnly = true;
+        description = "Built toggle script path. Read-only, derived from other scratchTerminal options.";
       };
     };
 
@@ -134,4 +161,6 @@ with lib;
       };
     };
   };
+
+  config.internal.desktop.core.commands.scratchTerminal.script = toggleScratchTerminal;
 }

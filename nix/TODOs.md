@@ -2,7 +2,9 @@
 - [x] Think about named workspaces for Niri
 - [x] Remove monitor keybind mode, and add direct keybindings for monitor management (e.g., Super+Shift+Arrow keys to move windows between monitors)
 - [ ] Add a scratch (floating) terminal which can be toggled with a keybinding (Super+Alt+Return)
+- [ ] Configure vicinae
+- [ ] Configure WezTerm
+- [ ] Configure Zen browser
 - [ ] Create a Raycast/Vicinae plugin to send `niri msg` for additional functionality beyond keybindings
-- [ ] Setup Zen browser configuration from Nix
 - [ ] Check for possible Nix based configuration for WhatsApp, Telegram, and Discord (especially for theming)
 - [ ] Setup Nushell and starship
