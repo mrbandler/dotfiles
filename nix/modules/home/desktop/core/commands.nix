@@ -74,6 +74,15 @@ in
         ];
         description = "Command to launch application launcher";
       };
+      passwordManager = mkOption {
+        type = types.listOf types.str;
+        default = [
+          "sh"
+          "-c"
+          "$PASS"
+        ];
+        description = "Command to launch password manager";
+      };
     };
 
     # === Scratch Terminal ===
@@ -110,7 +119,7 @@ in
       };
       postSpawn = mkOption {
         type = types.nullOr types.str;
-        default = "niri msg action set-window-height -- 75% && niri msg action set-window-width -- 75% && sleep 0.005 && niri msg action center-window";
+        default = "niri msg action set-window-height -- 75% && niri msg action set-window-width -- 75% && sleep 0.1 && niri msg action center-window";
         description = "Command to run after spawning the scratch terminal. {id} is substituted at runtime with the window id. Null to skip.";
       };
       script = mkOption {

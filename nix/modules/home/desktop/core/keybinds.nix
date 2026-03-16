@@ -21,115 +21,304 @@ in
 
     # === Monitor navigation ===
     monitor = {
-      focusMonitorLeft = mkOption { type = types.str; default = "Super+N"; };
-      focusMonitorRight = mkOption { type = types.str; default = "Super+Period"; };
-      focusMonitorDown = mkOption { type = types.str; default = "Super+M"; };
-      focusMonitorUp = mkOption { type = types.str; default = "Super+Comma"; };
-      moveToMonitorLeft = mkOption { type = types.str; default = "Super+Alt+N"; };
-      moveToMonitorRight = mkOption { type = types.str; default = "Super+Alt+Period"; };
-      moveToMonitorDown = mkOption { type = types.str; default = "Super+Alt+M"; };
-      moveToMonitorUp = mkOption { type = types.str; default = "Super+Alt+Comma"; };
+      focusMonitorLeft = mkOption {
+        type = types.str;
+        default = "Super+N";
+      };
+      focusMonitorRight = mkOption {
+        type = types.str;
+        default = "Super+Period";
+      };
+      focusMonitorDown = mkOption {
+        type = types.str;
+        default = "Super+M";
+      };
+      focusMonitorUp = mkOption {
+        type = types.str;
+        default = "Super+Comma";
+      };
+      moveToMonitorLeft = mkOption {
+        type = types.str;
+        default = "Super+Alt+N";
+      };
+      moveToMonitorRight = mkOption {
+        type = types.str;
+        default = "Super+Alt+Period";
+      };
+      moveToMonitorDown = mkOption {
+        type = types.str;
+        default = "Super+Alt+M";
+      };
+      moveToMonitorUp = mkOption {
+        type = types.str;
+        default = "Super+Alt+Comma";
+      };
     };
 
     # === Navigation ===
     navigation = {
-      focusColumnLeft = mkOption { type = types.str; default = "Super+H"; };
-      focusColumnRight = mkOption { type = types.str; default = "Super+L"; };
-      focusWindowUp = mkOption { type = types.str; default = "Super+K"; };
-      focusWindowDown = mkOption { type = types.str; default = "Super+J"; };
-      moveColumnLeft = mkOption { type = types.str; default = "Super+Alt+H"; };
-      moveColumnRight = mkOption { type = types.str; default = "Super+Alt+L"; };
-      moveWindowUp = mkOption { type = types.str; default = "Super+Alt+K"; };
-      moveWindowDown = mkOption { type = types.str; default = "Super+Alt+J"; };
-      focusWorkspaceUp = mkOption { type = types.str; default = "Super+U"; };
-      focusWorkspaceDown = mkOption { type = types.str; default = "Super+I"; };
-      moveToWorkspaceUp = mkOption { type = types.str; default = "Super+Alt+U"; };
-      moveToWorkspaceDown = mkOption { type = types.str; default = "Super+Alt+I"; };
-      focusFirstColumn = mkOption { type = types.str; default = "Super+Home"; };
-      focusLastColumn = mkOption { type = types.str; default = "Super+End"; };
-      moveColumnFirst = mkOption { type = types.str; default = "Super+Alt+Home"; };
-      moveColumnLast = mkOption { type = types.str; default = "Super+Alt+End"; };
-      consumeFromLeft = mkOption { type = types.str; default = "Super+BracketLeft"; };
-      consumeFromRight = mkOption { type = types.str; default = "Super+BracketRight"; };
-      expelToLeft = mkOption { type = types.str; default = "Super+Alt+BracketLeft"; };
-      expelToRight = mkOption { type = types.str; default = "Super+Alt+BracketRight"; };
+      focusColumnLeft = mkOption {
+        type = types.str;
+        default = "Super+H";
+      };
+      focusColumnRight = mkOption {
+        type = types.str;
+        default = "Super+L";
+      };
+      focusWindowUp = mkOption {
+        type = types.str;
+        default = "Super+K";
+      };
+      focusWindowDown = mkOption {
+        type = types.str;
+        default = "Super+J";
+      };
+      moveColumnLeft = mkOption {
+        type = types.str;
+        default = "Super+Alt+H";
+      };
+      moveColumnRight = mkOption {
+        type = types.str;
+        default = "Super+Alt+L";
+      };
+      moveWindowUp = mkOption {
+        type = types.str;
+        default = "Super+Alt+K";
+      };
+      moveWindowDown = mkOption {
+        type = types.str;
+        default = "Super+Alt+J";
+      };
+      focusWorkspaceUp = mkOption {
+        type = types.str;
+        default = "Super+U";
+      };
+      focusWorkspaceDown = mkOption {
+        type = types.str;
+        default = "Super+I";
+      };
+      moveToWorkspaceUp = mkOption {
+        type = types.str;
+        default = "Super+Alt+U";
+      };
+      moveToWorkspaceDown = mkOption {
+        type = types.str;
+        default = "Super+Alt+I";
+      };
+      focusFirstColumn = mkOption {
+        type = types.str;
+        default = "Super+Home";
+      };
+      focusLastColumn = mkOption {
+        type = types.str;
+        default = "Super+End";
+      };
+      moveColumnFirst = mkOption {
+        type = types.str;
+        default = "Super+Alt+Home";
+      };
+      moveColumnLast = mkOption {
+        type = types.str;
+        default = "Super+Alt+End";
+      };
+      consumeFromLeft = mkOption {
+        type = types.str;
+        default = "Super+BracketLeft";
+      };
+      consumeFromRight = mkOption {
+        type = types.str;
+        default = "Super+BracketRight";
+      };
+      expelToLeft = mkOption {
+        type = types.str;
+        default = "Super+Alt+BracketLeft";
+      };
+      expelToRight = mkOption {
+        type = types.str;
+        default = "Super+Alt+BracketRight";
+      };
     };
 
     # === Layout ===
     layout = {
-      resizeWidthDecrease = mkOption { type = types.str; default = "Super+Minus"; };
-      resizeWidthIncrease = mkOption { type = types.str; default = "Super+Equal"; };
-      resizeHeightDecrease = mkOption { type = types.str; default = "Super+Alt+Minus"; };
-      resizeHeightIncrease = mkOption { type = types.str; default = "Super+Alt+Equal"; };
-      cyclePresetWidth = mkOption { type = types.str; default = "Super+R"; };
-      cyclePresetHeight = mkOption { type = types.str; default = "Super+Alt+R"; };
-      maximize = mkOption { type = types.str; default = "Super+F"; };
-      fullscreen = mkOption { type = types.str; default = "Super+Alt+F"; };
-      expand = mkOption { type = types.str; default = "Super+X"; };
-      center = mkOption { type = types.str; default = "Super+C"; };
-      toggleFloating = mkOption { type = types.str; default = "Super+V"; };
-      switchFloatingFocus = mkOption { type = types.str; default = "Super+Alt+V"; };
-      toggleTabbed = mkOption { type = types.str; default = "Super+T"; };
+      resizeWidthDecrease = mkOption {
+        type = types.str;
+        default = "Super+Minus";
+      };
+      resizeWidthIncrease = mkOption {
+        type = types.str;
+        default = "Super+Equal";
+      };
+      resizeHeightDecrease = mkOption {
+        type = types.str;
+        default = "Super+Alt+Minus";
+      };
+      resizeHeightIncrease = mkOption {
+        type = types.str;
+        default = "Super+Alt+Equal";
+      };
+      cyclePresetWidth = mkOption {
+        type = types.str;
+        default = "Super+R";
+      };
+      cyclePresetHeight = mkOption {
+        type = types.str;
+        default = "Super+Alt+R";
+      };
+      maximize = mkOption {
+        type = types.str;
+        default = "Super+F";
+      };
+      fullscreen = mkOption {
+        type = types.str;
+        default = "Super+Alt+F";
+      };
+      expand = mkOption {
+        type = types.str;
+        default = "Super+X";
+      };
+      center = mkOption {
+        type = types.str;
+        default = "Super+C";
+      };
+      toggleFloating = mkOption {
+        type = types.str;
+        default = "Super+V";
+      };
+      switchFloatingFocus = mkOption {
+        type = types.str;
+        default = "Super+Alt+V";
+      };
+      toggleTabbed = mkOption {
+        type = types.str;
+        default = "Super+T";
+      };
     };
 
     # === Applications ===
     applications = {
-      terminal = mkOption { type = types.str; default = "Super+Return"; };
-      fileManager = mkOption { type = types.str; default = "Super+E"; };
-      browser = mkOption { type = types.str; default = "Super+B"; };
-      scratchTerminal = mkOption { type = types.str; default = "Super+Alt+Return"; };
+      terminal = mkOption {
+        type = types.str;
+        default = "Super+Return";
+      };
+      fileManager = mkOption {
+        type = types.str;
+        default = "Super+E";
+      };
+      browser = mkOption {
+        type = types.str;
+        default = "Super+B";
+      };
+      scratchTerminal = mkOption {
+        type = types.str;
+        default = "Super+Alt+Return";
+      };
+      passwordManager = mkOption {
+        type = types.str;
+        default = "Super+S";
+      };
     };
 
     # === Window & System ===
     window = {
       close = mkOption {
         type = types.listOf types.str;
-        default = [ "Super+Q" "Super+Y" ];
+        default = [
+          "Super+Q"
+          "Super+Y"
+        ];
       };
-      overview = mkOption { type = types.str; default = "Super+O"; };
-      inhibitShortcuts = mkOption { type = types.str; default = "Super+Escape"; };
+      overview = mkOption {
+        type = types.str;
+        default = "Super+O";
+      };
+      inhibitShortcuts = mkOption {
+        type = types.str;
+        default = "Super+Escape";
+      };
     };
 
     # === Media ===
     media = {
-      volumeUp = mkOption { type = types.str; default = "XF86AudioRaiseVolume"; };
-      volumeDown = mkOption { type = types.str; default = "XF86AudioLowerVolume"; };
-      mute = mkOption { type = types.str; default = "XF86AudioMute"; };
-      micMute = mkOption { type = types.str; default = "XF86AudioMicMute"; };
-      play = mkOption { type = types.str; default = "XF86AudioPlay"; };
-      stop = mkOption { type = types.str; default = "XF86AudioStop"; };
-      prev = mkOption { type = types.str; default = "XF86AudioPrev"; };
-      next = mkOption { type = types.str; default = "XF86AudioNext"; };
+      volumeUp = mkOption {
+        type = types.str;
+        default = "XF86AudioRaiseVolume";
+      };
+      volumeDown = mkOption {
+        type = types.str;
+        default = "XF86AudioLowerVolume";
+      };
+      mute = mkOption {
+        type = types.str;
+        default = "XF86AudioMute";
+      };
+      micMute = mkOption {
+        type = types.str;
+        default = "XF86AudioMicMute";
+      };
+      play = mkOption {
+        type = types.str;
+        default = "XF86AudioPlay";
+      };
+      stop = mkOption {
+        type = types.str;
+        default = "XF86AudioStop";
+      };
+      prev = mkOption {
+        type = types.str;
+        default = "XF86AudioPrev";
+      };
+      next = mkOption {
+        type = types.str;
+        default = "XF86AudioNext";
+      };
     };
 
     # === Desktop Shell ===
     desktopShell = {
-      spotlight = mkOption { type = types.str; default = "Super+D"; };
-      notifications = mkOption { type = types.str; default = "Super+G"; };
-      lock = mkOption { type = types.str; default = "Super+A"; };
-      powerMenu = mkOption { type = types.str; default = "Super+P"; };
-      processlist = mkOption { type = types.str; default = "Ctrl+Shift+Escape"; };
+      spotlight = mkOption {
+        type = types.str;
+        default = "Super+D";
+      };
+      notifications = mkOption {
+        type = types.str;
+        default = "Super+G";
+      };
+      lock = mkOption {
+        type = types.str;
+        default = "Super+A";
+      };
+      powerMenu = mkOption {
+        type = types.str;
+        default = "Super+P";
+      };
+      processlist = mkOption {
+        type = types.str;
+        default = "Ctrl+Shift+Escape";
+      };
     };
 
     # === Escape hatches ===
     extraNiri = mkOption {
-      type = types.listOf (types.submodule {
-        options = {
-          key = mkOption { type = types.str; };
-          action = mkOption { type = types.str; };
-          args = mkOption {
-            type = types.listOf types.str;
-            default = [];
+      type = types.listOf (
+        types.submodule {
+          options = {
+            key = mkOption { type = types.str; };
+            action = mkOption { type = types.str; };
+            args = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
           };
-        };
-      });
-      default = [];
+        }
+      );
+      default = [ ];
       description = "Additional custom Niri keybindings";
     };
 
     extraXremap = mkOption {
       type = types.attrs;
-      default = {};
+      default = { };
       description = "Additional xremap configuration";
     };
   };

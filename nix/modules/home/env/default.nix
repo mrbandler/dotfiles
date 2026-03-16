@@ -51,6 +51,12 @@ in
       default = "nautilus";
       description = "Default file manager ($FILEMANAGER)";
     };
+
+    passwordManager = mkOption {
+      type = types.nullOr types.str;
+      default = "1password --quick-access";
+      description = "Default password manager ($PASS)";
+    };
   };
 
   config =
@@ -63,6 +69,7 @@ in
         PAGER = cfg.pager;
         BROWSER = cfg.browser;
         FILEMANAGER = cfg.fileManager;
+        PASS = cfg.passwordManager;
       };
     in
     {
