@@ -110,7 +110,7 @@ in
       };
       postSpawn = mkOption {
         type = types.nullOr types.str;
-        default = "niri msg action set-window-height -- 50% && niri msg action set-window-width -- 50% && niri msg action center-window";
+        default = "niri msg action set-window-height -- 50% && niri msg action set-window-width -- 50% && sleep 0.1 && niri msg action center-window";
         description = "Command to run after spawning the scratch terminal. {id} is substituted at runtime with the window id. Null to skip.";
       };
       script = mkOption {
