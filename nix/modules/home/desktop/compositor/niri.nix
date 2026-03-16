@@ -13,6 +13,23 @@ let
   wsCfg = config.internal.desktop.core.workspaces;
   wrCfg = config.internal.desktop.core.windowRules;
 
+  stCmds = config.internal.desktop.core.commands.scratchTerminal;
+  stHeight = config.internal.desktop.core.scratchTerminal.height;
+
+  # Build the filter with {appId} substituted at Nix eval time
+  stFilter = builtins.replaceStrings [ "{appId}" ] [ stCmds.appId ] stCmds.filter;
+
+  toggleScratchTerminal = pkgs.writeShellScript "toggle-scratch-terminal" ''
+    id=$(${stCmds.check} | ${pkgs.jq}/bin/jq -r '${stFilter}')
+
+    if [ -n "$id" ]; then
+      # Nix replaces {id} with literal $id, shell expands the variable
+      ${builtins.replaceStrings [ "{id}" ] [ "$id" ] stCmds.close}
+    else
+      ${stCmds.spawn}${lib.optionalString (stCmds.command != null) " -- ${stCmds.command}"}
+    fi
+  '';
+
   # Translate a core match/exclude entry to niri's attribute names
   toNiriMatch = m:
     lib.filterAttrs (_: v: v != null) (
@@ -141,7 +158,14 @@ in
               bottom-right = 5.0;
             };
           }
-        ] ++ (map toNiriWindowRule wrCfg);
+        ] ++ (map toNiriWindowRule wrCfg)
+        ++ [
+          {
+            matches = [{ app-id = "^${lib.escape [ "." ] stCmds.appId}$"; }];
+            open-floating = true;
+            default-window-height.proportion = stHeight;
+          }
+        ];
 
         binds = mkIf cfg.enable (
           let
@@ -159,6 +183,7 @@ in
             "${app.terminal}".action.spawn = cmds.applications.terminal;
             "${app.fileManager}".action.spawn = cmds.applications.fileManager;
             "${app.browser}".action.spawn = cmds.applications.browser;
+            "${app.scratchTerminal}".action.spawn = [ "${toggleScratchTerminal}" ];
 
             # === Window actions ===
             "${win.overview}" = {
