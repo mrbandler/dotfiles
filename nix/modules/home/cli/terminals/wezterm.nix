@@ -20,7 +20,7 @@ with lib;
     config.window_padding = {
       left = '0.5cell',
       right = '0.5cell',
-      top = '0',
+      top = '0.5cell',
       bottom = '0.5cell',
     }
     config.default_cursor_style = 'BlinkingUnderline'
