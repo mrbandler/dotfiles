@@ -1,0 +1,12 @@
+{
+  lib,
+  config,
+  ...
+}:
+
+with lib;
+{
+  imports = [
+    (mkAliasOptionModule [ "internal" "cli" "multiplexers" "zellij" ] [ "programs" "zellij" ])
+  ];
+}
