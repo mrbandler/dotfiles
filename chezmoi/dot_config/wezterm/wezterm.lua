@@ -22,6 +22,7 @@ config.window_padding = {
 config.window_background_opacity = 0.9
 config.default_cursor_style = 'BlinkingUnderline'
 config.adjust_window_size_when_changing_font_size  = true
+config.window_close_confirmation = 'NeverPrompt'
 
 -- Actions
 paste = wezterm.action_callback(function(window, pane)
