@@ -27,6 +27,40 @@ with lib;
       };
     };
 
+    # === Scratch Terminal ===
+    scratchTerminal = {
+      spawn = mkOption {
+        type = types.str;
+        default = "\${TERMINAL} start --class scratch-terminal";
+        description = "Command to launch the scratch terminal. Must set a Wayland app-id for window matching.";
+      };
+      command = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Command to run inside the scratch terminal. Null uses the terminal's default shell.";
+      };
+      appId = mkOption {
+        type = types.str;
+        default = "scratch-terminal";
+        description = "Wayland app-id for window matching between spawn command and window rule.";
+      };
+      check = mkOption {
+        type = types.str;
+        default = "niri msg --json windows";
+        description = "Command that outputs JSON listing open windows.";
+      };
+      filter = mkOption {
+        type = types.str;
+        default = ''.[] | select(.app_id == "{appId}") | .id'';
+        description = "jq expression to extract window id from check output. {appId} is substituted at build time.";
+      };
+      close = mkOption {
+        type = types.str;
+        default = "niri msg action close-window --id {id}";
+        description = "Command to close the window. {id} is substituted at runtime.";
+      };
+    };
+
     # === Desktop Shell ===
     desktopShell = {
       spotlight = mkOption {
