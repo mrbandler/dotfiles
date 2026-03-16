@@ -46,4 +46,12 @@ in
     default = [];
     description = "Window rules for controlling window placement and behavior.";
   };
+
+  options.internal.desktop.core.scratchTerminal = {
+    height = mkOption {
+      type = types.float;
+      default = 0.5;
+      description = "Scratch terminal floating window height as proportion of screen (0.0-1.0).";
+    };
+  };
 }
