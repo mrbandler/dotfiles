@@ -38,7 +38,13 @@
 
       hardware = {
         gpu.amd.enable = true;
-        audio.backend = "pipewire";
+        audio = {
+          backend = "pipewire";
+          pipewire = {
+            jack = true;
+            lowLatency.enable = true;
+          };
+        };
         input.wacom.enable = true;
       };
       media.hardwareAcceleration.amd = true;
