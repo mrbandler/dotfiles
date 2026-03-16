@@ -18,7 +18,7 @@ with lib;
     config.enable_scroll_bar = true
     config.enable_tab_bar = false
     config.hide_tab_bar_if_only_one_tab = true
-    config.window_decorations = 'RESIZE'
+    config.window_decorations = 'NONE'
     config.window_padding = {
       left = '1cell',
       right = '1cell',
