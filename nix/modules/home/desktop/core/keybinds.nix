@@ -137,6 +137,16 @@ in
         type = types.str;
         default = "Super+Alt+BracketRight";
       };
+      focusWorkspacePrefix = mkOption {
+        type = types.str;
+        default = "Super";
+        description = "Modifier prefix for focus-workspace-N binds (generates prefix+1 through prefix+9)";
+      };
+      moveToWorkspacePrefix = mkOption {
+        type = types.str;
+        default = "Super+Alt";
+        description = "Modifier prefix for move-column-to-workspace-N binds (generates prefix+1 through prefix+9)";
+      };
     };
 
     # === Layout ===
