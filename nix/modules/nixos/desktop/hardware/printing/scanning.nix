@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   namespace,
   ...
@@ -35,10 +36,11 @@ in
     # Scanner support
     hardware.sane = {
       enable = true;
-      extraBackends = cfg.extraBackends;
+      extraBackends = [ pkgs.sane-airscan ] ++ cfg.extraBackends;
     };
 
-    # Add scanner group for users
+    # Add scanner group and assign to primary user
     users.groups.scanner = { };
+    users.users.${config.${namespace}.core.user.name}.extraGroups = [ "scanner" "lp" ];
   };
 }
