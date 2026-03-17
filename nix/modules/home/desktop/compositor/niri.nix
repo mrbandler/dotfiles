@@ -150,13 +150,7 @@ in
             };
           }
         ]
-        ++ (map toNiriWindowRule wrCfg)
-        ++ [
-          {
-            matches = [ { app-id = "^${lib.escape [ "." ] stCmds.appId}$"; } ];
-            open-floating = true;
-          }
-        ];
+        ++ (map toNiriWindowRule wrCfg);
 
         binds = mkIf cfg.enable (
           let

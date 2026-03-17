@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 with lib;
 let
@@ -48,4 +48,22 @@ in
     default = [ ];
     description = "Window rules for controlling window placement and behavior.";
   };
+
+  config =
+    let
+      stCmds = config.internal.desktop.core.commands.scratchTerminal;
+    in
+    {
+      internal.desktop.core.windowRules = [
+        {
+          matches = [ { appId = "^${lib.escape [ "." ] stCmds.appId}$"; } ];
+          properties = {
+            open-floating = true;
+            open-focused = true;
+            default-column-width = { proportion = 0.75; };
+            default-window-height = { proportion = 0.75; };
+          };
+        }
+      ];
+    };
 }
