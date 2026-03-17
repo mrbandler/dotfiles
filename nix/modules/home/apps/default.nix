@@ -11,5 +11,7 @@
     whatsapp-electron
     vesktop
     claude-desktop
+    system-config-printer
+    simple-scan
   ];
 }
