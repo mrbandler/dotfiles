@@ -218,10 +218,20 @@ in
 
           # === Workspace by number (1-9) ===
           // (builtins.listToAttrs (
-            builtins.concatMap (n:
-              let ns = toString n; in [
-                { name = "${nav.focusWorkspacePrefix}+${ns}"; value.action.focus-workspace = n; }
-                { name = "${nav.moveToWorkspacePrefix}+${ns}"; value.action.move-column-to-workspace = n; }
+            builtins.concatMap (
+              n:
+              let
+                ns = toString n;
+              in
+              [
+                {
+                  name = "${nav.focusWorkspacePrefix}+${ns}";
+                  value.action.focus-workspace = n;
+                }
+                {
+                  name = "${nav.moveToWorkspacePrefix}+${ns}";
+                  value.action.move-column-to-workspace = n;
+                }
               ]
             ) (lib.range 1 9)
           ))
