@@ -13,3 +13,4 @@
 - [ ] Setup Nushell and starship
 - [ ] Setup the rest of the CLI workflow (e.g., fzf, fd, ripgrep, lazygit, gh (+ dash), delta, etc.)
 - [ ] Create global .gitignore from https://www.toptal.com/developers/gitignore within the Nix configuration
+- [ ] Integrate opnix
