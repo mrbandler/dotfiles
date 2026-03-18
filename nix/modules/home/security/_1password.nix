@@ -13,7 +13,8 @@ in
   imports = [
     (mkAliasOptionModule
       [ "internal" "security" "_1password" "opnix" ]
-      [ "programs" "onepassword-secrets" ])
+      [ "programs" "onepassword-secrets" ]
+    )
   ];
 
   options.internal.security._1password = {
@@ -42,7 +43,11 @@ in
         type = types.listOf types.str;
         default = [ "Development" ];
         description = "List of vaults to expose SSH keys from (in order of preference)";
-        example = [ "Development" "Private" "Keys" ];
+        example = [
+          "Development"
+          "Private"
+          "Keys"
+        ];
       };
     };
 
@@ -70,9 +75,9 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      home.packages = with pkgs;
-        (optional cfg.enableCli _1password-cli)
-        ++ (optional cfg.enableGui _1password-gui);
+      home.packages =
+        with pkgs;
+        (optional cfg.enableCli _1password-cli) ++ (optional cfg.enableGui _1password-gui);
     }
 
     (mkIf cfg.shellPlugins.enable {
@@ -84,7 +89,12 @@ in
     })
 
     (mkIf cfg.sshAgent.enable {
-      internal.desktop.core.init.spawn = [ [ "1password" "--silent" ] ];
+      internal.desktop.core.init.spawn = [
+        [
+          "1password"
+          "--silent"
+        ]
+      ];
 
       programs.ssh = {
         enable = true;
@@ -100,10 +110,15 @@ in
       home.file.".config/1Password/ssh/agent.toml".text = ''
         # Managed by Home Manager
         ${concatMapStringsSep "\n" (vault: ''
-        [[ssh-keys]]
-        vault = "${vault}"
+          [[ssh-keys]]
+          vault = "${vault}"
         '') cfg.sshAgent.vaults}
       '';
+    })
+
+    (mkIf cfg.opnix.enable {
+      home.file.".config/opnix/.keep".text = "";
+      programs.onepassword-secrets.tokenFile = "${config.home.homeDirectory}/.config/opnix/token";
     })
   ]);
 }
