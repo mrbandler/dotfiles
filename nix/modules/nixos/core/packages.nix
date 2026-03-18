@@ -24,6 +24,7 @@ in
       with pkgs;
       [
         # Essential utilities
+        util-linux
         file
         rsync
         tree
