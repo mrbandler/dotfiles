@@ -211,6 +211,10 @@ in
         type = types.str;
         default = "Super+Return";
       };
+      scratchTerminal = mkOption {
+        type = types.str;
+        default = "Super+Alt+Return";
+      };
       fileManager = mkOption {
         type = types.str;
         default = "Super+E";
@@ -219,9 +223,9 @@ in
         type = types.str;
         default = "Super+B";
       };
-      scratchTerminal = mkOption {
+      privateBrowser = mkOption {
         type = types.str;
-        default = "Super+Alt+Return";
+        default = "Super+Alt+B";
       };
       passwordManager = mkOption {
         type = types.str;

@@ -65,6 +65,15 @@ in
         ];
         description = "Command to launch browser";
       };
+      privateBrowser = mkOption {
+        type = types.listOf types.str;
+        default = [
+          "sh"
+          "-c"
+          "$BROWSER --private-window"
+        ];
+        description = "Command to launch private browser";
+      };
       launcher = mkOption {
         type = types.listOf types.str;
         default = [

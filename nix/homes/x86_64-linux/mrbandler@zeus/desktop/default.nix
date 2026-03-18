@@ -72,6 +72,7 @@ in
     windowRules = [
       {
         matches = [ { appId = "^zen"; } ];
+        excludes = [ { title = "Zen Browser Private Browsing"; } ];
         properties = {
           open-on-workspace = "1";
           default-column-width = {

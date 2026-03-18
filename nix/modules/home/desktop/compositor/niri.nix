@@ -168,6 +168,7 @@ in
             "${app.terminal}".action.spawn = cmds.applications.terminal;
             "${app.fileManager}".action.spawn = cmds.applications.fileManager;
             "${app.browser}".action.spawn = cmds.applications.browser;
+            "${app.privateBrowser}".action.spawn = cmds.applications.privateBrowser;
             "${app.scratchTerminal}".action.spawn = [ "${stCmds.script}" ];
             "${app.passwordManager}".action.spawn = cmds.applications.passwordManager;
 
