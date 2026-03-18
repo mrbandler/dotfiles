@@ -54,6 +54,10 @@
       url = "github:vicinaehq/extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -80,11 +84,13 @@
           nur = inputs.nur.modules.nixos.default;
           dms = inputs.dms.nixosModules.dank-material-shell;
           dms-greeter = inputs.dms.nixosModules.greeter;
+          disko = inputs.disko.nixosModules.default;
         in
         [
           nur
           dms
           dms-greeter
+          disko
         ];
 
       homes.modules =
