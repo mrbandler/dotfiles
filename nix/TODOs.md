@@ -4,8 +4,7 @@
 - [x] Add a scratch (floating) terminal which can be toggled with a keybinding (Super+Alt+Return)
 - [x] Configure vicinae
   - [x] Find a way to add custom commands
-  - [ ] Setup all extensions through Nix module
-  - [ ] Check why `op` has issues connecting to the GUI application 
+  - [x] Setup all extensions through Nix module
 - [x] Configure WezTerm
 - [ ] Add password manager keybind Super+S for secrets
 - [ ] Configure Zen browser
@@ -13,4 +12,5 @@
 - [ ] Setup Nushell and starship
 - [ ] Setup the rest of the CLI workflow (e.g., fzf, fd, ripgrep, lazygit, gh (+ dash), delta, etc.)
 - [ ] Create global .gitignore from https://www.toptal.com/developers/gitignore within the Nix configuration
-- [ ] Integrate opnix
+- [x] Integrate opnix
+- [x] Setup a one command install script
