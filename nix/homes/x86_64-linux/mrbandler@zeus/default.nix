@@ -1,5 +1,4 @@
 {
-  config,
   ...
 }:
 
@@ -27,13 +26,10 @@
 
     security._1password = {
       enable = true;
-      opnix = {
-        enable = true;
-        secrets = {
-          vicinaeGitHubAccessToken = {
-            reference = "op//Development/Vicinae GitHub Token/credential";
-          };
-        };
+      opnix.enable = true;
+
+      injects.vicinaeGitHubAccessToken = {
+        reference = "op://Development/Vicinae GitHub Token/credential";
       };
     };
 

@@ -19,6 +19,8 @@
       nix.settings.additionalSubstituters = [ "https://niri.cachix.org" ];
     };
 
+    security._1password.enable = true;
+
     desktop = {
       enable = true;
 
