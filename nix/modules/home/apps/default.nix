@@ -13,5 +13,6 @@
     claude-desktop
     system-config-printer
     simple-scan
+    pdfarranger
   ];
 }

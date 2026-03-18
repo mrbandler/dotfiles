@@ -11,5 +11,6 @@
     sqlite
     sqlitebrowser
     gitnr
+    pdftk
   ];
 }
