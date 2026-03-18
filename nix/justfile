@@ -10,6 +10,10 @@ build:
 check:
     nix flake check
 
+# Shows all flake outputs.
+show:
+    nix flake show
+
 # Updates all flake inputs to their latest versions.
 update:
     nix flake update
