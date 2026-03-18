@@ -29,15 +29,8 @@ in
         favicon_service = "duckduckgo";
 
         providers = {
-          "@khasbilegt/1password" = {
-            preferences = {
-              cliPath = "/etc/profiles/per-user/mrbandler/bin/op";
-              zshPath = "/etc/profiles/per-user/mrbandler/bin/zsh";
-            };
-          };
-
           "@samlinville/tailscale" = {
-            preferences.tailscalePath = "/run/current-system/sw/bin/tailscale";
+            preferences.tailscalePath = "${pkgs.tailscale}/bin/tailscale";
           };
 
           "@mattisssa/spotify-player" = {
@@ -69,17 +62,10 @@ in
           niri
 
           # Dev
-          github
-          zed-recents
           nix
         ])
         ++ [
           # Raycast extensions
-          (mkRaycastExt {
-            name = "1password";
-            inherit rev;
-            sha256 = "sha256-94h3i5bMKDAtaCvkE7BM0bTFsx1YuzUDC9vg2mJ3Yq0=";
-          })
           (mkRaycastExt {
             name = "linear";
             inherit rev;
@@ -91,44 +77,14 @@ in
             sha256 = "sha256-J4EaKxrqVJgIta0gYl5rvhNfILUdMoQhDpA9f9gRxJc=";
           })
           (mkRaycastExt {
-            name = "remove-paywall";
-            inherit rev;
-            sha256 = "sha256-5E844SP8q//gH2cvMoJlV9NfvSdPAU6TYL1t2tCV6yc=";
-          })
-          (mkRaycastExt {
-            name = "youtube";
-            inherit rev;
-            sha256 = "sha256-4lNsliLA89BCa2BzZKGeifgR7wuNvKW2QUaP1OdOkws=";
-          })
-          (mkRaycastExt {
             name = "tailscale";
             inherit rev;
             sha256 = "sha256-1MW+747L1xPRsrqcEydXFyCWf3mKH2lVHT9uSE8ss4k=";
           })
           (mkRaycastExt {
-            name = "obsidian";
-            inherit rev;
-            sha256 = "sha256-ryK/5sTBIJk9mIAYuAqdkGJhs7h3D4+bAj8+zKjLLMg=";
-          })
-          (mkRaycastExt {
-            name = "devdocs";
-            inherit rev;
-            sha256 = "sha256-tqhHLIyWpFBHhkt7AiJSfkjIqJNO3+Fkntt7mlbLYbY=";
-          })
-          (mkRaycastExt {
             name = "uuid-generator";
             inherit rev;
             sha256 = "sha256-27KqqcVWFbQegoWLfpRlsaUGoWrektcs8uirGaMIU4k=";
-          })
-          (mkRaycastExt {
-            name = "steam";
-            inherit rev;
-            sha256 = "sha256-EWp5g1/OoF4An6x9PMeAbyHzfQqRSZsXkLjGMXD5WzQ=";
-          })
-          (mkRaycastExt {
-            name = "protondb";
-            inherit rev;
-            sha256 = "sha256-mjcGBDiFPj+K7jc7g8BKrChbE5oYQelDj01Ryvm1Ip8=";
           })
         ]
         ++ [
