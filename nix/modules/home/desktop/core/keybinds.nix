@@ -91,19 +91,19 @@ in
       };
       focusWorkspaceUp = mkOption {
         type = types.str;
-        default = "Super+U";
+        default = "Super+I";
       };
       focusWorkspaceDown = mkOption {
         type = types.str;
-        default = "Super+I";
+        default = "Super+U";
       };
       moveToWorkspaceUp = mkOption {
         type = types.str;
-        default = "Super+Alt+U";
+        default = "Super+Alt+I";
       };
       moveToWorkspaceDown = mkOption {
         type = types.str;
-        default = "Super+Alt+I";
+        default = "Super+Alt+U";
       };
       focusFirstColumn = mkOption {
         type = types.str;
