@@ -32,6 +32,7 @@ in
         wget
         unzip
         p7zip
+        nmap
 
         # System text editor (minimal fallback)
         nano
