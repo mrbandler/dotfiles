@@ -29,6 +29,12 @@ in
       default = [ ];
       description = "Additional groups for the user.";
     };
+
+    icon = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = "Profile image for the user (used by AccountsService).";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -44,6 +50,19 @@ in
         ]
         ++ cfg.user.additionalGroups;
       };
+    };
+
+    system.activationScripts.userIcon = mkIf (cfg.user.icon != null) {
+      text = ''
+        mkdir -p /var/lib/AccountsService/icons
+        cp ${cfg.user.icon} /var/lib/AccountsService/icons/${cfg.user.name}
+
+        mkdir -p /var/lib/AccountsService/users
+        cat > /var/lib/AccountsService/users/${cfg.user.name} <<EOF
+        [User]
+        Icon=/var/lib/AccountsService/icons/${cfg.user.name}
+        EOF
+      '';
     };
   };
 }

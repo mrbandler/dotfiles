@@ -17,6 +17,7 @@
       enable = true;
       networking.hostName = "zeus";
       nix.settings.additionalSubstituters = [ "https://niri.cachix.org" ];
+      user.icon = ./../../../profiles/mrbandler.png;
     };
 
     security._1password.enable = true;
