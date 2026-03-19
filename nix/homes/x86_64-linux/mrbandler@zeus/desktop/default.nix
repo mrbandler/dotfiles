@@ -14,13 +14,11 @@ let
   '';
 
   startup = pkgs.writeShellScript "workspace-startup" ''
-    # Workspace 1: Zen → Claude Desktop → WezTerm
+    # Workspace 1: Zen → Claude Desktop
     zen-beta &
     ${waitForWindow "zen-beta"}
     claude-desktop &
     ${waitForWindow "Claude"}
-    wezterm &
-    ${waitForWindow "org.wezfurlong.wezterm"}
 
     # Workspace 2: WhatsApp → Telegram → Vesktop
     whatsapp-electron &
@@ -73,20 +71,6 @@ in
       {
         matches = [ { appId = "^zen"; } ];
         excludes = [ { title = "Zen Browser Private Browsing"; } ];
-        properties = {
-          open-on-workspace = "1";
-          default-column-width = {
-            proportion = 1.0;
-          };
-        };
-      }
-      {
-        matches = [
-          {
-            appId = "^org\\.wezfurlong\\.wezterm$";
-            atStartup = true;
-          }
-        ];
         properties = {
           open-on-workspace = "1";
           default-column-width = {
