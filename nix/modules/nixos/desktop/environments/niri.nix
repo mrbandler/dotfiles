@@ -23,10 +23,10 @@ in
     systemd.user.services.niri-flake-polkit.enable = false;
     services.displayManager.sessionPackages = [ pkgs.niri ];
 
-    environment.systemPackages =
-      with pkgs;
-      [
-        niri
-      ];
+    # xwayland-satellite in PATH lets niri auto-spawn it for X11 apps.
+    environment.systemPackages = with pkgs; [
+      niri
+      xwayland-satellite
+    ];
   };
 }
