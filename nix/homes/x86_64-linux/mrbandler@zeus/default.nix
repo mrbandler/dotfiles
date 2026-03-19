@@ -42,9 +42,12 @@
       fileManagers.nautilus.enable = true;
     };
 
-    apps.web = {
-      firefox.enable = true;
-      zen.enable = true;
+    apps = {
+      web = {
+        firefox.enable = true;
+        zen.enable = true;
+      };
+      gaming.enable = true;
     };
 
     cli = {
