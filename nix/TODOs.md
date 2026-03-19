@@ -5,12 +5,13 @@
 - [x] Configure vicinae
   - [x] Find a way to add custom commands
   - [x] Setup all extensions through Nix module
+- [x] Integrate opnix
+- [x] Setup a one command install script
 - [x] Configure WezTerm
-- [ ] Add password manager keybind Super+S for secrets
-- [ ] Configure Zen browser
-- [ ] Check for possible Nix based configuration for WhatsApp, Telegram, and Discord (especially for theming)
+- [x] Add password manager keybind Super+S for secrets
+- [x] Make Steam launch and work under Niri
 - [ ] Setup Nushell and starship
 - [ ] Setup the rest of the CLI workflow (e.g., fzf, fd, ripgrep, lazygit, gh (+ dash), delta, etc.)
 - [ ] Create global .gitignore from https://www.toptal.com/developers/gitignore within the Nix configuration
-- [x] Integrate opnix
-- [x] Setup a one command install script
+- [ ] Configure Zen browser
+- [ ] Add option to set a browser as the default
