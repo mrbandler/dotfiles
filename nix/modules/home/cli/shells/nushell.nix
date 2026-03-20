@@ -15,7 +15,7 @@ with lib;
     settings = {
       show_banner = false;
       history = {
-        format = "sqlite";
+        file_format = "sqlite";
         max_size = 100000;
       };
       completions = {
