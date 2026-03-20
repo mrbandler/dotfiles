@@ -1,7 +1,10 @@
 {
-  ...
-}:
-
-{
-  # CLI tools (future: bat, fzf, yazi, etc.)
+  imports = [
+    ./fd.nix
+    ./fzf.nix
+    ./ripgrep.nix
+    ./tv.nix
+    ./yazi.nix
+    ./zoxide.nix
+  ];
 }
