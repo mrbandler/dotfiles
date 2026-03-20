@@ -10,7 +10,7 @@
 - [x] Configure WezTerm
 - [x] Add password manager keybind Super+S for secrets
 - [x] Make Steam launch and work under Niri
-- [ ] Setup Nushell and starship
+- [x] Setup Nushell and starship
 - [ ] Setup the rest of the CLI workflow (e.g., fzf, fd, ripgrep, lazygit, gh (+ dash), delta, etc.)
 - [ ] Create global .gitignore from https://www.toptal.com/developers/gitignore within the Nix configuration
 - [ ] Configure Zen browser
