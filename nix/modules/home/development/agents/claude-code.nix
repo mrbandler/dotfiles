@@ -7,6 +7,9 @@
 with lib;
 {
   imports = [
-    (mkAliasOptionModule [ "internal" "development" "claude-code" ] [ "programs" "claude-code" ])
+    (mkAliasOptionModule
+      [ "internal" "development" "agents" "claude-code" ]
+      [ "programs" "claude-code" ]
+    )
   ];
 }
