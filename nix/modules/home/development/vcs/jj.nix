@@ -33,9 +33,9 @@ let
     program = "${vcsCfg.signing.program}"
     ''}
 
-    ${optionalString cfg.delta.enable ''
+    ${optionalString config.programs.delta.enable ''
     [ui]
-    diff.tool = ["delta", "--dark", "--paging=never"]
+    diff.tool = ["delta", "--paging=never"]
     pager = "delta"
     ''}
 
@@ -50,14 +50,7 @@ in
       description = "Enable Jujutsu (jj) configuration";
     };
 
-    delta = {
-      enable = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable delta for jj diffs";
-      };
-    };
-  };
+};
 
   config = mkIf (vcsCfg.enable && cfg.enable) {
     home.packages = [ pkgs.jujutsu ];

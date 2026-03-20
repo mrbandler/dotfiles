@@ -25,6 +25,7 @@ in
 {
   imports = [
     ./git.nix
+    ./gh.nix
     ./jj.nix
   ];
 
@@ -79,10 +80,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      delta
-    ];
-
     assertions = [
       {
         assertion = !cfg.signing.enable || cfg.signing.publicKey != null;

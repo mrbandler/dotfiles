@@ -29,20 +29,7 @@ in
       description = "Enable Git configuration";
     };
 
-    delta = {
-      enable = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable delta for git diffs";
-      };
-
-      theme = mkOption {
-        type = types.str;
-        default = "Catppuccin Macchiato";
-        description = "Syntax theme for delta";
-      };
-    };
-  };
+};
 
   config = mkIf (vcsCfg.enable && cfg.enable) {
     # Ensure ~/.gitconfig points to the XDG config managed by home-manager
@@ -76,16 +63,5 @@ in
 
       includes = contextIncludes;
     };
-
-    programs.delta = mkIf cfg.delta.enable {
-      enable = true;
-      enableGitIntegration = true;
-      options = {
-        navigate = true;
-        syntax-theme = cfg.delta.theme;
-        line-numbers = true;
-        side-by-side = false;
-      };
-    };
-  };
+};
 }
