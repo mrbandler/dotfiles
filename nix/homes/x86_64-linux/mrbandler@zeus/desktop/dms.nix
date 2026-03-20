@@ -217,10 +217,6 @@
 
           rightWidgets = [
             {
-              id = "claudeCodeUsage";
-              enabled = true;
-            }
-            {
               id = "keyboard_layout_name";
               enabled = true;
               keyboardLayoutNameCompactMode = false;
