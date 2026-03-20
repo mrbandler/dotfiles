@@ -25,5 +25,6 @@ with lib;
     }
     config.default_cursor_style = 'BlinkingUnderline'
     config.adjust_window_size_when_changing_font_size = true
+    config.default_prog = {"nu"}
   '';
 }
