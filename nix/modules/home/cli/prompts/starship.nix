@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   ...
 }:
 
@@ -14,15 +13,9 @@ with lib;
     enable = true;
     enableBashIntegration = true;
     enableNushellIntegration = true;
-    presets = [ "catppuccin-powerline" ];
+    presets = [ "nerd-font-symbols" ];
     settings = {
-      palette = mkForce "catppuccin_mocha";
       os.disabled = true;
-      shell = {
-        disabled = false;
-        nu_indicator = "nu";
-        bash_indicator = "bash";
-      };
     };
   };
 }
