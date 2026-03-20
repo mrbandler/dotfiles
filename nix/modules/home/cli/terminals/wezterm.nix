@@ -24,7 +24,11 @@ with lib;
       bottom = '0.5cell',
     }
     config.default_cursor_style = 'BlinkingUnderline'
-    config.font = wezterm.font('JetBrainsMono Nerd Font')
+    config.font = wezterm.font_with_fallback({
+      'JetBrainsMono Nerd Font',
+      'Symbols Nerd Font Mono',
+      'Symbola',
+    })
     config.adjust_window_size_when_changing_font_size = true
     config.default_prog = {"nu"}
   '';

@@ -29,6 +29,8 @@ in
         nerd-fonts.jetbrains-mono
         nerd-fonts.fira-code
         nerd-fonts.meslo-lg
+        nerd-fonts.symbols-only
+        symbola
         noto-fonts-color-emoji
         noto-fonts-cjk-sans
         corefonts
