@@ -11,7 +11,7 @@
 - [x] Add password manager keybind Super+S for secrets
 - [x] Make Steam launch and work under Niri
 - [x] Setup Nushell and starship
-- [ ] Setup the rest of the CLI workflow (e.g., zoxide, eza, diskonaut, rip, kmon, bat, tokei, sd, dtool, licensor, static-web-server, git-cliff, just, scriptisto, vhs, tailspin, zellij, fastfetch, lazygit, lazydocker, lazyjj, carapace, ast-grep  fzf/tv, fd, ripgrep, lazygit, gh (+ dash, diffnav), delta, gogcli (or google/cli), btop, some fun utilities, etc.)
+- [ ] Setup the rest of the CLI workflow (see [CLI-TOOLS.md](CLI-TOOLS.md))
 - [ ] Terminal editors setup (Neovim and Helix)
 - [ ] Setup config for graphical editors (Zed)
 - [ ] Coding agents (Claude Code and Opencode)
@@ -20,3 +20,5 @@
 - [ ] Add option to set a browser as the default
 - [ ] Add additional window rules
   - [ ] Float picture-in-picture window from zen
+- [ ] Add creative applications (DaVinci Resolve, Affinity, Blender, Blockbench, a material maker?)
+- [ ] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need

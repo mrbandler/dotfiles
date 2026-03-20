@@ -3,6 +3,7 @@
 - Conventional Commits with hierarchical scopes: `type(nix/scope): message`
 - No "Co-Authored-By" or "Generated with Claude" in commits
 - Don't commit `docs/` — keep plans and specs local only
+- No intermediate commits — only commit once all changes build and work, and always ask before committing
 
 # Nix
 
