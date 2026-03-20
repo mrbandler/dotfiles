@@ -1,7 +1,5 @@
 {
-  ...
-}:
-
-{
-  # Prompt configs (future: starship, oh-my-posh, etc.)
+  imports = [
+    ./starship.nix
+  ];
 }
