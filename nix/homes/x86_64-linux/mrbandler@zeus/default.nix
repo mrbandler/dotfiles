@@ -67,13 +67,9 @@
         signing.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2G7J57J+2prp4UH/oWhIk6q+/rrvIhlsCypkK6Ak+d";
       };
 
-      nodejs = {
-        enable = true;
-        enableYarn = true;
-        enablePnpm = true;
-      };
+      runtimes.nodejs.enable = true;
 
-      claude-code.enable = true;
+      agents.claude-code.enable = true;
     };
   };
 }

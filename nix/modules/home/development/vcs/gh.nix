@@ -22,7 +22,7 @@ in
   config = {
     programs.gh = {
       enable = true;
-      gitProtocol = "ssh";
+      settings.git_protocol = "ssh";
     };
 
     programs.bash.initExtra = mkIf (cfg.ghToken != null && config.programs.bash.enable) ''
