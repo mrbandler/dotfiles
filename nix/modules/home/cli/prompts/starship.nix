@@ -16,6 +16,7 @@ with lib;
     enableNushellIntegration = true;
     presets = [ "catppuccin-powerline" ];
     settings = {
+      palette = mkForce "catppuccin_mocha";
       os.disabled = true;
       shell = {
         disabled = false;
