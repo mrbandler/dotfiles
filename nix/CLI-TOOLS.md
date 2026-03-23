@@ -10,8 +10,8 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [x] yazi — terminal file manager
 
 ## File Viewers
-- [ ] bat — cat with syntax highlighting
-- [ ] eza — modern ls replacement
+- [x] bat — cat with syntax highlighting
+- [x] eza — modern ls replacement
 
 ## Git Tools
 - [x] delta — git pager with syntax highlighting
