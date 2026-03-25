@@ -22,13 +22,24 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [x] git-cliff — changelog generator
 
 ## System Monitoring
-- [ ] btop — system monitor
-- [ ] kmon — kernel module monitor
+- [x] btop — system monitor
+- [x] kmon — kernel module monitor
 
 ## Container & Dev Tools
 - [ ] lazydocker — Docker TUI
 - [ ] lazyjj — Jujutsu VCS TUI
 - [ ] k9s — Kubernetes TUI
+
+## JSON
+- [ ] jnv — interactive JSON filter using jq
+
+## Process Management
+- [ ] process-compose — scheduler/orchestrator for non-containerized apps
+
+## Journaling & Notes
+- [ ] jrnl — command line journal application
+- [ ] zk — Zettelkasten plain text note-taking assistant
+- [ ] nb — command line note-taking and knowledge base
 
 ## Disk & File Utils
 - [ ] diskonaut — interactive disk usage TUI

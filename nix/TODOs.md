@@ -20,5 +20,8 @@
 - [ ] Add option to set a browser as the default
 - [ ] Add additional window rules
   - [ ] Float picture-in-picture window from zen
+  - [ ] Float system monitor window from DMS
 - [ ] Add creative applications (DaVinci Resolve, Affinity, Blender, Blockbench, a material maker?)
 - [ ] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need
+- [ ] Add P4 to vcs setup
+- [ ] Add a media playback app (something like VLC but more modern)
