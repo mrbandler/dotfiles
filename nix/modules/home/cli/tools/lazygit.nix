@@ -10,6 +10,7 @@ let
   cfg = config.internal.cli.tools.lazygit;
   yamlFormat = pkgs.formats.yaml {};
   deltaEnabled = config.programs.delta.enable or false;
+  batEnabled = config.programs.bat.enable or false;
 in
 {
   options.internal.cli.tools.lazygit = {
@@ -36,11 +37,16 @@ in
           nerdFontsVersion = "3";
         };
       })
-      (mkIf deltaEnabled (mapAttrsRecursive (_: mkDefault) {
-        git.paging = {
-          pager = "delta --paging=never";
-        };
-      }))
+      (mkIf deltaEnabled {
+        git.pagers = mkDefault [
+          { command = "diff"; pager = "delta --paging=never"; }
+        ];
+      })
+      (mkIf batEnabled {
+        git.pagers = mkDefault [
+          { command = "log"; pager = "bat --style=plain --paging=never"; }
+        ];
+      })
     ];
 
     xdg.configFile."lazygit/config.yml".source =
