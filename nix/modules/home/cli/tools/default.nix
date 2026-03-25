@@ -1,12 +1,20 @@
 {
   imports = [
     ./bat.nix
+    ./btop.nix
     ./eza.nix
     ./fd.nix
     ./fzf.nix
+    ./jrnl.nix
+    ./k9s.nix
+    ./lazydocker.nix
+    ./lazygit.nix
+    ./lazyjj.nix
+    ./nb.nix
     ./ripgrep.nix
     ./tv.nix
     ./yazi.nix
+    ./zk.nix
     ./zoxide.nix
   ];
 }

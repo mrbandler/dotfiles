@@ -7,9 +7,9 @@
   home.packages = with pkgs; [
     jq
     just
-    lazygit
-    sqlite
-    sqlitebrowser
+    jnv
+    kmon
+    process-compose
     gitnr
     pdftk
   ];
