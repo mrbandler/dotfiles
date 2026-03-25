@@ -27,6 +27,7 @@ in
     ./git.nix
     ./gh.nix
     ./jj.nix
+    ./p4.nix
   ];
 
   options.internal.development.vcs = {
