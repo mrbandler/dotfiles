@@ -24,7 +24,7 @@ in
 
     editor = mkOption {
       type = types.nullOr types.str;
-      default = null;
+      default = "hx";
       description = "Console editor override ($EDITOR). Null uses system default.";
     };
 
@@ -36,7 +36,7 @@ in
 
     pager = mkOption {
       type = types.nullOr types.str;
-      default = null;
+      default = "bat --style=plain";
       description = "Pager override ($PAGER). Null uses system default.";
     };
 
