@@ -9,7 +9,14 @@
     just
     jnv
     kmon
+    duf
+    dust
+    ncdu
+    ouch
     process-compose
+    sd
+    tokei
+    trashy
     gitnr
     pdftk
   ];

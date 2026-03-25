@@ -42,13 +42,13 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [ ] nb — command line note-taking and knowledge base
 
 ## Disk & File Utils
-- [ ] diskonaut — interactive disk usage TUI
-- [ ] dust — quick disk usage (du replacement)
-- [ ] duf — disk free overview (df replacement)
-- [ ] rip — safe rm replacement
-- [ ] tokei — code line counter
-- [ ] sd — sed replacement
-- [ ] ouch — universal compress/decompress
+- [x] ncdu — interactive disk usage TUI
+- [x] dust — quick disk usage (du replacement)
+- [x] duf — disk free overview (df replacement)
+- [x] trashy — safe rm replacement (FreeDesktop trash)
+- [x] tokei — code line counter
+- [x] sd — sed replacement
+- [x] ouch — universal compress/decompress
 
 ## Shell Completions
 - [ ] carapace — multi-shell completion engine
