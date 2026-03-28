@@ -19,5 +19,7 @@
     trashy
     gitnr
     pdftk
+    hyperfine
+    watchexec
   ];
 }

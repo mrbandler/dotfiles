@@ -19,5 +19,7 @@
     ./xh.nix
     ./posting.nix
     ./harlequin.nix
+    ./glow.nix
+    ./direnv.nix
   ];
 }

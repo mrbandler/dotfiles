@@ -64,14 +64,14 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [x] harlequin — SQL IDE TUI (DuckDB, PostgreSQL, SQLite)
 
 ## Benchmarking
-- [ ] hyperfine — command benchmarking
+- [x] hyperfine — command benchmarking
 
 ## Dev Tools
-- [ ] watchexec — run commands on file changes
-- [ ] direnv — per-directory env vars (+ op integration for secrets)
+- [x] watchexec — run commands on file changes
+- [x] direnv — per-directory env vars (+ op integration for secrets)
 
 ## Markdown
-- [ ] glow — terminal markdown renderer
+- [x] glow — terminal markdown renderer
 
 ## Other
 - [ ] fastfetch — system info display
