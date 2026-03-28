@@ -26,20 +26,20 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [x] kmon — kernel module monitor
 
 ## Container & Dev Tools
-- [ ] lazydocker — Docker TUI
-- [ ] lazyjj — Jujutsu VCS TUI
-- [ ] k9s — Kubernetes TUI
+- [x] lazydocker — Docker TUI
+- [x] lazyjj — Jujutsu VCS TUI
+- [x] k9s — Kubernetes TUI
 
 ## JSON
-- [ ] jnv — interactive JSON filter using jq
+- [x] jnv — interactive JSON filter using jq
 
 ## Process Management
-- [ ] process-compose — scheduler/orchestrator for non-containerized apps
+- [x] process-compose — scheduler/orchestrator for non-containerized apps
 
 ## Journaling & Notes
-- [ ] jrnl — command line journal application
-- [ ] zk — Zettelkasten plain text note-taking assistant
-- [ ] nb — command line note-taking and knowledge base
+- [x] jrnl — command line journal application
+- [x] zk — Zettelkasten plain text note-taking assistant
+- [x] nb — command line note-taking and knowledge base
 
 ## Disk & File Utils
 - [x] ncdu — interactive disk usage TUI
@@ -57,11 +57,11 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [ ] atuin — shell history with SQLite and fuzzy search
 
 ## HTTP & API
-- [ ] xh — httpie replacement (Rust)
-- [ ] posting — Postman-like TUI for HTTP
+- [x] xh — httpie replacement (Rust)
+- [x] posting — Postman-like TUI for HTTP
 
 ## Database
-- [ ] dblab — multi-database TUI client
+- [x] harlequin — SQL IDE TUI (DuckDB, PostgreSQL, SQLite)
 
 ## Benchmarking
 - [ ] hyperfine — command benchmarking

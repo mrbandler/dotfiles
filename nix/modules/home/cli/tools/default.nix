@@ -16,5 +16,8 @@
     ./yazi.nix
     ./zk.nix
     ./zoxide.nix
+    ./xh.nix
+    ./posting.nix
+    ./harlequin.nix
   ];
 }
