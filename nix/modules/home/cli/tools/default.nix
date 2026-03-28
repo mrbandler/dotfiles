@@ -21,5 +21,12 @@
     ./harlequin.nix
     ./glow.nix
     ./direnv.nix
+    ./fastfetch.nix
+    ./tailspin.nix
+    ./aerc.nix
+    ./himalaya.nix
+    ./protonmail-bridge.nix
+    ./khal.nix
+    ./vdirsyncer.nix
   ];
 }

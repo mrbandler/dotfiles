@@ -74,11 +74,17 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [x] glow — terminal markdown renderer
 
 ## Other
-- [ ] fastfetch — system info display
-- [ ] tailspin — log file highlighting
-- [ ] dtool — developer utility tool
-- [ ] licensor — license file generator
-- [ ] static-web-server — static file server
-- [ ] scriptisto — polyglot script runner
-- [ ] vhs — terminal session recorder
-- [ ] gogcli — GOG game library CLI
+- [x] fastfetch — system info display
+- [x] tailspin — log file highlighting
+- [x] static-web-server — static file server
+- [x] vhs — terminal session recorder
+
+## Email & Calendar
+- [x] protonmail-bridge — Proton Mail IMAP/SMTP bridge
+- [x] aerc — terminal email client
+- [x] himalaya — CLI email client
+- [x] khal — CalDAV calendar TUI
+- [x] vdirsyncer — CalDAV sync
+
+## VPN
+- [x] proton-vpn-cli — Proton VPN CLI

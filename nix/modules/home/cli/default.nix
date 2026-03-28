@@ -21,5 +21,8 @@
     pdftk
     hyperfine
     watchexec
+    vhs
+    static-web-server
+    proton-vpn-cli
   ];
 }
