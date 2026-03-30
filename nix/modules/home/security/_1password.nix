@@ -92,7 +92,13 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      lib.opnix.injectSecret = secret: "@opnix:${secret.name}@";
+      lib.opnix = {
+        injectSecret = secret: "@opnix:${secret.name}@";
+        mkSecret = name: reference: {
+          inherit reference;
+          path = ".config/opnix/secrets/${name}";
+        };
+      };
     }
 
     (mkIf cfg.shellPlugins.enable {
