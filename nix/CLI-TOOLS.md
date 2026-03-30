@@ -51,10 +51,10 @@ Full list of CLI tools, TUIs, and apps to integrate into the Nix configuration.
 - [x] ouch — universal compress/decompress
 
 ## Shell Completions
-- [ ] carapace — multi-shell completion engine
+- [x] carapace — multi-shell completion engine
 
 ## Shell History
-- [ ] atuin — shell history with SQLite and fuzzy search
+- [x] atuin — shell history with SQLite and fuzzy search
 
 ## HTTP & API
 - [x] xh — httpie replacement (Rust)

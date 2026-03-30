@@ -11,7 +11,8 @@
 - [x] Add password manager keybind Super+S for secrets
 - [x] Make Steam launch and work under Niri
 - [x] Setup Nushell and starship
-- [ ] Setup the rest of the CLI workflow (see [CLI-TOOLS.md](CLI-TOOLS.md))
+- [x] Setup the rest of the CLI workflow (see [CLI-TOOLS.md](CLI-TOOLS.md))
+- [ ] Setup aliases and CLI tool workflows
 - [ ] Terminal editors setup (Neovim and Helix)
 - [ ] Setup config for graphical editors (Zed)
 - [ ] Coding agents (Claude Code and Opencode)
