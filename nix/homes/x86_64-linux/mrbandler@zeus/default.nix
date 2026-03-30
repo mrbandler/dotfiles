@@ -1,6 +1,11 @@
 {
+  config,
   ...
 }:
+let
+  secretPaths = config.internal.security._1password.opnix.secretPaths;
+  mkSecret = config.lib.opnix.mkSecret;
+in
 
 {
   imports = [
@@ -26,10 +31,14 @@
 
     security._1password = {
       enable = true;
-      opnix.enable = true;
-
-      injects.vicinaeGitHubAccessToken = {
-        reference = "op://Development/Vicinae GitHub Token/credential";
+      opnix = {
+        enable = true;
+        secrets = {
+          protonBridge = mkSecret "protonBridge" "op://Nix/Proton Bridge/password";
+          googleMail = mkSecret "googleMail" "op://Nix/Google Nix App/password";
+          googleCalendarClientId = mkSecret "googleCalendarClientId" "op://Nix/vdirsyncer/username";
+          googleCalendarClientSecret = mkSecret "googleCalendarClientSecret" "op://Nix/vdirsyncer/credential";
+        };
       };
     };
 
@@ -53,6 +62,43 @@
     cli = {
       terminals.wezterm.enable = true;
       multiplexers.zellij.enable = true;
+    };
+
+    accounts = {
+      email = {
+        proton = {
+          enable = true;
+          address = "michael.baudler@proton.me";
+          aliases = [
+            "michael.baudler@pm.me"
+            "me@mrbandler.dev"
+            "catch@mrbandler.dev"
+            "hello@mrbandler.dev"
+            "b7sch@proton.me"
+          ];
+          realName = "Michael Baudler";
+          passwordCommand = "cat ${secretPaths.protonBridge}";
+        };
+
+        google = {
+          enable = true;
+          address = "baudler.michael@gmail.com";
+          realName = "Michael Baudler";
+          passwordCommand = "cat ${secretPaths.googleMail}";
+        };
+      };
+
+      calendar.google = {
+        enable = true;
+        oauth2ClientIdCommand = [ "cat" secretPaths.googleCalendarClientId ];
+        oauth2ClientSecretCommand = [ "cat" secretPaths.googleCalendarClientSecret ];
+        collections = [
+          ["events" "baudler.michael@gmail.com" "baudler.michael@gmail.com"]
+          ["holidays" "cln2spr5e9mm2rh3d1nmoqb4c5sk0pridtqn0bjm5phm2r35dpi62shectnmuprcckn66rrd@virtual" "cln2spr5e9mm2rh3d1nmoqb4c5sk0pridtqn0bjm5phm2r35dpi62shectnmuprcckn66rrd@virtual"]
+          ["vromis-daily-chaos" "e8d331252df1768615b83c49b911f388ad38735864127520c73cf9f1a0a173c4@group.calendar.google.com" "e8d331252df1768615b83c49b911f388ad38735864127520c73cf9f1a0a173c4@group.calendar.google.com"]
+          ["birthdays" "535cfd434efbde5bb03123e4b2052343d0058f097595c28e4f12a0fabf4e137e@group.calendar.google.com" "535cfd434efbde5bb03123e4b2052343d0058f097595c28e4f12a0fabf4e137e@group.calendar.google.com"]
+        ];
+      };
     };
 
     development = {
