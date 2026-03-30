@@ -32,7 +32,7 @@ in
         plugins {
             autolock location="file:~/.config/zellij/plugins/zellij-autolock.wasm" {
                 is_enabled true
-                triggers "nvim|vim|helix|hx|git|fzf|zoxide|atuin|tv"
+                triggers "nvim|vim|helix|hx|git|fzf|zoxide|atuin|tv|aerc|nano"
                 reaction_seconds "0.3"
                 print_to_log false
             }
