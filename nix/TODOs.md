@@ -25,3 +25,4 @@
 - [ ] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need
 - [ ] Add P4 to vcs setup
 - [ ] Add a media playback app (something like VLC but more modern)
+- [ ] Why does Alt+Enter move a window into fullscreen?
