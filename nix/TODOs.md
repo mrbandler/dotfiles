@@ -12,7 +12,7 @@
 - [x] Make Steam launch and work under Niri
 - [x] Setup Nushell and starship
 - [x] Setup the rest of the CLI workflow (see [CLI-TOOLS.md](CLI-TOOLS.md))
-- [ ] Setup aliases and CLI tool workflows
+- [x] Setup aliases and CLI tool workflows
 - [ ] Terminal editors setup (Neovim and Helix)
 - [ ] Setup config for graphical editors (Zed)
 - [ ] Coding agents (Claude Code and Opencode)
