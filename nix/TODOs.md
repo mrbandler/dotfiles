@@ -13,7 +13,7 @@
 - [x] Setup Nushell and starship
 - [x] Setup the rest of the CLI workflow (see [CLI-TOOLS.md](CLI-TOOLS.md))
 - [x] Setup aliases and CLI tool workflows
-- [ ] Terminal editors setup (Neovim) — Helix done, Neovim/LazyVim pending
+- [x] Terminal editors setup (Neovim) — Helix done, Neovim/LazyVim done
 - [ ] Setup config for graphical editors (Zed)
 - [ ] Coding agents (Claude Code and Opencode)
 - [ ] Create global .gitignore from https://www.toptal.com/developers/gitignore within the Nix configuration

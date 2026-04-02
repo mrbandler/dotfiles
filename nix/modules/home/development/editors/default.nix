@@ -7,6 +7,5 @@
     ./vscode.nix
     ./helix.nix
     ./zed.nix
-    ./neovim.nix
   ];
 }

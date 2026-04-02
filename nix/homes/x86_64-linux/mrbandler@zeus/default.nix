@@ -111,6 +111,7 @@ in
         vscode.enable = true;
         zed.enable = true;
         helix.enable = true;
+        neovim.enable = true;
       };
 
       runtimes.nodejs.enable = true;

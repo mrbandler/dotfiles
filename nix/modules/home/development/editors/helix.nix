@@ -20,18 +20,40 @@ with lib;
           line-number = "relative";
           auto-format = true;
           auto-pairs = true;
-          rulers = [ 80 100 120 ];
+          rulers = [
+            80
+            100
+            120
+          ];
           soft-wrap.enable = true;
           indent-guides.render = true;
-          gutters = [ "diagnostics" "line-numbers" "spacer" "diff" ];
+          gutters = [
+            "diagnostics"
+            "line-numbers"
+            "spacer"
+            "diff"
+          ];
           cursor-shape = {
             normal = "block";
             insert = "bar";
             select = "underline";
           };
           statusline = {
-            left = [ "mode" "spinner" "file-name" "file-modification-indicator" ];
-            right = [ "diagnostics" "selections" "register" "position" "file-encoding" "file-line-ending" "file-type" ];
+            left = [
+              "mode"
+              "spinner"
+              "file-name"
+              "file-modification-indicator"
+            ];
+            right = [
+              "diagnostics"
+              "selections"
+              "register"
+              "position"
+              "file-encoding"
+              "file-line-ending"
+              "file-type"
+            ];
           };
           lsp = {
             display-messages = true;
@@ -41,12 +63,6 @@ with lib;
             hidden = false;
             git-ignore = true;
           };
-        };
-
-        keys.normal.space = {
-          e = ":sh zellij run -c -f --x 10% --y 10% --width 80% --height 80% -- yazi";
-          g = ":sh zellij run -c --floating -- lazygit";
-          t = ":sh zellij run -d down -- nu";
         };
       };
 
@@ -65,7 +81,10 @@ with lib;
           {
             name = "toml";
             formatter.command = "taplo";
-            formatter.args = [ "fmt" "-" ];
+            formatter.args = [
+              "fmt"
+              "-"
+            ];
             auto-format = true;
           }
           {
