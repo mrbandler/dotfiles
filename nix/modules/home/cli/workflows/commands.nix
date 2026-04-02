@@ -53,6 +53,7 @@ let
 
     def "nx repl" [] { cd ${flakeDir}; nix repl . }
     def "nx rp" [] { nx repl }
+
   '';
 
   # -- Bash function ------------------------------------------------------------

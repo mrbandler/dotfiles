@@ -60,7 +60,7 @@ in
 
       interval = mkOption {
         type = types.str;
-        default = "weekly";
+        default = "monthly";
         description = "How often to check for updates (systemd calendar format)";
         example = "daily";
       };

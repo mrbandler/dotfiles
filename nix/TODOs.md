@@ -13,7 +13,7 @@
 - [x] Setup Nushell and starship
 - [x] Setup the rest of the CLI workflow (see [CLI-TOOLS.md](CLI-TOOLS.md))
 - [x] Setup aliases and CLI tool workflows
-- [ ] Terminal editors setup (Neovim and Helix)
+- [ ] Terminal editors setup (Neovim) — Helix done, Neovim/LazyVim pending
 - [ ] Setup config for graphical editors (Zed)
 - [ ] Coding agents (Claude Code and Opencode)
 - [ ] Create global .gitignore from https://www.toptal.com/developers/gitignore within the Nix configuration
@@ -24,6 +24,6 @@
   - [x] Float system monitor window from DMS
 - [ ] Add creative applications (DaVinci Resolve, Affinity, Blender, Blockbench, a material maker?)
 - [ ] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need
-- [ ] Add P4 to vcs setup
+- [x] Add P4 to vcs setup
 - [ ] Add a media playback app (something like VLC but more modern)
 - [ ] Why does Alt+Enter move a window into fullscreen?
