@@ -10,6 +10,17 @@ with lib;
 let
   cfg = config.internal.security._1password;
   injectsWithTargets = filterAttrs (_: s: s.injectInto != []) cfg.injects;
+
+  # Nushell wrappers for 1Password shell plugins (upstream only supports bash/zsh/fish)
+  getExeName = package:
+    strings.unsafeDiscardStringContext (baseNameOf (lib.getExe package));
+  nushellPluginCommands = concatMapStringsSep "\n" (package:
+    let exe = getExeName package; in ''
+      def --wrapped ${exe} [...args] {
+        op plugin run -- ${exe} ...$args
+      }
+    ''
+  ) cfg.shellPlugins.plugins;
 in
 {
   imports = [
@@ -56,7 +67,7 @@ in
 
       plugins = mkOption {
         type = types.listOf types.package;
-        default = with pkgs; [ gh ];
+        default = with pkgs; [ gh hcloud ];
         description = "CLI packages to enable 1Password shell plugins for";
         example = literalExpression "with pkgs; [ gh awscli2 google-cloud-sdk cachix ]";
       };
@@ -107,6 +118,8 @@ in
         package = cfg.shellPlugins.package;
         plugins = cfg.shellPlugins.plugins;
       };
+
+      programs.nushell.extraConfig = mkIf config.programs.nushell.enable nushellPluginCommands;
     })
 
     (mkIf cfg.sshAgent.enable {
