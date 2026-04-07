@@ -21,13 +21,6 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.diffnav ];
 
-    xdg.configFile."diffnav/config.yml".text = ''
-      ui:
-        showFileTree: true
-        sideBySide: true
-        icons: nerd-fonts-full
-        colorFileNames: true
-        showDiffStats: true
-    '';
+    xdg.configFile."diffnav/config.yml".source = ./config.yml;
   };
 }

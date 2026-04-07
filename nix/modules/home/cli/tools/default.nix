@@ -19,7 +19,6 @@
     ./lazyjj.nix
     ./nb.nix
     ./ripgrep.nix
-    ./tv.nix
     ./yazi.nix
     ./zk.nix
     ./zoxide.nix

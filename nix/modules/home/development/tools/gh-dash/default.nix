@@ -21,15 +21,6 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.gh-dash ];
 
-    xdg.configFile."gh-dash/config.yml".text = ''
-      keybindings:
-        prs:
-          - key: d
-            name: diffnav
-            command: gh pr diff --repo {{.RepoName}} {{.PrNumber}} | diffnav
-          - key: a
-            name: enhance
-            command: gh-enhance
-    '';
+    xdg.configFile."gh-dash/config.yml".source = ./config.yml;
   };
 }

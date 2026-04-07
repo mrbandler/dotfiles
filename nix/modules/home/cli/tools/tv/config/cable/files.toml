@@ -1,0 +1,24 @@
+[metadata]
+name = "files"
+description = "Find files"
+requirements = ["fd"]
+
+[source]
+command = "fd --type f --hidden --follow"
+
+[preview]
+command = "bat --color=always --style=plain {}"
+
+[keybindings]
+ctrl-e = "actions:edit"
+ctrl-o = "actions:visual"
+
+[actions.edit]
+description = "Open in $EDITOR"
+command = "$EDITOR '{}'"
+mode = "execute"
+
+[actions.visual]
+description = "Open in $VISUAL"
+command = "$VISUAL '{}'"
+mode = "execute"
