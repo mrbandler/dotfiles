@@ -34,6 +34,7 @@
     ./protonmail-bridge.nix
     ./khal.nix
     ./vdirsyncer.nix
+    ./tealdeer.nix
   ];
 
   home.packages = with pkgs; [
@@ -57,5 +58,9 @@
     static-web-server
     proton-vpn-cli
     hcloud
+    viddy
+    yq-go
+    doggo
+    serpl
   ];
 }
