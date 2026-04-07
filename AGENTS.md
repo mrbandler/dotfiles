@@ -4,6 +4,7 @@
 - No "Co-Authored-By", "Generated with [tool]", or any AI attribution in commits
 - Don't commit `docs/` — keep plans and specs local only
 - No intermediate commits — only commit once all changes build and work, and always ask before committing
+- Always create atomic commits — each commit should be a single logical change
 
 # Nix
 
