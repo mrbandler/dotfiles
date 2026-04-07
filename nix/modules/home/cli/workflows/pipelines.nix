@@ -29,6 +29,36 @@ let
         tv ripgrep
       }
     }
+
+    # ports - Show listening ports with process info
+    def ports [port?: int] {
+      let raw = (ss -tlnp | lines | skip 1 | each { |line|
+        let parts = ($line | split row -r '\s+')
+        let listen = ($parts | get 3 | default "")
+        let addr = if ($listen | str contains "]:") {
+          let split = ($listen | split row "]:")
+          { address: ($split | get 0 | str trim -l -c '['), port: ($split | get 1) }
+        } else if ($listen | str contains ":") {
+          let split = ($listen | split row ":")
+          { address: ($split | drop last 1 | str join ":"), port: ($split | last) }
+        } else {
+          { address: $listen, port: "" }
+        }
+        let proc = ($parts | get 5? | default "" | parse -r 'users:\(\("(?<name>[^"]+)",pid=(?<pid>\d+)' | get 0? | default { name: "-", pid: "-" })
+        {
+          proto: ($parts | get 0)
+          address: $addr.address
+          port: ($addr.port | into int)
+          process: $proc.name
+          pid: $proc.pid
+        }
+      })
+      if ($port != null) {
+        $raw | where port == $port
+      } else {
+        $raw | sort-by port
+      }
+    }
   '';
 in
 {
