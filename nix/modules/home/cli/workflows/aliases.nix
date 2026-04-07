@@ -40,14 +40,6 @@ in
     top = "btop";
     watch = "viddy";
 
-    # Nix (nx shortcuts)
-    nxr = "nx rebuild";
-    nxb = "nx build";
-    nxc = "nx check";
-    nxs = "nx show";
-    nxu = "nx update";
-    nxg = "nx upgrade";
-
     # Container
     ld = "lazydocker";
     dk = "docker compose";

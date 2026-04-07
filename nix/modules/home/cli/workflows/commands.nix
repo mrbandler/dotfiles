@@ -54,6 +54,14 @@ let
     def "nx repl" [] { cd ${flakeDir}; nix repl . }
     def "nx rp" [] { nx repl }
 
+    # nx top-level shortcuts
+    def nxr [] { nx rebuild }
+    def nxb [] { nx build }
+    def nxc [] { nx check }
+    def nxs [] { nx show }
+    def nxu [] { nx update }
+    def nxg [] { nx upgrade }
+
   '';
 
   # -- Bash function ------------------------------------------------------------
@@ -87,6 +95,14 @@ let
           ;;
       esac
     }
+
+    # nx top-level shortcuts
+    alias nxr='nx rebuild'
+    alias nxb='nx build'
+    alias nxc='nx check'
+    alias nxs='nx show'
+    alias nxu='nx update'
+    alias nxg='nx upgrade'
   '';
 in
 {

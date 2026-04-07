@@ -35,12 +35,9 @@ let
       let raw = (ss -tlnp | lines | skip 1 | each { |line|
         let parts = ($line | split row -r '\s+')
         let listen = ($parts | get 3 | default "")
-        let addr = if ($listen | str contains "]:") {
-          let split = ($listen | split row "]:")
-          { address: ($split | get 0 | str trim -l -c '['), port: ($split | get 1) }
-        } else if ($listen | str contains ":") {
-          let split = ($listen | split row ":")
-          { address: ($split | drop last 1 | str join ":"), port: ($split | last) }
+        let idx = ($listen | str index-of ":" -e)
+        let addr = if ($idx >= 0) {
+          { address: ($listen | str substring 0..($idx - 1) | str trim -l -c '[' | str trim -r -c ']'), port: ($listen | str substring ($idx + 1)..) }
         } else {
           { address: $listen, port: "" }
         }
@@ -60,6 +57,17 @@ let
       }
     }
   '';
+
+  bashPipelineCommands = ''
+    # ports - Show listening ports with process info
+    ports() {
+      if [ -n "$1" ]; then
+        ss -tlnp | awk -v port="$1" 'NR>1 { split($4, a, ":"); p=a[length(a)]; if (p == port) print }'
+      else
+        ss -tlnp
+      fi
+    }
+  '';
 in
 {
   options.internal.cli.workflows.pipelines = {
@@ -70,5 +78,8 @@ in
     };
   };
 
-  config.programs.nushell.extraConfig = mkIf (cfg.enable && config.programs.nushell.enable) pipelineCommands;
+  config = mkIf cfg.enable {
+    programs.nushell.extraConfig = mkIf config.programs.nushell.enable pipelineCommands;
+    programs.bash.initExtra = mkIf config.programs.bash.enable bashPipelineCommands;
+  };
 }
