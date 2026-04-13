@@ -116,6 +116,7 @@ in
 
       runtimes.nodejs.enable = true;
       agents.claude-code.enable = true;
+      agents.pi.enable = true;
     };
   };
 }
