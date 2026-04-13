@@ -35,6 +35,7 @@
     ./khal.nix
     ./vdirsyncer.nix
     ./tealdeer.nix
+    ./nh.nix
   ];
 
   home.packages = with pkgs; [
@@ -62,5 +63,6 @@
     yq-go
     doggo
     serpl
+    devenv
   ];
 }
