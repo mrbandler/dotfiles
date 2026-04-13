@@ -81,9 +81,8 @@
 
           centerWidgets = [
             {
-              id = "music";
+              id = "privacyIndicator";
               enabled = true;
-              mediaSize = 1;
             }
             {
               id = "clock";
@@ -99,10 +98,6 @@
             }
             {
               id = "dankPomodoroTimer";
-              enabled = true;
-            }
-            {
-              id = "privacyIndicator";
               enabled = true;
             }
           ];
@@ -127,18 +122,6 @@
               minimumWidth = true;
               showInGb = false;
             }
-            # {
-            #   id = "nixMonitor";
-            #   enabled = true;
-            # }
-            # {
-            #   id = "sshMonitor";
-            #   enabled = true;
-            # }
-            # {
-            #   id = "vpn";
-            #   enabled = true;
-            # }
             {
               id = "keyboard_layout_name";
               enabled = true;
@@ -198,6 +181,10 @@
 
           centerWidgets = [
             {
+              id = "privacyIndicator";
+              enabled = true;
+            }
+            {
               id = "clock";
               enabled = true;
             }
@@ -207,10 +194,6 @@
             }
             {
               id = "dankPomodoroTimer";
-              enabled = true;
-            }
-            {
-              id = "privacyIndicator";
               enabled = true;
             }
           ];
