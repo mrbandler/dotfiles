@@ -26,7 +26,7 @@
 - [x] Add nh (<https://github.com/nix-community/nh>)
 - [x] Add devenv (<https://devenv.sh/>) to be used in conjunction with direnv and native dev shells
 - [x] Create global .gitignore from <https://www.toptal.com/developers/gitignore> within the Nix configuration
-- [ ] Configure Zen browser
+- [x] Configure Zen browser
 - [ ] Add option to set a browser as the default (if this is something that does not yet exist)
 - [ ] Add creative applications (DaVinci Resolve, Affinity, Blender, Blockbench, a material maker?)
 - [ ] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need
