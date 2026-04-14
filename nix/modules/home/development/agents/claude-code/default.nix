@@ -20,7 +20,11 @@ in
     mcpServers = {
       nixos = {
         command = "nix";
-        args = [ "run" "github:utensils/mcp-nixos" "--" ];
+        args = [
+          "run"
+          "github:utensils/mcp-nixos"
+          "--"
+        ];
       };
     };
     settings = {
