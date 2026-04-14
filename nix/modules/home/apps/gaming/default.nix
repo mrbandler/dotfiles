@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   osConfig,
   ...
@@ -13,6 +14,8 @@ in
 {
   imports = [
     ./steam.nix
+    ./mangohud.nix
+    ./lutris.nix
   ];
 
   options.internal.apps.gaming = {
@@ -25,6 +28,11 @@ in
         assertion = gamingEnabled;
         message = "Gaming apps require system-level gaming support. Set `internal.desktop.services.gaming.enable = true` in your NixOS system config.";
       }
+    ];
+
+    home.packages = with pkgs; [
+      heroic
+      itch
     ];
   };
 }

@@ -5,14 +5,24 @@
 
 {
   home.packages = with pkgs; [
-    uhk-agent
-    spotify
-    telegram-desktop
-    whatsapp-electron
-    vesktop
     claude-desktop
-    system-config-printer
-    simple-scan
-    pdfarranger
+    loupe
+    file-roller
+    gparted
   ];
+
+  # Register Loupe as default image viewer
+  xdg.mimeApps.defaultApplications = let
+    viewer = "org.gnome.Loupe.desktop";
+  in {
+    "image/png" = viewer;
+    "image/jpeg" = viewer;
+    "image/gif" = viewer;
+    "image/webp" = viewer;
+    "image/svg+xml" = viewer;
+    "image/bmp" = viewer;
+    "image/tiff" = viewer;
+    "image/avif" = viewer;
+    "image/jxl" = viewer;
+  };
 }
