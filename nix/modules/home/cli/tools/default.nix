@@ -64,5 +64,6 @@
     doggo
     serpl
     devenv
+    ffmpeg-full
   ];
 }
