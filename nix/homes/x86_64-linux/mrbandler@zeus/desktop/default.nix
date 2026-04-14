@@ -24,7 +24,7 @@ let
 
   startup = pkgs.writeShellScript "workspace-startup" ''
     # Workspace 1: Zen → Claude Desktop
-    zen-beta &
+    zen-beta --profile $HOME/.config/zen/mrbandler &
     ${waitForWindow "zen-beta"}
     claude-desktop &
     ${waitForTitle "Claude"}

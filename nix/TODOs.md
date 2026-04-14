@@ -1,6 +1,9 @@
+# TODOs
+
 - [x] Integrate Ultimate Hacking Keyboard (UHK)
 - [x] Think about named workspaces for Niri
-- [x] Remove monitor keybind mode, and add direct keybindings for monitor management (e.g., Super+Shift+Arrow keys to move windows between monitors)
+- [x] Remove monitor keybind mode, and add direct keybindings for monitor management
+      (e.g., Super+Shift+Arrow keys to move windows between monitors)
 - [x] Add a scratch (floating) terminal which can be toggled with a keybinding (Super+Alt+Return)
 - [x] Configure vicinae
   - [x] Find a way to add custom commands
@@ -14,16 +17,19 @@
 - [x] Setup the rest of the CLI workflow (see [CLI-TOOLS.md](CLI-TOOLS.md))
 - [x] Setup aliases and CLI tool workflows
 - [x] Terminal editors setup (Neovim) — Helix done, Neovim/LazyVim done
-- [ ] Setup config for graphical editors (Zed)
-- [ ] Coding agents (Claude Code and Opencode)
-- [ ] Create global .gitignore from https://www.toptal.com/developers/gitignore within the Nix configuration
-- [ ] Configure Zen browser
-- [ ] Add option to set a browser as the default
+- [x] Add P4 to vcs setup
 - [x] Add additional window rules
   - [x] Float picture-in-picture window from zen
   - [x] Float system monitor window from DMS
+- [x] Coding agents (Claude Code and Pi)
+- [x] Setup config for graphical editors (Zed)
+- [x] Add nh (<https://github.com/nix-community/nh>)
+- [x] Add devenv (<https://devenv.sh/>) to be used in conjunction with direnv and native dev shells
+- [x] Create global .gitignore from <https://www.toptal.com/developers/gitignore> within the Nix configuration
+- [ ] Configure Zen browser
+- [ ] Add option to set a browser as the default (if this is something that does not yet exist)
 - [ ] Add creative applications (DaVinci Resolve, Affinity, Blender, Blockbench, a material maker?)
 - [ ] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need
-- [x] Add P4 to vcs setup
 - [ ] Add a media playback app (something like VLC but more modern)
 - [ ] Why does Alt+Enter move a window into fullscreen?
+- [ ] Look into making the configuration Dendritic
