@@ -24,6 +24,24 @@ in
       rm -rf "$HOME/.zen"
     '';
 
+    # Set Zen as default browser for XDG MIME handlers
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "text/html" = "zen-beta.desktop";
+        "x-scheme-handler/http" = "zen-beta.desktop";
+        "x-scheme-handler/https" = "zen-beta.desktop";
+        "x-scheme-handler/about" = "zen-beta.desktop";
+        "x-scheme-handler/unknown" = "zen-beta.desktop";
+        "application/xhtml+xml" = "zen-beta.desktop";
+        "application/x-extension-htm" = "zen-beta.desktop";
+        "application/x-extension-html" = "zen-beta.desktop";
+        "application/x-extension-shtml" = "zen-beta.desktop";
+        "application/x-extension-xhtml" = "zen-beta.desktop";
+        "application/x-extension-xht" = "zen-beta.desktop";
+      };
+    };
+
     # Override desktop entry to force the correct profile
     xdg.desktopEntries.zen-beta = {
       name = "Zen Browser";
