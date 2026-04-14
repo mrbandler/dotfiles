@@ -31,5 +31,10 @@ with lib;
     })
     config.adjust_window_size_when_changing_font_size = true
     config.default_prog = {"nu"}
+
+    -- Disable Alt+Enter fullscreen toggle (managed by window manager)
+    config.keys = {
+      { key = 'Enter', mods = 'ALT', action = wezterm.action.DisableDefaultAssignment },
+    }
   '';
 }
