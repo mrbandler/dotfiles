@@ -72,7 +72,12 @@
       inherit inputs;
 
       src = ./.;
-      channels-config.allowUnfree = true;
+      channels-config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "ventoy-1.1.10"
+        ];
+      };
       snowfall.namespace = "internal";
 
       overlays = with inputs; [
