@@ -32,5 +32,6 @@
 - [x] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need
 - [x] Add a media playback app (something like VLC but more modern)
 - [ ] Package ArmorPaint as a Nix overlay
+- [ ] Fix DaVinci Resolve on AMD (needs ROCm or Studio license)
 - [x] Why does Alt+Enter move a window into fullscreen?
 - [ ] Look into making the configuration Dendritic

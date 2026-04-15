@@ -27,7 +27,6 @@
     reaper
 
     # Video
-    davinci-resolve
     handbrake
 
     # Game engines
