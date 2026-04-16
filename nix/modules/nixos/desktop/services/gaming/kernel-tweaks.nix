@@ -25,5 +25,8 @@ in
       # Needed for some games (e.g., Star Citizen)
       "vm.max_map_count" = 2147483642;
     };
+
+    # NT synchronization primitives — improves Wine/Proton game performance
+    boot.kernelModules = [ "ntsync" ];
   };
 }
