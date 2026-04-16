@@ -38,6 +38,12 @@ in
           googleMail = mkSecret "googleMail" "op://Nix/Google Nix App/password";
           googleCalendarClientId = mkSecret "googleCalendarClientId" "op://Nix/vdirsyncer/username";
           googleCalendarClientSecret = mkSecret "googleCalendarClientSecret" "op://Nix/vdirsyncer/credential";
+          googleDriveClientId = mkSecret "googleDriveClientId" "op://Nix/rclone-gdrive/username";
+          googleDriveClientSecret = mkSecret "googleDriveClientSecret" "op://Nix/rclone-gdrive/credential";
+          googleDriveToken = mkSecret "googleDriveToken" "op://Nix/rclone-gdrive/token";
+          protonDriveUsername = mkSecret "protonDriveUsername" "op://Nix/rclone-pdrive/username";
+          protonDrivePassword = mkSecret "protonDrivePassword" "op://Nix/rclone-pdrive/password";
+          protonDriveTotpSecretKey = mkSecret "protonDriveTotpSecretKey" "op://Nix/rclone-pdrive/otp secret";
         };
       };
     };
@@ -57,6 +63,22 @@ in
         zen.enable = true;
       };
       gaming.enable = true;
+      storage.rclone = {
+        googleDrive = {
+          enable = true;
+          mountPoint = "${config.home.homeDirectory}/.drives/g";
+          clientIdCommand = "cat ${secretPaths.googleDriveClientId}";
+          clientSecretCommand = "cat ${secretPaths.googleDriveClientSecret}";
+          tokenCommand = "cat ${secretPaths.googleDriveToken}";
+        };
+        protonDrive = {
+          enable = true;
+          mountPoint = "${config.home.homeDirectory}/.drives/p";
+          usernameCommand = "cat ${secretPaths.protonDriveUsername}";
+          passwordCommand = "cat ${secretPaths.protonDrivePassword}";
+          totpSecretCommand = "cat ${secretPaths.protonDriveTotpSecretKey}";
+        };
+      };
     };
 
     cli = {

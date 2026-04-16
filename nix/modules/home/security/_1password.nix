@@ -107,7 +107,7 @@ in
         injectSecret = secret: "@opnix:${secret.name}@";
         mkSecret = name: reference: {
           inherit reference;
-          path = ".config/opnix/secrets/${name}";
+          path = ".local/share/opnix/secrets/${name}";
         };
       };
     }
