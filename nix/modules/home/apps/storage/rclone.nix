@@ -121,6 +121,12 @@ in
       )
     );
 
+    # Add drives to Nautilus sidebar via GTK bookmarks
+    home.file.".config/gtk-3.0/bookmarks".text = concatStringsSep "\n" (
+      (optional cfg.googleDrive.enable "file://${cfg.googleDrive.mountPoint} Google Drive")
+      ++ (optional cfg.protonDrive.enable "file://${cfg.protonDrive.mountPoint} Proton Drive")
+    );
+
     # Systemd user services
     systemd.user.services = mkMerge [
       (mkIf cfg.googleDrive.enable {
