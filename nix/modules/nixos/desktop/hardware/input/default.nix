@@ -14,6 +14,7 @@ in
     ./touchpad.nix
     ./wacom.nix
     ./controllers.nix
+    ./logitech.nix
   ];
 
   config = mkIf desktopCfg.enable {
