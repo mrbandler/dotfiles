@@ -13,9 +13,14 @@ in
     (mkAliasOptionModule [ "internal" "apps" "gaming" "mangohud" ] [ "programs" "mangohud" ])
   ];
 
-  config.programs.mangohud = mkIf cfg.enable {
-    enable = true;
-    settings = mapAttrsRecursive (_: mkDefault) {
+  config = mkIf cfg.enable {
+    # Enable MangoHud globally — hidden by default, toggle with Shift+F12
+    home.sessionVariables.MANGOHUD = "1";
+    systemd.user.sessionVariables.MANGOHUD = "1";
+
+    programs.mangohud = {
+      enable = true;
+      settings = mapAttrsRecursive (_: mkDefault) {
       fps_limit = 0;
       gpu_stats = true;
       gpu_temp = true;
@@ -31,6 +36,7 @@ in
       position = "top-left";
       toggle_hud = "Shift_R+F12";
       no_display = true; # hidden by default, toggle with keybind
+      };
     };
   };
 }
