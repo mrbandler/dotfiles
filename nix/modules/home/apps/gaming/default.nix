@@ -31,8 +31,16 @@ in
     ];
 
     home.packages = with pkgs; [
+      # Launchers
       heroic
       itch
+
+      # Emulators
+      rpcs3        # PS3
+      pcsx2        # PS2
+      ppsspp       # PSP
+      retroarch    # Multi-system (NES, SNES, GBA, Genesis, N64, DS, etc.)
+      xemu         # Original Xbox
     ];
   };
 }
