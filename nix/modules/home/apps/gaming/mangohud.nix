@@ -34,7 +34,7 @@ in
       frame_timing = true;
       font_size = 20;
       position = "top-left";
-      toggle_hud = "Shift_L+grave";
+      toggle_hud = "Scroll_Lock";
       no_display = true; # hidden by default, toggle with keybind
       };
     };
