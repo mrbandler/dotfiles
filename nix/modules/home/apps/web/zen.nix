@@ -44,20 +44,23 @@ in
 
     # Separate desktop entry for private browsing
     xdg.desktopEntries.zen-beta-private = {
-      name = "Zen Browser (Private)";
+      name = "Zen (Private)";
       genericName = "Private Web Browser";
       exec = "zen-beta --profile ${config.xdg.configHome}/zen/${profile} --private-window %U";
-      icon = "zen-beta";
+      icon = "zen-browser";
       terminal = false;
-      categories = [ "Network" "WebBrowser" ];
+      categories = [
+        "Network"
+        "WebBrowser"
+      ];
     };
 
     # Override desktop entry to force the correct profile
     xdg.desktopEntries.zen-beta = {
-      name = "Zen Browser";
+      name = "Zen";
       genericName = "Web Browser";
       exec = "zen-beta --profile ${config.xdg.configHome}/zen/${profile} --name zen-beta %U";
-      icon = "zen-beta";
+      icon = "zen-browser";
       terminal = false;
       categories = [
         "Network"

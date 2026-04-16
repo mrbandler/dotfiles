@@ -13,7 +13,7 @@
     name = "Material Maker";
     genericName = "Material Editor";
     exec = "material-maker";
-    icon = "material-maker";
+    icon = "${pkgs.material-maker}/share/material-maker/examples/mm_icon.png";
     terminal = false;
     categories = [ "Graphics" "3DGraphics" ];
   };
