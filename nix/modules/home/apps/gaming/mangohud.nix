@@ -14,9 +14,11 @@ in
   ];
 
   config = mkIf cfg.enable {
-    # MangoHud is available but not globally injected.
-    # Use per-game: Steam launch options → "mangohud %command%"
-    # Or wrap any game with: mangohud <command>
+    # Enable MangoHud globally for native games.
+    # Steam has MANGOHUD injected via extraEnv in the NixOS steam module.
+    # Heroic/Lutris have built-in MangoHud toggles in their settings.
+    home.sessionVariables.MANGOHUD = "1";
+    systemd.user.sessionVariables.MANGOHUD = "1";
 
     programs.mangohud = {
       enable = true;

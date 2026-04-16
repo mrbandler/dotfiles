@@ -52,6 +52,11 @@ in
       dedicatedServer.openFirewall = cfg.dedicatedServer;
       gamescopeSession.enable = cfg.gamescopeSession;
       extraCompatPackages = mkIf cfg.protonGE [ pkgs.proton-ge-bin ];
+      package = pkgs.steam.override {
+        extraEnv = {
+          MANGOHUD = true;
+        };
+      };
     };
   };
 }
