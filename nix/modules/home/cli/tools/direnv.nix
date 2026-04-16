@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   ...
 }:
 
@@ -16,7 +17,7 @@ with lib;
       hide_env_diff = true;
       load_dotenv = true;
       warn_timeout = "10s";
-      whitelist.prefix = [ "~/dev" ];
+      whitelist.prefix = [ config.internal.development.devDir ];
     };
   };
 }

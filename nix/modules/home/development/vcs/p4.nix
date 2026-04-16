@@ -46,6 +46,25 @@ in
     home.packages = [ pkgs.p4 ]
       ++ optional cfg.visual pkgs.p4v;
 
+    xdg.desktopEntries = mkIf cfg.visual {
+      p4v = {
+        name = "P4V";
+        genericName = "Perforce Visual Client";
+        exec = "p4v";
+        icon = "p4v";
+        terminal = false;
+        categories = [ "Development" "RevisionControl" ];
+      };
+      p4admin = {
+        name = "P4Admin";
+        genericName = "Perforce Administration Tool";
+        exec = "p4admin";
+        icon = "p4admin";
+        terminal = false;
+        categories = [ "Development" "RevisionControl" ];
+      };
+    };
+
     home.sessionVariables = mkMerge [
       { P4PORT = cfg.port; }
       { P4USER = cfg.user; }

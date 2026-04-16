@@ -8,6 +8,7 @@
 with lib;
 let
   cfg = config.internal.development.vcs;
+  devDir = config.internal.development.devDir;
 
   identityModule = types.submodule {
     options = {
@@ -50,10 +51,22 @@ in
       contexts = mkOption {
         type = types.attrsOf identityModule;
         default = {
-          "~/dev/mrbandler" = { name = "mrbandler"; email = "me@mrbandler.dev"; };
-          "~/dev/ffg" = { name = "Michael Baudler"; email = "michael.baudler@fivefingergames.com"; };
-          "~/dev/ss" = { name = "Michael Baudler"; email = "michael.baudler@smokingsquid.games"; };
-          "~/dev/la" = { name = "mrbandler"; email = "mrbandler@leakyabstractions.dev"; };
+          "${devDir}/mrbandler" = {
+            name = "mrbandler";
+            email = "me@mrbandler.dev";
+          };
+          "${devDir}/ffg" = {
+            name = "Michael Baudler";
+            email = "michael.baudler@fivefingergames.com";
+          };
+          "${devDir}/ss" = {
+            name = "Michael Baudler";
+            email = "michael.baudler@smokingsquid.games";
+          };
+          "${devDir}/la" = {
+            name = "mrbandler";
+            email = "mrbandler@leakyabstractions.dev";
+          };
         };
         description = "Directory-based identity overrides";
       };
