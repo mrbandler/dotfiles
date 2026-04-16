@@ -8,7 +8,7 @@
     claude-desktop
     loupe
     file-roller
-    gparted
+    gnome-disk-utility
   ];
 
   # Register Loupe as default image viewer
