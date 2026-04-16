@@ -46,12 +46,15 @@ in
     home.packages = [ pkgs.p4 ]
       ++ optional cfg.visual pkgs.p4v;
 
-    xdg.desktopEntries = mkIf cfg.visual {
+    xdg.desktopEntries = mkIf cfg.visual (let
+      p4vPkg = pkgs.p4v;
+      iconBase = "${p4vPkg}/lib/P4VResources/icons";
+    in {
       p4v = {
         name = "P4V";
         genericName = "Perforce Visual Client";
         exec = "p4v";
-        icon = "p4v";
+        icon = "${iconBase}/p4v.svg";
         terminal = false;
         categories = [ "Development" "RevisionControl" ];
       };
@@ -59,11 +62,11 @@ in
         name = "P4Admin";
         genericName = "Perforce Administration Tool";
         exec = "p4admin";
-        icon = "p4admin";
+        icon = "${iconBase}/p4admin.svg";
         terminal = false;
         categories = [ "Development" "RevisionControl" ];
       };
-    };
+    });
 
     home.sessionVariables = mkMerge [
       { P4PORT = cfg.port; }

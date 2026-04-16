@@ -34,4 +34,5 @@
 - [ ] Package ArmorPaint as a Nix overlay
 - [ ] Fix DaVinci Resolve on AMD (needs ROCm or Studio license)
 - [x] Why does Alt+Enter move a window into fullscreen?
+- [ ] Fix UHK Agent 9.0.2 — window not rendering (Electron 41 regression?)
 - [ ] Look into making the configuration Dendritic
