@@ -14,9 +14,9 @@ in
   ];
 
   config = mkIf cfg.enable {
-    # Enable MangoHud globally — hidden by default, toggle with Shift+F12
-    home.sessionVariables.MANGOHUD = "1";
-    systemd.user.sessionVariables.MANGOHUD = "1";
+    # MangoHud is available but not globally injected.
+    # Use per-game: Steam launch options → "mangohud %command%"
+    # Or wrap any game with: mangohud <command>
 
     programs.mangohud = {
       enable = true;
