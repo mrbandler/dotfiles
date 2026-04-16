@@ -8,7 +8,7 @@
 with lib;
 let
   cfg = config.internal.apps.storage.rclone;
-  mountOpts = "--vfs-cache-mode writes --vfs-cache-max-age 24h --dir-cache-time 5m";
+  mountOpts = "--vfs-cache-mode writes --vfs-cache-max-age 24h --dir-cache-time 5m --tpslimit 4 --checkers 1";
 in
 {
   options.internal.apps.storage.rclone = {
@@ -135,7 +135,7 @@ in
             ExecStart = "${pkgs.rclone}/bin/rclone mount gdrive: ${cfg.googleDrive.mountPoint} ${mountOpts}";
             ExecStop = "/run/wrappers/bin/fusermount -u ${cfg.googleDrive.mountPoint}";
             Restart = "on-failure";
-            RestartSec = 5;
+            RestartSec = 30;
             Environment = "PATH=/run/wrappers/bin:${pkgs.fuse}/bin:${pkgs.coreutils}/bin";
           };
           Install.WantedBy = [ "default.target" ];
@@ -153,7 +153,7 @@ in
             ExecStart = "${pkgs.rclone}/bin/rclone mount pdrive: ${cfg.protonDrive.mountPoint} ${mountOpts}";
             ExecStop = "/run/wrappers/bin/fusermount -u ${cfg.protonDrive.mountPoint}";
             Restart = "on-failure";
-            RestartSec = 5;
+            RestartSec = 30;
             Environment = "PATH=/run/wrappers/bin:${pkgs.fuse}/bin:${pkgs.coreutils}/bin";
           };
           Install.WantedBy = [ "default.target" ];
