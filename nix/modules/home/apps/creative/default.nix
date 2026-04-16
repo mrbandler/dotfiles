@@ -8,6 +8,16 @@
     ./obs.nix
   ];
 
+  # Material Maker has no desktop entry — create one
+  xdg.desktopEntries.material-maker = {
+    name = "Material Maker";
+    genericName = "Material Editor";
+    exec = "material-maker";
+    icon = "material-maker";
+    terminal = false;
+    categories = [ "Graphics" "3DGraphics" ];
+  };
+
   home.packages = with pkgs; [
     # 3D / CAD
     blender

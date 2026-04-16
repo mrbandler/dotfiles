@@ -42,6 +42,16 @@ in
       };
     };
 
+    # Separate desktop entry for private browsing
+    xdg.desktopEntries.zen-beta-private = {
+      name = "Zen Browser (Private)";
+      genericName = "Private Web Browser";
+      exec = "zen-beta --profile ${config.xdg.configHome}/zen/${profile} --private-window %U";
+      icon = "zen-beta";
+      terminal = false;
+      categories = [ "Network" "WebBrowser" ];
+    };
+
     # Override desktop entry to force the correct profile
     xdg.desktopEntries.zen-beta = {
       name = "Zen Browser";
