@@ -31,8 +31,8 @@
 - [x] Add creative applications (DaVinci Resolve, Affinity, Blender, Blockbench, a material maker?)
 - [x] Look at the application list in ./chezmoi/state/dsc/packages/ to find missing applications I might need
 - [x] Add a media playback app (something like VLC but more modern)
-- [ ] Package ArmorPaint as a Nix overlay
-- [ ] Fix DaVinci Resolve on AMD (needs ROCm or Studio license)
 - [x] Why does Alt+Enter move a window into fullscreen?
-- [ ] Fix UHK Agent 9.0.2 — window not rendering (Electron 41 regression?)
+- [ ] Package ArmorPaint as a Nix overlay #later
+- [ ] Fix DaVinci Resolve on AMD (needs ROCm or Studio license) #later
+- [ ] Fix UHK Agent 9.0.2 — window not rendering (Electron 41 regression?) #debug
 - [ ] Look into making the configuration Dendritic
