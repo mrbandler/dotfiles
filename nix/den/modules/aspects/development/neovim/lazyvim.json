@@ -1,0 +1,6 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.lang.nix"
+  ],
+  "version": 7
+}

@@ -1,0 +1,6 @@
+ui:
+  showFileTree: true
+  sideBySide: true
+  icons: nerd-fonts-full
+  colorFileNames: true
+  showDiffStats: true

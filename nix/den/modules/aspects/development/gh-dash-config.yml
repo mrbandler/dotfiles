@@ -1,0 +1,8 @@
+keybindings:
+  prs:
+    - key: d
+      name: diffnav
+      command: gh pr diff --repo {{.RepoName}} {{.PrNumber}} | diffnav
+    - key: a
+      name: enhance
+      command: gh-enhance
