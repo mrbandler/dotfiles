@@ -24,6 +24,38 @@ in
       rm -rf "$HOME/.zen"
     '';
 
+    # Seed zen-sessions.jsonlz4 on fresh profiles so the flake's workspace writer
+    # doesn't skip activation (upstream bug: it exits early if the file doesn't exist)
+    home.activation.zenSessionsSeed =
+      lib.hm.dag.entryBetween [ "zen-sessions-${profile}" ] [ "writeBoundary" ]
+        ''
+          SESSIONS_FILE="${config.xdg.configHome}/zen/${profile}/zen-sessions.jsonlz4"
+          if [ ! -f "$SESSIONS_FILE" ]; then
+            SEED_TMP="$(mktemp)"
+            echo '{"spaces":[],"tabs":[],"folders":[],"groups":[],"lastSelected":0,"splitViewData":{"groups":[]}}' > "$SEED_TMP"
+            ${lib.getExe pkgs.mozlz4a} "$SEED_TMP" "$SESSIONS_FILE"
+            rm -f "$SEED_TMP"
+            echo "zen-sessions: Seeded empty sessions file for fresh profile"
+          fi
+        '';
+
+    # Sort workspaces by position after the flake's writer runs
+    # (upstream bug: spaces are inserted in alphabetical order, not by position)
+    home.activation.zenSessionsSort = lib.hm.dag.entryAfter [ "zen-sessions-${profile}" ] ''
+      SESSIONS_FILE="${config.xdg.configHome}/zen/${profile}/zen-sessions.jsonlz4"
+      if [ -f "$SESSIONS_FILE" ]; then
+        SORT_TMP="$(mktemp)"
+        SORT_OUT="$(mktemp)"
+        ${lib.getExe pkgs.mozlz4a} -d "$SESSIONS_FILE" "$SORT_TMP" 2>/dev/null
+        ${lib.getExe pkgs.jq} '.spaces = (.spaces | sort_by(.position))' "$SORT_TMP" > "$SORT_OUT" 2>/dev/null
+        if [ -s "$SORT_OUT" ]; then
+          ${lib.getExe pkgs.mozlz4a} "$SORT_OUT" "$SESSIONS_FILE"
+          echo "zen-sessions: Sorted workspaces by position"
+        fi
+        rm -f "$SORT_TMP" "$SORT_OUT"
+      fi
+    '';
+
     # Set Zen as default browser for XDG MIME handlers
     xdg.mimeApps = {
       enable = true;
@@ -118,46 +150,6 @@ in
           # Wikiwand, vidIQ, and Grammarly are installed manually (not in NUR)
         ];
 
-        # Pinned & essential tabs
-        pinsForce = true;
-        pins = {
-          "Proton Mail" = {
-            id = "e1a1b2c3-0001-4000-8000-000000000001";
-            url = "https://mail.proton.me";
-            isEssential = true;
-            position = 1;
-            container = 1;
-          };
-          "Proton Drive" = {
-            id = "e1a1b2c3-0002-4000-8000-000000000002";
-            url = "https://drive.proton.me";
-            isEssential = true;
-            position = 2;
-            container = 1;
-          };
-          "Gmail" = {
-            id = "e1a1b2c3-0003-4000-8000-000000000003";
-            url = "https://mail.google.com";
-            isEssential = true;
-            position = 3;
-            container = 1;
-          };
-          "Google Drive" = {
-            id = "e1a1b2c3-0004-4000-8000-000000000004";
-            url = "https://drive.google.com";
-            isEssential = true;
-            position = 4;
-            container = 1;
-          };
-          "GitHub" = {
-            id = "e1a1b2c3-0005-4000-8000-000000000005";
-            url = "https://github.com";
-            workspace = "{6999010f-0d9f-4762-b172-3c8085827d3d}";
-            position = 5;
-            container = 1;
-          };
-        };
-
         search = {
           force = true;
           default = "duckduckgo";
@@ -168,7 +160,6 @@ in
           "f7c71d9a-bce2-420f-ae44-a64bd92975ab" # Better Unloaded Tabs
           "906c6915-5677-48ff-9bfc-096a02a72379" # Floating Status Bar
           "79dde383-4fe7-404a-a8e6-9be440022542" # Tidy Popup
-          "5941aefd-67b0-453d-9b62-9071a31cbb0d" # Smaller Compact Mode
           "378ba8b9-cd36-45f5-88df-595df5288795" # Add new tab urlbar icon
           "ae7868dc-1fa1-469e-8b89-a5edf7ab1f24" # Load Bar
           "58649066-2b6f-4a5b-af6d-c3d21d16fc00" # Private Mode Highlighting
@@ -200,13 +191,13 @@ in
           };
           "Watching" = {
             id = "f8724f7d-3fde-4f50-b8fe-a08347485c8d";
-            icon = "📺️";
+            icon = "👀";
             position = 4;
             container = 1;
           };
           "Leaky Abstractions" = {
             id = "46cae16d-0d8e-4a0b-80fe-29ddc0245ac7";
-            icon = "💦";
+            icon = "🔧";
             position = 5;
             container = 7;
           };
@@ -247,7 +238,17 @@ in
         settings = {
           # Extensions
           "extensions.autoDisableScopes" = 0;
+          "extensions.enabledScopes" = 15;
           "extensions.allowPrivateBrowsingByDefault" = true;
+
+          # Skip first-run onboarding (prevents Zen from wiping session data)
+          "zen.welcomeScreen.enabled" = false;
+          "zen.welcomeScreen.seen" = true;
+          "browser.startup.homepage_override.mstone" = "ignore";
+          "browser.aboutwelcome.enabled" = false;
+          "startup.homepage_welcome_url" = "";
+          "startup.homepage_welcome_url.additional" = "";
+          "trailhead.firstrun.didSeeAboutWelcome" = true;
 
           # Privacy
           "privacy.donottrackheader.enabled" = true;
@@ -276,6 +277,7 @@ in
           "services.sync.engine.workspaces" = true;
 
           # Zen UI
+          "zen.theme.hide-unified-extensions-button" = true;
           "zen.urlbar.behavior" = "float";
           "zen.glance.activation-method" = "ctrl";
           "zen.view.compact.enable-at-startup" = false;
@@ -298,7 +300,6 @@ in
           "mod.superpins.pins.grid-count" = "1";
           "mod.tidypopup.hovercolor" = "rgba(80, 80, 250, 1)";
           "mod.tidypopup.usecustomhovercolor" = false;
-          "theme.smaller_compact_mode.sidebar_height" = "70";
           "theme.better-active-tab.on-right" = false;
           "theme.better_uniextbtn.default" = "Default";
 
