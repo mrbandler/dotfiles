@@ -13,5 +13,6 @@
     cryptomator
     veracrypt
     ventoy
+    ledger-live-desktop
   ];
 }
