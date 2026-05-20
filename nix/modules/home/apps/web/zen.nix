@@ -165,7 +165,6 @@ in
           "58649066-2b6f-4a5b-af6d-c3d21d16fc00" # Private Mode Highlighting
           "ad97bb70-0066-4e42-9b5f-173a5e42c6fc" # SuperPins
           "f4866f39-cfd6-4498-ab92-54213b8279dc" # Animations Plus
-          "a5f6a231-e3c8-4ce8-8a8e-3e93efd6adec" # Cleaned URL bar
         ];
 
         # Workspaces
