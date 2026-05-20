@@ -46,9 +46,10 @@
       url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # NOTE: not following nixpkgs — upstream still uses nodePackages.asar which
+    # was removed from nixpkgs-unstable. Let it use its own pinned nixpkgs.
     claude-desktop = {
       url = "github:k3d3/claude-desktop-linux-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     vicinae-extensions = {
       url = "github:vicinaehq/extensions";
@@ -75,13 +76,20 @@
       channels-config = {
         allowUnfree = true;
         permittedInsecurePackages = [
-          "ventoy-1.1.10"
+          "ventoy-1.1.12"
         ];
       };
       snowfall.namespace = "internal";
 
       overlays = with inputs; [
         nur.overlays.default
+        # HACK: openldap 2.6.13 has a flaky syncreplication test on unstable.
+        # Disable doCheck until upstream fixes it.
+        (_final: prev: {
+          openldap = prev.openldap.overrideAttrs (_old: {
+            doCheck = false;
+          });
+        })
       ];
 
       systems.modules.nixos =
