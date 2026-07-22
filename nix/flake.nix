@@ -77,6 +77,10 @@
         allowUnfree = true;
         permittedInsecurePackages = [
           "ventoy-1.1.12"
+          # pnpm build tool for vesktop; runs offline in the Nix sandbox
+          # against a hash-locked pnpm-lock.yaml, blocking the network/env
+          # attack vectors these CVEs need.
+          "pnpm-10.29.2"
         ];
       };
       snowfall.namespace = "internal";
