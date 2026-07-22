@@ -2,7 +2,7 @@
 
 let
   vicinae = inputs.vicinae-extensions.inputs.vicinae;
-  mkExt = vicinae.packages.${pkgs.stdenv.hostPlatform.system}.mkVicinaeExtension;
+  mkExt = vicinae.lib.${pkgs.stdenv.hostPlatform.system}.mkVicinaeExtension;
 in
 mkExt {
   pname = "praxis";
