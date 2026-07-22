@@ -9,7 +9,6 @@
   ];
 
   home.packages = with pkgs; [
-    spacedrive
     cryptomator
     veracrypt
     ventoy
