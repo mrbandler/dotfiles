@@ -15,7 +15,10 @@
     exec = "material-maker";
     icon = "${pkgs.material-maker}/share/material-maker/examples/mm_icon.png";
     terminal = false;
-    categories = [ "Graphics" "3DGraphics" ];
+    categories = [
+      "Graphics"
+      "3DGraphics"
+    ];
   };
 
   home.packages = with pkgs; [
@@ -30,14 +33,14 @@
     graphite
     inkscape
     libresprite
-    darktable
 
     # Audio
     tenacity
     reaper
 
-    # Video
-    handbrake
+    # Photo
+    rapidraw
+    darktable
 
     # Game engines
     godot_4
