@@ -52,7 +52,6 @@ in
       extensions =
         (with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
           # System
-          bluetooth
           power-profile
           process-manager
           pulseaudio
