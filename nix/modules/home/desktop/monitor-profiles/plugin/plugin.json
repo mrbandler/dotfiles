@@ -1,0 +1,13 @@
+{
+  "id": "monitorProfileToggle",
+  "name": "Monitor Profile Toggle",
+  "description": "Toggle monitor between sRGB (editing) and HDR Effect (gaming) over DDC/CI.",
+  "version": "1.0.0",
+  "author": "mrbandler",
+  "type": "widget",
+  "capabilities": ["dankbar-widget"],
+  "component": "./MonitorProfileToggleWidget.qml",
+  "icon": "monitor",
+  "permissions": ["process"],
+  "requires": ["nu", "ddcutil"]
+}

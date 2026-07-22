@@ -132,6 +132,10 @@
               enabled = true;
             }
             {
+              id = "monitorProfileToggle";
+              enabled = true;
+            }
+            {
               id = "controlCenterButton";
               enabled = true;
               showNetworkIcon = true;

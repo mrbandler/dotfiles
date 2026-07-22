@@ -61,6 +61,7 @@ in
   imports = [
     ./niri.nix
     ./dms.nix
+    ./monitor-profiles.nix
   ];
 
   internal.desktop.core = {

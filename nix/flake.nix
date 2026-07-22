@@ -115,7 +115,7 @@
           opnix = inputs.opnix.homeManagerModules.default;
           dms = inputs.dms.homeModules.dank-material-shell;
           dms-niri = inputs.dms.homeModules.niri;
-          dms-plugins = inputs.dms-plugin-registry.modules.default;
+          dms-plugins = inputs.dms-plugin-registry.homeModules.default;
           xremap = inputs.xremap.homeManagerModules.default;
         in
         [
